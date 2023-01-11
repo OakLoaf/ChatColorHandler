@@ -4,7 +4,7 @@ import de.themoep.minedown.MineDown;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.chat.BaseComponent;
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatColorHandler {
@@ -13,45 +13,45 @@ public class ChatColorHandler {
     /**
      * Sends this sender a message
      *
-     * @param player  Player to receive this message
+     * @param sender Player to receive this message
      * @param message Message to be displayed
      */
-    public static void sendMessage(@NotNull Player player, @NotNull String message) {
-        player.spigot().sendMessage(getTranslatedComponent(message));
+    public static void sendMessage(@NotNull CommandSender sender, @NotNull String message) {
+        sender.spigot().sendMessage(getTranslatedComponent(message));
     }
 
     /**
      * Sends this sender multiple messages
      *
-     * @param player   Player to receive this message
+     * @param sender   Player to receive this message
      * @param messages Messages to be displayed
      */
-    public static void sendMessage(@NotNull Player player, @NotNull String... messages) {
-        sendMessage(player, String.join(" ", messages));
+    public static void sendMessage(@NotNull CommandSender sender, @NotNull String... messages) {
+        sendMessage(sender, String.join(" ", messages));
     }
 
     /**
      * Sends this sender multiple messages
      *
-     * @param players Players to receive this message
+     * @param senders Players to receive this message
      * @param message Message to be displayed
      */
-    public static void sendMessage(Player[] players, @NotNull String message) {
-        for (Player player : players) {
-            sendMessage(player, message);
+    public static void sendMessage(CommandSender[] senders, @NotNull String message) {
+        for (CommandSender sender : senders) {
+            sendMessage(sender, message);
         }
     }
 
     /**
      * Sends this sender multiple messages
      *
-     * @param players  Players to receive this message
+     * @param senders  Players to receive this message
      * @param messages Messages to be displayed
      */
-    public static void sendMessage(Player[] players, @NotNull String... messages) {
+    public static void sendMessage(CommandSender[] senders, @NotNull String... messages) {
         String message = String.join(" ", messages);
-        for (Player player : players) {
-            sendMessage(player, message);
+        for (CommandSender sender : senders) {
+            sendMessage(sender, message);
         }
     }
 
