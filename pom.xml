@@ -6,7 +6,7 @@
 
     <groupId>me.dave</groupId>
     <artifactId>chatcolorhandler</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>master-SNAPSHOT</version>
     <build>
         <plugins>
             <plugin>
