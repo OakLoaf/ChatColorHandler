@@ -1,4 +1,4 @@
-package chatcolorhandler;
+package main;
 
 import de.themoep.minedown.MineDown;
 import net.kyori.adventure.text.minimessage.MiniMessage;
