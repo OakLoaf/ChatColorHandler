@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class ChatColorHandler {
-    private final MiniMessage miniMessage = MiniMessage.miniMessage();
+    private static final MiniMessage miniMessage = MiniMessage.miniMessage();
 
     /**
      * Sends this sender a message
@@ -16,7 +16,7 @@ public class ChatColorHandler {
      * @param player  Player to receive this message
      * @param message Message to be displayed
      */
-    public void sendMessage(@NotNull Player player, @NotNull String message) {
+    public static void sendMessage(@NotNull Player player, @NotNull String message) {
         player.spigot().sendMessage(getTranslatedComponent(message));
     }
 
@@ -26,7 +26,7 @@ public class ChatColorHandler {
      * @param player   Player to receive this message
      * @param messages Messages to be displayed
      */
-    public void sendMessage(@NotNull Player player, @NotNull String... messages) {
+    public static void sendMessage(@NotNull Player player, @NotNull String... messages) {
         sendMessage(player, String.join(" ", messages));
     }
 
@@ -36,7 +36,7 @@ public class ChatColorHandler {
      * @param players Players to receive this message
      * @param message Message to be displayed
      */
-    public void sendMessage(Player[] players, @NotNull String message) {
+    public static void sendMessage(Player[] players, @NotNull String message) {
         for (Player player : players) {
             sendMessage(player, message);
         }
@@ -48,7 +48,7 @@ public class ChatColorHandler {
      * @param players  Players to receive this message
      * @param messages Messages to be displayed
      */
-    public void sendMessage(Player[] players, @NotNull String... messages) {
+    public static void sendMessage(Player[] players, @NotNull String... messages) {
         String message = String.join(" ", messages);
         for (Player player : players) {
             sendMessage(player, message);
@@ -60,7 +60,7 @@ public class ChatColorHandler {
      *
      * @param message Messages to be displayed
      */
-    private BaseComponent[] getTranslatedComponent(String message) {
+    private static BaseComponent[] getTranslatedComponent(String message) {
         String mmParsed = LegacyComponentSerializer.builder().build().serialize(miniMessage.deserialize(message));
         return new MineDown(mmParsed).toComponent();
     }
