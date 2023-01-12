@@ -1,13 +1,16 @@
 package me.dave.chatcolorhandler;
 
-import de.themoep.minedown.MineDown;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class ChatColorHandler {
+    private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
 
     /**
@@ -17,7 +20,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(@NotNull CommandSender sender, @NotNull String message) {
-        sender.spigot().sendMessage(getTranslatedComponent(message));
+        sender.sendMessage(translateAlternateColorCodes(message));
     }
 
     /**
@@ -60,8 +63,15 @@ public class ChatColorHandler {
      *
      * @param message Messages to be displayed
      */
-    private static BaseComponent[] getTranslatedComponent(String message) {
-        String mmParsed = LegacyComponentSerializer.builder().build().serialize(miniMessage.deserialize(message));
-        return new MineDown(mmParsed).toComponent();
+    public static String translateAlternateColorCodes(String message) {
+        message = LegacyComponentSerializer.builder().build().serialize(miniMessage.deserialize(message));
+
+        Matcher match = hexPattern.matcher(message);
+        while (match.find()) {
+            String color = message.substring(match.start(), match.end());
+            message = message.replace(color, ChatColor.of(color) + "");
+            match = hexPattern.matcher(message);
+        }
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }
