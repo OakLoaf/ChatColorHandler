@@ -6,7 +6,7 @@
 
     <groupId>me.dave</groupId>
     <artifactId>chatcolorhandler</artifactId>
-    <version>v0.9.6</version>
+    <version>v0.9.7</version>
     <packaging>jar</packaging>
 
     <name>ChatColorHandler</name>
@@ -60,10 +60,6 @@
         <repository>
             <id>sonatype</id>
             <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>minebench-repo</id>
-            <url>https://repo.minebench.de/</url>
         </repository>
     </repositories>
 
