@@ -73,7 +73,7 @@ public class ChatColorHandler {
         Matcher match = hexPattern.matcher(message);
         while (match.find()) {
             String color = message.substring(match.start() + 1, match.end());
-            message = message.replace(color, ChatColor.of(color) + "");
+            message = message.replace("&" + color, ChatColor.of(color) + "");
             match = hexPattern.matcher(message);
         }
         return ChatColor.translateAlternateColorCodes('&', message);
