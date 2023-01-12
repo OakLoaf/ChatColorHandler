@@ -64,11 +64,15 @@ public class ChatColorHandler {
      * @param message Messages to be displayed
      */
     public static String translateAlternateColorCodes(String message) {
+        message = message.replaceAll("§", "&");
+
+        // Parse message through MiniMessage
         message = LegacyComponentSerializer.builder().build().serialize(miniMessage.deserialize(message));
 
+        // Parse message through Default Hex in format "&#rrggbb"
         Matcher match = hexPattern.matcher(message);
         while (match.find()) {
-            String color = message.substring(match.start(), match.end());
+            String color = message.substring(match.start() + 1, match.end());
             message = message.replace(color, ChatColor.of(color) + "");
             match = hexPattern.matcher(message);
         }
