@@ -6,7 +6,7 @@
 
     <groupId>me.dave</groupId>
     <artifactId>chatcolorhandler</artifactId>
-    <version>v1.0</version>
+    <version>v1.1</version>
     <packaging>jar</packaging>
 
     <name>ChatColorHandler</name>
@@ -74,12 +74,6 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
             <version>4.12.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-platform-bukkit</artifactId>
-            <version>4.2.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
