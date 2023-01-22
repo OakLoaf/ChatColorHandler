@@ -64,6 +64,9 @@ public class ChatColorHandler {
      * @param message Messages to be displayed
      */
     public static String translateAlternateColorCodes(String message) {
+        // Initial changes as MiniMessage crashes
+        message = message.replaceAll("§", "&");
+
         // Parse message through MiniMessage
         message = LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(message));
         message = message.replaceAll("§", "&");
