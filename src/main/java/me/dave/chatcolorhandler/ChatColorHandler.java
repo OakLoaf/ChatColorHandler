@@ -1,11 +1,13 @@
 package me.dave.chatcolorhandler;
 
-import me.dave.chatcolorhandler.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,25 +61,38 @@ public class ChatColorHandler {
     }
 
     /**
-     * Converts message to a BaseComponent[]
+     * Converts string to a BaseComponent[]
      *
-     * @param message Messages to be displayed
+     * @param string String to be converted
      */
-    public static String translateAlternateColorCodes(String message) {
+    public static String translateAlternateColorCodes(String string) {
         // Initial changes as MiniMessage crashes
-        message = message.replaceAll("§", "&");
+        string = string.replaceAll("§", "&");
 
         // Parse message through MiniMessage
-        message = LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(message));
-        message = message.replaceAll("§", "&");
+        string = LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string));
+        string = string.replaceAll("§", "&");
 
         // Parse message through Default Hex in format "&#rrggbb"
-        Matcher match = hexPattern.matcher(message);
+        Matcher match = hexPattern.matcher(string);
         while (match.find()) {
-            String color = message.substring(match.start() + 1, match.end());
-            message = message.replace("&" + color, ChatColor.of(color) + "");
-            match = hexPattern.matcher(message);
+            String color = string.substring(match.start() + 1, match.end());
+            string = string.replace("&" + color, ChatColor.of(color) + "");
+            match = hexPattern.matcher(string);
         }
-        return ChatColor.translateAlternateColorCodes('&', message);
+        return ChatColor.translateAlternateColorCodes('&', string);
+    }
+
+    /**
+     * Converts strings to a BaseComponent[]
+     *
+     * @param strings Strings to be converted
+     */
+    public static List<String> translateAlternateColorCodes(List<String> strings) {
+        List<String> outputList = new ArrayList<>();
+        for (String string : strings) {
+            outputList.add(translateAlternateColorCodes(string));
+        }
+        return outputList;
     }
 }
