@@ -105,12 +105,16 @@ public class ChatColorHandler {
      * @param enable Whether to enable MiniMessage
      */
     public static boolean enableMiniMessage(boolean enable) {
+        if (!enable) {
+            miniMessageHandler = null;
+            return true;
+        }
         if (miniMessageHandler != null) return true;
 
         try {
             miniMessageHandler = new MiniMessageHandler();
-        } catch (NoClassDefFoundError err) {
-            Bukkit.getLogger().severe("Could not enable MiniMessage, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
+        } catch (Exception err) {
+            Bukkit.getLogger().severe("Something went wrong whilst enabling MiniMessage, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
             return false;
         }
 
