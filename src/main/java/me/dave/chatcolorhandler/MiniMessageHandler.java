@@ -11,7 +11,6 @@ public class MiniMessageHandler {
         try {
             miniMessage = MiniMessage.miniMessage();
         } catch (NoClassDefFoundError err) {
-            Bukkit.getLogger().severe("MiniMessage couldn't be enabled, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
             throw new NoClassDefFoundError(err.getMessage());
         }
 
