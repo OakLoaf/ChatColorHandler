@@ -1,6 +1,5 @@
 package me.dave.chatcolorhandler;
 
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class ChatColorHandler {
     private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
-    private static final MiniMessage miniMessage = MiniMessage.miniMessage();
+    private static MiniMessageHandler miniMessageHandler = null;
 
     /**
      * Sends this sender a message
@@ -66,11 +65,12 @@ public class ChatColorHandler {
      * @param string String to be converted
      */
     public static String translateAlternateColorCodes(String string) {
-        // Initial changes as MiniMessage crashes
-        string = string.replaceAll("§", "&");
-
         // Parse message through MiniMessage
-        string = LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string));
+        if (miniMessageHandler != null) {
+            string = LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessageHandler.deserialize(string));
+        }
+
+        // Replace legacy character
         string = string.replaceAll("§", "&");
 
         // Parse message through Default Hex in format "&#rrggbb"
@@ -94,5 +94,23 @@ public class ChatColorHandler {
             outputList.add(translateAlternateColorCodes(string));
         }
         return outputList;
+    }
+
+    /**
+     * Enables MiniMessage to be parsed.
+     * Note: This requires the MiniMessage dependency in your project (This is built into Paper by default)
+     *
+     * @param enable Whether to enable MiniMessage
+     */
+    public static boolean enableMiniMessage(boolean enable) {
+        if (miniMessageHandler != null) return true;
+
+        try {
+            miniMessageHandler = new MiniMessageHandler();
+        } catch (Exception err) {
+            return false;
+        }
+
+        return true;
     }
 }
