@@ -99,6 +99,7 @@ public class ChatColorHandler {
     /**
      * Enables MiniMessage to be parsed.
      * Note: This requires the MiniMessage dependency in your project (This is built into Paper by default)
+     * Get MiniMessage here: <a href="https://docs.adventure.kyori.net/minimessage/api.html">...</a>
      *
      * @param enable Whether to enable MiniMessage
      */
