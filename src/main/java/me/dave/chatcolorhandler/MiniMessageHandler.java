@@ -2,6 +2,7 @@ package me.dave.chatcolorhandler;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 
 public class MiniMessageHandler {
     private final MiniMessage miniMessage;
@@ -10,6 +11,7 @@ public class MiniMessageHandler {
         try {
             miniMessage = MiniMessage.miniMessage();
         } catch (NoClassDefFoundError err) {
+            Bukkit.getLogger().severe("MiniMessage couldn't be enabled, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
             throw new NoClassDefFoundError(err.getMessage());
         }
 
