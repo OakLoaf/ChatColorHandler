@@ -7,7 +7,12 @@ public class MiniMessageHandler {
     private final MiniMessage miniMessage;
 
     public MiniMessageHandler() {
-        miniMessage = MiniMessage.miniMessage();
+        try {
+            miniMessage = MiniMessage.miniMessage();
+        } catch (NoClassDefFoundError err) {
+            throw new NoClassDefFoundError(err.getMessage());
+        }
+
     }
 
     public Component deserialize(String string) {
