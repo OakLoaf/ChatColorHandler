@@ -109,7 +109,7 @@ public class ChatColorHandler {
 
         try {
             miniMessageHandler = new MiniMessageHandler();
-        } catch (Exception err) {
+        } catch (NoClassDefFoundError err) {
             Bukkit.getLogger().severe("Could not enable MiniMessage, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
             return false;
         }
