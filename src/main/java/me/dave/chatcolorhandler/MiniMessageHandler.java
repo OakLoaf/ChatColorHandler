@@ -4,7 +4,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 public class MiniMessageHandler {
-    private final MiniMessage miniMessage = MiniMessage.miniMessage();
+    private final MiniMessage miniMessage;
+
+    public MiniMessageHandler() {
+        miniMessage = MiniMessage.miniMessage();
+    }
 
     public Component deserialize(String string) {
         // Initial character replacements as MiniMessage crashes with '
