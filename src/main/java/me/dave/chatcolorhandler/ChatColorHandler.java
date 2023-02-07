@@ -2,6 +2,7 @@ package me.dave.chatcolorhandler;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -109,6 +110,7 @@ public class ChatColorHandler {
         try {
             miniMessageHandler = new MiniMessageHandler();
         } catch (Exception err) {
+            Bukkit.getLogger().severe("Could not enable MiniMessage, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
             return false;
         }
 
