@@ -1,6 +1,7 @@
 package me.dave.chatcolorhandler;
 
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import me.dave.chatcolorhandler.legacySerializer.LegacyTranslator;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -68,7 +69,8 @@ public class ChatColorHandler {
     public static String translateAlternateColorCodes(String string) {
         // Parse message through MiniMessage
         if (miniMessageHandler != null) {
-            string = LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessageHandler.deserialize(string));
+            Component mmDeserialized = miniMessageHandler.deserialize(string);
+            string = LegacyTranslator.translateFromMiniMessage(mmDeserialized.insertion());
         }
 
         // Replace legacy character

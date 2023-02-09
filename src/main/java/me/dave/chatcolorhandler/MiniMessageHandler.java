@@ -2,7 +2,6 @@ package me.dave.chatcolorhandler;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Bukkit;
 
 public class MiniMessageHandler {
     private final MiniMessage miniMessage;
