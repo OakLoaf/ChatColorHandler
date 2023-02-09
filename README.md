@@ -25,7 +25,7 @@ player.sendMessage(ChatColorHandler.translateAlternateColorCodes("&cThis is an e
 ChatColorHandler.sendMessage(player, "&cThis is an example message");
 ```
 ### Adding Hex Colors to the rest of Minecraft
-With ChatColorHandler you are able to change gui titles, item names, item lore, etc. All by running parsing your text through `ChatColorHandler.translateAlternateColorCodes("Test string")`
+With ChatColorHandler you are able to change gui titles, item names, item lore, etc. All by parsing your text through `ChatColorHandler.translateAlternateColorCodes("Test string")`
 
 <br></br>
 ## Add ChatColorHandler to your project:
@@ -47,7 +47,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>com.github.CoolDCB</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>VERSION</version>
+        <version>v1.2</version>
     </dependency>
 </dependencies>
 ```
