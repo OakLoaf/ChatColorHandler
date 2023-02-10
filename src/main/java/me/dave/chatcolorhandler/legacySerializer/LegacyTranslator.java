@@ -13,7 +13,7 @@ public class LegacyTranslator {
         // Translate MiniMessage entry statements to legacy
         Matcher entryMatch = entryPattern.matcher(legacy);
         while (entryMatch.find()) {
-            String contents = legacy.substring(entryMatch.start(), entryMatch.end() - 1);
+            String contents = legacy.substring(entryMatch.start() + 1, entryMatch.end() - 1);
             String[] contentsArr = contents.split(":");
 
             String replacement = "<" + contents + ">";
