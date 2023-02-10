@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class LegacyTranslator {
 //    private static final Pattern entryPattern = Pattern.compile("<[a-zA-Z0-9:#]+>");
-    private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)</$1>");
+    private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)</\\1>");
     private static final Pattern fullStatementPattern1 = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)");
     private static final Pattern fullStatementPattern2 = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>");
     private static final Pattern hexPattern = Pattern.compile("<#[a-fA-F0-9]{6}>");
