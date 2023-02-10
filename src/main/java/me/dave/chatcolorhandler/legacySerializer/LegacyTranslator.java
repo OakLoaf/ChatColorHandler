@@ -12,15 +12,16 @@ public class LegacyTranslator {
 
     public static String translateFromMiniMessage(String miniMessage) {
         String legacy = miniMessage;
+        String temp = "";
 
         Matcher fullStatementMatch1 = fullStatementPattern1.matcher(legacy);
         while (fullStatementMatch1.find()) {
-            legacy = "success1";
+            temp = "success1";
         }
 
         Matcher fullStatementMatch2 = fullStatementPattern2.matcher(legacy);
         while (fullStatementMatch2.find()) {
-            legacy = "success2";
+            temp = "success2";
         }
 
         // Translate full MiniMessage entry statements to legacy
