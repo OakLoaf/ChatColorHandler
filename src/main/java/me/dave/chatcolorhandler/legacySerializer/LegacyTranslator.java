@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LegacyTranslator {
-    private static final Pattern entryPattern = Pattern.compile("<.+>");
+    private static final Pattern entryPattern = Pattern.compile("<[a-zA-Z0-9:#]+>");
     private static final Pattern hexPattern = Pattern.compile("<#[a-fA-F0-9]{6}>");
 
     public static String translateFromMiniMessage(String miniMessage) {
