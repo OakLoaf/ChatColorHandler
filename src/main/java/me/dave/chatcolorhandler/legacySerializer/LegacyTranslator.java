@@ -6,10 +6,22 @@ import java.util.regex.Pattern;
 public class LegacyTranslator {
 //    private static final Pattern entryPattern = Pattern.compile("<[a-zA-Z0-9:#]+>");
     private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)</\1>");
+    private static final Pattern fullStatementPattern1 = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)");
+    private static final Pattern fullStatementPattern2 = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>");
     private static final Pattern hexPattern = Pattern.compile("<#[a-fA-F0-9]{6}>");
 
     public static String translateFromMiniMessage(String miniMessage) {
         String legacy = miniMessage;
+
+        Matcher fullStatementMatch1 = fullStatementPattern1.matcher(legacy);
+        while (fullStatementMatch1.find()) {
+            legacy = "success1";
+        }
+
+        Matcher fullStatementMatch2 = fullStatementPattern2.matcher(legacy);
+        while (fullStatementMatch2.find()) {
+            legacy = "success2";
+        }
 
         // Translate full MiniMessage entry statements to legacy
         Matcher fullStatementMatch = fullStatementPattern.matcher(legacy);
