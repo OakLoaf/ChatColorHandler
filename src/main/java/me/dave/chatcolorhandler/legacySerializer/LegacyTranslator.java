@@ -4,20 +4,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LegacyTranslator {
-    private static final Pattern entryPattern = Pattern.compile("<[a-zA-Z0-9:#]+>");
+//    private static final Pattern entryPattern = Pattern.compile("<[a-zA-Z0-9:#]+>");
+    private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)</\1>");
     private static final Pattern hexPattern = Pattern.compile("<#[a-fA-F0-9]{6}>");
 
     public static String translateFromMiniMessage(String miniMessage) {
         String legacy = miniMessage;
 
-        // Translate MiniMessage entry statements to legacy
-        Matcher entryMatch = entryPattern.matcher(legacy);
-        while (entryMatch.find()) {
-            String contents = legacy.substring(entryMatch.start() + 1, entryMatch.end() - 1);
-            String[] contentsArr = contents.split(":");
+        // Translate full MiniMessage entry statements to legacy
+        Matcher fullStatementMatch = fullStatementPattern.matcher(legacy);
+        while (fullStatementMatch.find()) {
+            String fullMatch = fullStatementMatch.group();
+            String type = fullStatementMatch.group(1);
+            String[] settings = fullStatementMatch.group(2).split(":");
+            String content = fullStatementMatch.group(3);
 
-            String replacement = "<" + contents + ">";
-            switch(contentsArr[0]) {
+            String replacement = fullMatch.replaceAll("<", "@L3£G").replaceAll(">", "@R£G");
+            switch(type) {
                 case "black" -> replacement = "&0";
                 case "dark_blue" -> replacement = "&1";
                 case "dark_green" -> replacement = "&2";
@@ -54,18 +57,16 @@ public class LegacyTranslator {
                 case "reset" -> replacement = "&r";
 
                 case "gradient" -> {
-                    Pattern gradClosePattern = Pattern.compile("</gradient>");
-                    String gradientSnippet = legacy.substring(entryMatch.start());
-                    Matcher gradCloseMatch = gradClosePattern.matcher(gradientSnippet);
-                    if (!gradCloseMatch.find()) break;
-                    gradientSnippet = gradientSnippet.substring(contents.length() + 2, gradientSnippet.length() - 11);
-
-                    replacement = "HEX-" + gradientSnippet + "-HEX";
+                    String startingHex = "#ffffff";
+                    String endingHex = "#ffffff";
+                    if (settings.length > 0) startingHex = settings[1];
+                    if (settings.length > 1) endingHex = settings[settings.length - 1];
+                    replacement = startingHex + "-" + content + "-" + endingHex;
                 }
             }
 
-            legacy = legacy.replace("<" + contents + ">", replacement);
-            entryMatch = entryPattern.matcher(legacy);
+            legacy = legacy.replace(fullMatch, replacement);
+            fullStatementMatch = fullStatementPattern.matcher(legacy);
         }
 
         // Translate MiniMessage hex colours to legacy
@@ -77,7 +78,10 @@ public class LegacyTranslator {
         }
 
         // Remove closing statements
-        legacy = legacy.replaceAll("</.+>", "");
+//        legacy = legacy.replaceAll("</.+>", "");
+
+        // Return '<' and '>' characters
+        legacy = legacy.replaceAll("@L£G", "<").replaceAll("@R£G", ">");
 
         return legacy;
     }
