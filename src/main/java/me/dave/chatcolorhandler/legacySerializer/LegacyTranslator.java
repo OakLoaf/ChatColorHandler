@@ -58,7 +58,7 @@ public class LegacyTranslator {
                     String gradientSnippet = legacy.substring(entryMatch.start());
                     Matcher gradCloseMatch = gradClosePattern.matcher(gradientSnippet);
                     if (!gradCloseMatch.find()) break;
-                    gradientSnippet = gradientSnippet.substring(0, gradCloseMatch.end());
+                    gradientSnippet = gradientSnippet.substring(contents.length() + 2, gradientSnippet.length() - 11);
 
                     replacement = "HEX-" + gradientSnippet + "-HEX";
                 }
