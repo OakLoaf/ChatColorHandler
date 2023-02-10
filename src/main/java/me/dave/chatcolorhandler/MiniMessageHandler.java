@@ -16,7 +16,7 @@ public class MiniMessageHandler {
     }
 
     public Component deserialize(String string) {
-        // Initial character replacements as MiniMessage crashes with '
+        // Initial character replacements as MiniMessage errors when receiving the legacy character '§'
         string = string.replaceAll("§", "&");
 
         // Parse message through MiniMessage

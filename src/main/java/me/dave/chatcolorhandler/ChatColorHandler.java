@@ -69,8 +69,8 @@ public class ChatColorHandler {
     public static String translateAlternateColorCodes(String string) {
         // Parse message through MiniMessage
         if (miniMessageHandler != null) {
-            Component mmDeserialized = miniMessageHandler.deserialize(string);
-            string = LegacyTranslator.translateFromMiniMessage(mmDeserialized.insertion());
+//            Component mmDeserialized = miniMessageHandler.deserialize(string);
+            string = LegacyTranslator.translateFromMiniMessage(string);
         }
 
         // Replace legacy character
