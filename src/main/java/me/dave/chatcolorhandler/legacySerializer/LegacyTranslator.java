@@ -138,4 +138,9 @@ public class LegacyTranslator {
 
         return legacy;
     }
+
+    private static String applyGradient(String string, List<String> gradients, int phase) {
+        int length = string.length();
+        return null;
+    }
 }
