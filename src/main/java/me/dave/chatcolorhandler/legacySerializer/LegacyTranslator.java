@@ -1,13 +1,15 @@
 package me.dave.chatcolorhandler.legacySerializer;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class LegacyTranslator {
     private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)</\\1>");
-    private static final Pattern halfStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>");
+    private static final Pattern halfStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)");
 
     public static String translateFromMiniMessage(String miniMessage) {
         String legacy = miniMessage;
@@ -59,10 +61,12 @@ public class LegacyTranslator {
 
                 case "gradient" -> {
                     List<String> gradientHexList = new ArrayList<>();
+                    int phase = 0;
                     for (String setting : settings) {
                         if (setting.matches("#[a-fA-F0-9]{6}")) gradientHexList.add(setting);
                     }
-                    replacement = gradientHexList.get(0) + "-" + content + "-" + gradientHexList.get(gradientHexList.size() - 1);
+                    if (settings[settings.length - 1].matches("[-][0-1]]")) phase = Integer.parseInt(settings[settings.length - 1]);
+                    replacement = applyGradient(content, gradientHexList, phase);
                 }
 
                 default -> {
@@ -120,6 +124,16 @@ public class LegacyTranslator {
 
                 case "reset" -> replacement = "&r";
 
+                case "gradient" -> {
+                    List<String> gradientHexList = new ArrayList<>();
+                    int phase = 0;
+                    for (String setting : settings) {
+                        if (setting.matches("#[a-fA-F0-9]{6}")) gradientHexList.add(setting);
+                    }
+                    if (settings[settings.length - 1].matches("[-][0-1]]")) phase = Integer.parseInt(settings[settings.length - 1]);
+                    replacement = applyGradient(content, gradientHexList, phase);
+                }
+
                 default -> {
                     // Translate MiniMessage hex colours to legacy
                     if (type.matches("#[a-fA-F0-9]{6}")) replacement = "&" + type;
@@ -139,8 +153,47 @@ public class LegacyTranslator {
         return legacy;
     }
 
-    private static String applyGradient(String string, List<String> gradients, int phase) {
+    private static String applyGradient(String string, List<String> hexColours, int phase) {
+        String[] charArr = string.split("(?!^)");
         int length = string.length();
-        return null;
+        double stepSize = length / (hexColours.size() - 1.0);
+
+        int currChar = 0;
+        for (int i = 0; i < hexColours.size() - 1; i++) {
+            String fromHex = hexColours.get(i);
+            String toHex = hexColours.get(i + 1);
+
+            Color fromColor = hex2Rgb(fromHex);
+            Color toColor = hex2Rgb(toHex);
+
+            double redStep = (toColor.getRed() - fromColor.getRed()) / stepSize;
+            double greenStep = (toColor.getGreen() - fromColor.getGreen()) / stepSize;
+            double blueStep = (toColor.getBlue() - fromColor.getBlue()) / stepSize;
+
+            double currRed = fromColor.getBlue();
+            double currGreen = fromColor.getBlue();
+            double currBlue = fromColor.getBlue();
+            for (int j = 0; j < stepSize; j++) {
+                currRed = currRed + redStep;
+                currGreen = currGreen + greenStep;
+                currBlue = currBlue + blueStep;
+                charArr[currChar] = "&" + rgb2Hex(new Color(Math.round(currRed), Math.round(currGreen), Math.round(currBlue))) + charArr[currChar];
+                currChar++;
+            }
+        }
+
+        return Arrays.toString(charArr);
+    }
+
+    private static Color hex2Rgb(String colorStr) {
+        return new Color(
+            Integer.valueOf( colorStr.substring( 1, 3 ), 16 ),
+            Integer.valueOf( colorStr.substring( 3, 5 ), 16 ),
+            Integer.valueOf( colorStr.substring( 5, 7 ), 16 )
+        );
+    }
+
+    private static String rgb2Hex(Color color) {
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
     }
 }
