@@ -1,7 +1,7 @@
 # ChatColorHandler
 
 ChatColorHandler allows you to easily add Hex Colour support to your Minecraft plugins.
-This Library works with all versions of Spigot and also adds optional MiniMessage support. Please note that MiniMessage support requires MiniMessage as a dependency, MiniMessage is built into Paper servers, otherwise you can find MiniMessage here: https://docs.adventure.kyori.net/minimessage/api.html
+This Library works with all versions of Spigot and also adds optional MiniMessage support. Please note that MiniMessage support only offers colour, text decoration and gradient support. This is to decrease the file size of projects. If you would like to properly use MiniMessage please look here: https://docs.adventure.kyori.net/minimessage/index.html 
 <br></br>
 ## Using ChatColorHandler
 The hex color format added by ChatColorHandler is `&#rrggbb` and does not add gradient support.
