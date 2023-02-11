@@ -1,7 +1,10 @@
 package me.dave.chatcolorhandler;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -16,7 +19,7 @@ public class ChatColorHandler {
     /**
      * Sends this sender a message
      *
-     * @param sender Player to receive this message
+     * @param sender Sender to receive this message
      * @param message Message to be displayed
      */
     public static void sendMessage(@NotNull CommandSender sender, @NotNull String message) {
@@ -26,7 +29,7 @@ public class ChatColorHandler {
     /**
      * Sends this sender multiple messages
      *
-     * @param sender   Player to receive this message
+     * @param sender   Sender to receive this message
      * @param messages Messages to be displayed
      */
     public static void sendMessage(@NotNull CommandSender sender, @NotNull String... messages) {
@@ -34,9 +37,9 @@ public class ChatColorHandler {
     }
 
     /**
-     * Sends this sender multiple messages
+     * Sends multiple senders a message
      *
-     * @param senders Players to receive this message
+     * @param senders Senders to receive this message
      * @param message Message to be displayed
      */
     public static void sendMessage(CommandSender[] senders, @NotNull String message) {
@@ -46,15 +49,37 @@ public class ChatColorHandler {
     }
 
     /**
-     * Sends this sender multiple messages
+     * Sends multiple sender multiple messages
      *
-     * @param senders  Players to receive this message
+     * @param senders  Senders to receive this message
      * @param messages Messages to be displayed
      */
     public static void sendMessage(CommandSender[] senders, @NotNull String... messages) {
         String message = String.join(" ", messages);
         for (CommandSender sender : senders) {
             sendMessage(sender, message);
+        }
+    }
+
+    /**
+     * Sends this player an ACTION_BAR message
+     *
+     * @param player Player to receive this action bar message
+     * @param message Message to be displayed
+     */
+    public static void sendActionBarMessage(@NotNull Player player, @NotNull String message) {
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(translateAlternateColorCodes(message)));
+    }
+
+    /**
+     * Sends multiple players an ACTION_BAR message
+     *
+     * @param players Players to receive this action bar message
+     * @param message Message to be displayed
+     */
+    public static void sendActionBarMessage(@NotNull Player[] players, @NotNull String message) {
+        for (Player player : players) {
+            sendActionBarMessage(player, message);
         }
     }
 
