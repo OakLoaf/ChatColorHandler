@@ -177,7 +177,7 @@ public class LegacyTranslator {
                 currRed = currRed + redStep;
                 currGreen = currGreen + greenStep;
                 currBlue = currBlue + blueStep;
-                charArr[currChar] = "&" + rgb2Hex(new Color(Math.round(currRed), Math.round(currGreen), Math.round(currBlue))) + charArr[currChar];
+                charArr[currChar] = "&" + rgb2Hex(new Color((int) Math.round(currRed), (int) Math.round(currGreen), (int) Math.round(currBlue))) + charArr[currChar];
                 currChar++;
             }
         }

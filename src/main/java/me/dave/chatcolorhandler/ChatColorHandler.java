@@ -1,7 +1,6 @@
 package me.dave.chatcolorhandler;
 
 import me.dave.chatcolorhandler.legacySerializer.LegacyTranslator;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
