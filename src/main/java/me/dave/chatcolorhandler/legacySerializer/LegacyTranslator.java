@@ -169,9 +169,9 @@ public class LegacyTranslator {
             double greenStep = (toColor.getGreen() - fromColor.getGreen()) / stepSize;
             double blueStep = (toColor.getBlue() - fromColor.getBlue()) / stepSize;
 
-            double currRed = fromColor.getRed();
-            double currGreen = fromColor.getGreen();
-            double currBlue = fromColor.getBlue();
+            double currRed = fromColor.getRed() - redStep;
+            double currGreen = fromColor.getGreen() - greenStep;
+            double currBlue = fromColor.getBlue() - blueStep;
             for (int j = 0; j < stepSize; j++) {
                 if (currChar > length - 1) break;
                 currRed = currRed + redStep;
