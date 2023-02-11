@@ -154,7 +154,7 @@ public class MiniMessageTranslator {
         int length = string.length();
         double stepSize = (length - 1) / (hexColours.size() - 1.0);
 
-        int currChar = 0;
+        int currChar = (int) Math.round((length / 2.0) * phase);
         for (int i = 0; i < hexColours.size() - 1; i++) {
             String fromHex = hexColours.get(i);
             String toHex = hexColours.get(i + 1);
@@ -170,11 +170,11 @@ public class MiniMessageTranslator {
             double currGreen = fromColor.getGreen() - greenStep;
             double currBlue = fromColor.getBlue() - blueStep;
             for (int j = 0; j < stepSize; j++) {
-                if (currChar > length - 1) break;
+//                if (currChar > length - 1) break;
                 currRed = currRed + redStep;
                 currGreen = currGreen + greenStep;
                 currBlue = currBlue + blueStep;
-                charArr[currChar] = "&" + rgb2Hex(new Color((int) Math.round(currRed), (int) Math.round(currGreen), (int) Math.round(currBlue))) + charArr[currChar];
+                charArr[currChar % charArr.length] = "&" + rgb2Hex(new Color((int) Math.round(currRed), (int) Math.round(currGreen), (int) Math.round(currBlue))) + charArr[currChar % charArr.length];
                 currChar++;
             }
         }
