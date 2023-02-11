@@ -171,7 +171,6 @@ public class MiniMessageTranslator {
             double currGreen = fromColor.getGreen() - greenStep;
             double currBlue = fromColor.getBlue() - blueStep;
             for (int j = 0; j < stepSize; j++) {
-//                if (currChar > length - 1) break;
                 currRed = currRed + redStep;
                 currGreen = currGreen + greenStep;
                 currBlue = currBlue + blueStep;
