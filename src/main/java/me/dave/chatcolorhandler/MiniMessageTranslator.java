@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MiniMessageTranslator {
-    private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#-]+|)>([^<>]+)</\\1>");
-    private static final Pattern halfStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#-]+|)>([^<>]+)");
+    private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#-]+|\\.)>([^<>]+)</\\1>");
+    private static final Pattern halfStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#-]+|\\.)>([^<>]+)");
 
     public static String translateFromMiniMessage(String miniMessage) {
         String legacy = miniMessage;
