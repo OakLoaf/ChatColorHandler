@@ -156,7 +156,7 @@ public class LegacyTranslator {
     private static String applyGradient(String string, List<String> hexColours, int phase) {
         String[] charArr = string.split("(?!^)");
         int length = string.length();
-        double stepSize = length / (hexColours.size() - 1.0);
+        double stepSize = (length - 1) / (hexColours.size() - 1.0);
 
         int currChar = 0;
         for (int i = 0; i < hexColours.size() - 1; i++) {
@@ -174,6 +174,7 @@ public class LegacyTranslator {
             double currGreen = fromColor.getBlue();
             double currBlue = fromColor.getBlue();
             for (int j = 0; j < stepSize; j++) {
+                if (currChar > length - 1) break;
                 currRed = currRed + redStep;
                 currGreen = currGreen + greenStep;
                 currBlue = currBlue + blueStep;
