@@ -60,11 +60,11 @@ public class MiniMessageTranslator {
 
                 case "gradient" -> {
                     List<String> gradientHexList = new ArrayList<>();
-                    int phase = 0;
+                    double phase = 0;
                     for (String setting : settings) {
                         if (setting.matches("#[a-fA-F0-9]{6}")) gradientHexList.add(setting);
                     }
-                    if (settings[settings.length - 1].matches("[-][0-1]]")) phase = Integer.parseInt(settings[settings.length - 1]);
+                    if (isStringDoubleInRange(settings[settings.length - 1], -1.0, 1.0)) phase = Double.parseDouble(settings[settings.length - 1]);
                     replacement = applyGradient(content, gradientHexList, phase);
                 }
 
@@ -125,11 +125,11 @@ public class MiniMessageTranslator {
 
                 case "gradient" -> {
                     List<String> gradientHexList = new ArrayList<>();
-                    int phase = 0;
+                    double phase = 0.0;
                     for (String setting : settings) {
                         if (setting.matches("#[a-fA-F0-9]{6}")) gradientHexList.add(setting);
                     }
-                    if (settings[settings.length - 1].matches("[-][0-1]]")) phase = Integer.parseInt(settings[settings.length - 1]);
+                    if (isStringDoubleInRange(settings[settings.length - 1], -1.0, 1.0)) phase = Double.parseDouble(settings[settings.length - 1]);
                     replacement = applyGradient(content, gradientHexList, phase);
                 }
 
@@ -149,7 +149,7 @@ public class MiniMessageTranslator {
         return legacy;
     }
 
-    private static String applyGradient(String string, List<String> hexColours, int phase) {
+    private static String applyGradient(String string, List<String> hexColours, double phase) {
         String[] charArr = string.split("(?!^)");
         int length = string.length();
         double stepSize = (length - 1) / (hexColours.size() - 1.0);
@@ -192,5 +192,16 @@ public class MiniMessageTranslator {
 
     private static String rgb2Hex(Color color) {
         return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+    }
+
+    private static boolean isStringDoubleInRange(String string, double min, double max) {
+        double num;
+        try {
+            num = Double.parseDouble(string);
+        } catch (NumberFormatException err) {
+            return false;
+        }
+
+        return !(num > max) && !(num < min);
     }
 }
