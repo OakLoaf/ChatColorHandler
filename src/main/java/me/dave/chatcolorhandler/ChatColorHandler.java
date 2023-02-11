@@ -1,8 +1,6 @@
 package me.dave.chatcolorhandler;
 
-import me.dave.chatcolorhandler.legacySerializer.LegacyTranslator;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
@@ -13,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class ChatColorHandler {
     private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
-    private static MiniMessageHandler miniMessageHandler = null;
+    private static boolean isMiniMessageEnabled = false;
 
     /**
      * Sends this sender a message
@@ -67,9 +65,8 @@ public class ChatColorHandler {
      */
     public static String translateAlternateColorCodes(String string) {
         // Parse message through MiniMessage
-        if (miniMessageHandler != null) {
-//            Component mmDeserialized = miniMessageHandler.deserialize(string);
-            string = LegacyTranslator.translateFromMiniMessage(string);
+        if (isMiniMessageEnabled) {
+            string = MiniMessageTranslator.translateFromMiniMessage(string);
         }
 
         // Replace legacy character
@@ -100,25 +97,11 @@ public class ChatColorHandler {
 
     /**
      * Enables MiniMessage to be parsed.
-     * Note: This requires the MiniMessage dependency in your project (This is built into Paper by default)
-     * Get MiniMessage here: <a href="https://docs.adventure.kyori.net/minimessage/api.html">...</a>
+     * This only allows for colours, text decorations and gradients
      *
      * @param enable Whether to enable MiniMessage
      */
-    public static boolean enableMiniMessage(boolean enable) {
-        if (!enable) {
-            miniMessageHandler = null;
-            return true;
-        }
-        if (miniMessageHandler != null) return true;
-
-        try {
-            miniMessageHandler = new MiniMessageHandler();
-        } catch (NoClassDefFoundError err) {
-            Bukkit.getLogger().severe("Something went wrong whilst enabling MiniMessage, make sure you have it's dependency setup correctly: https://docs.adventure.kyori.net/minimessage/api.html");
-            return false;
-        }
-
-        return true;
+    public static void enableMiniMessage(boolean enable) {
+        isMiniMessageEnabled = enable;
     }
 }

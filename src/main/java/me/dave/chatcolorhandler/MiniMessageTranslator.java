@@ -1,4 +1,4 @@
-package me.dave.chatcolorhandler.legacySerializer;
+package me.dave.chatcolorhandler;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class LegacyTranslator {
+public class MiniMessageTranslator {
     private static final Pattern fullStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)</\\1>");
     private static final Pattern halfStatementPattern = Pattern.compile("<([a-zA-Z0-9]+)([a-zA-Z0-9:#]+|)>([^<>]+)");
 
@@ -86,7 +86,7 @@ public class LegacyTranslator {
             String[] settings = halfStatementMatch.group(2).split(":");
             String content = halfStatementMatch.group(3);
 
-            String replacement = fullMatch.replaceAll("<", "@L3£G").replaceAll(">", "@R£G");
+            String replacement = fullMatch.replaceAll("<", "@L£G").replaceAll(">", "@R£G");
             switch(type) {
                 case "black" -> replacement = "&0";
                 case "dark_blue" -> replacement = "&1";
@@ -142,9 +142,6 @@ public class LegacyTranslator {
             legacy = legacy.replace(fullMatch, replacement);
             halfStatementMatch = halfStatementPattern.matcher(legacy);
         }
-
-        // Remove closing statements
-//        legacy = legacy.replaceAll("</.+>", "");
 
         // Return '<' and '>' characters
         legacy = legacy.replaceAll("@L£G", "<").replaceAll("@R£G", ">");
