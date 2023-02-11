@@ -2,7 +2,6 @@ package me.dave.chatcolorhandler.legacySerializer;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -183,7 +182,7 @@ public class LegacyTranslator {
             }
         }
 
-        return Arrays.toString(charArr);
+        return String.join("", charArr);
     }
 
     private static Color hex2Rgb(String colorStr) {
