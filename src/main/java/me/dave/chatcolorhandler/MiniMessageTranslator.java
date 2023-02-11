@@ -154,7 +154,7 @@ public class MiniMessageTranslator {
         int length = string.length();
         double stepSize = (length - 1) / (hexColours.size() - 1.0);
 
-        int currChar = (int) Math.round((length / 2.0) * phase);
+        int currChar = (int) -Math.round((length / 2.0) * phase);
         if (currChar < 0) currChar = charArr.length + currChar;
         for (int i = 0; i < hexColours.size() - 1; i++) {
             String fromHex = hexColours.get(i);
