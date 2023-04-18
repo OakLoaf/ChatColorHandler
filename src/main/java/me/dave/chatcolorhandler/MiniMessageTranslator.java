@@ -30,8 +30,8 @@ public class MiniMessageTranslator {
                 case "dark_red" -> replacement = "&4" + content;
                 case "dark_purple" -> replacement = "&5" + content;
                 case "gold" -> replacement = "&6" + content;
-                case "gray" -> replacement = "&7" + content;
-                case "dark_gray" -> replacement = "&8" + content;
+                case "gray","grey" -> replacement = "&7" + content;
+                case "dark_gray","dark_grey" -> replacement = "&8" + content;
                 case "blue" -> replacement = "&9" + content;
                 case "green" -> replacement = "&a" + content;
                 case "aqua" -> replacement = "&b" + content;
@@ -40,22 +40,11 @@ public class MiniMessageTranslator {
                 case "yellow" -> replacement = "&e" + content;
                 case "white" -> replacement = "&f" + content;
 
-                case "strikethrough" -> replacement = "&m" + content;
-                case "st" -> replacement = "&m" + content;
-
-                case "obfuscated" -> replacement = "&k" + content;
-                case "obf" -> replacement = "&k" + content;
-
-                case "underlined" -> replacement = "&n" + content;
-                case "u" -> replacement = "&n" + content;
-
-                case "italic" -> replacement = "&o" + content;
-                case "em" -> replacement = "&o" + content;
-                case "i" -> replacement = "&o" + content;
-
-                case "bold" -> replacement = "&l" + content;
-                case "b" -> replacement = "&l" + content;
-
+                case "strikethrough","st" -> replacement = "&m" + content;
+                case "obfuscated","obf" -> replacement = "&k" + content;
+                case "underlined","u" -> replacement = "&n" + content;
+                case "italic","em","i" -> replacement = "&o" + content;
+                case "bold","b" -> replacement = "&l" + content;
                 case "reset" -> replacement = "&r" + content;
 
                 case "gradient" -> {
@@ -95,8 +84,8 @@ public class MiniMessageTranslator {
                 case "dark_red" -> replacement = "&4";
                 case "dark_purple" -> replacement = "&5";
                 case "gold" -> replacement = "&6";
-                case "gray" -> replacement = "&7";
-                case "dark_gray" -> replacement = "&8";
+                case "gray","grey" -> replacement = "&7";
+                case "dark_gray","dark_grey" -> replacement = "&8";
                 case "blue" -> replacement = "&9";
                 case "green" -> replacement = "&a";
                 case "aqua" -> replacement = "&b";
@@ -105,22 +94,11 @@ public class MiniMessageTranslator {
                 case "yellow" -> replacement = "&e";
                 case "white" -> replacement = "&f";
 
-                case "strikethrough" -> replacement = "&m";
-                case "st" -> replacement = "&m";
-
-                case "obfuscated" -> replacement = "&k";
-                case "obf" -> replacement = "&k";
-
-                case "underlined" -> replacement = "&n";
-                case "u" -> replacement = "&n";
-
-                case "italic" -> replacement = "&o";
-                case "em" -> replacement = "&o";
-                case "i" -> replacement = "&o";
-
-                case "bold" -> replacement = "&l";
-                case "b" -> replacement = "&l";
-
+                case "strikethrough","st" -> replacement = "&m";
+                case "obfuscated","obf" -> replacement = "&k";
+                case "underlined","u" -> replacement = "&n";
+                case "italic","em","i" -> replacement = "&o";
+                case "bold","b" -> replacement = "&l";
                 case "reset" -> replacement = "&r";
 
                 case "gradient" -> {
