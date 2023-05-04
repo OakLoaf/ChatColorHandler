@@ -84,7 +84,7 @@ public class ChatColorHandler {
     }
 
     /**
-     * Converts string to a BaseComponent[]
+     * Translates string
      *
      * @param string String to be converted
      */
@@ -108,7 +108,7 @@ public class ChatColorHandler {
     }
 
     /**
-     * Converts strings to a BaseComponent[]
+     * Translates string
      *
      * @param strings Strings to be converted
      */
@@ -116,6 +116,43 @@ public class ChatColorHandler {
         List<String> outputList = new ArrayList<>();
         for (String string : strings) {
             outputList.add(translateAlternateColorCodes(string));
+        }
+        return outputList;
+    }
+
+    /**
+     * Strips colour from string
+     *
+     * @param string String to be converted
+     */
+    public static String stripColor(String string) {
+        // Parse message through MiniMessage
+        if (isMiniMessageEnabled) {
+            string = MiniMessageTranslator.translateFromMiniMessage(string);
+        }
+
+        // Replace legacy character
+        string = string.replaceAll("§", "&");
+
+        // Parse message through Default Hex in format "&#rrggbb"
+        Matcher match = hexPattern.matcher(string);
+        while (match.find()) {
+            String color = string.substring(match.start() + 1, match.end());
+            string = string.replace("&" + color, ChatColor.of(color) + "");
+            match = hexPattern.matcher(string);
+        }
+        return ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', string));
+    }
+
+    /**
+     * Strips colour from strings
+     *
+     * @param strings Strings to be converted
+     */
+    public static List<String> stripColor(List<String> strings) {
+        List<String> outputList = new ArrayList<>();
+        for (String string : strings) {
+            outputList.add(stripColor(string));
         }
         return outputList;
     }
