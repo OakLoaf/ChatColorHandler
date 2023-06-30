@@ -3,6 +3,7 @@ package me.dave.chatcolorhandler;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -17,47 +18,65 @@ public class ChatColorHandler {
     private static boolean isMiniMessageEnabled = false;
 
     /**
-     * Sends this sender a message
+     * Sends this recipient a message
      *
-     * @param sender Sender to receive this message
      * @param message Message to be displayed
      */
-    public static void sendMessage(@NotNull CommandSender sender, @NotNull String message) {
-        sender.sendMessage(translateAlternateColorCodes(message));
+    public static void broadcastMessage(@NotNull String message) {
+        Bukkit.broadcastMessage(translateAlternateColorCodes(message));
     }
 
     /**
-     * Sends this sender multiple messages
+     * Sends this recipient multiple messages
      *
-     * @param sender   Sender to receive this message
      * @param messages Messages to be displayed
      */
-    public static void sendMessage(@NotNull CommandSender sender, @NotNull String... messages) {
-        sendMessage(sender, String.join(" ", messages));
+    public static void broadcastMessage(@NotNull String... messages) {
+        broadcastMessage(String.join(" ", messages));
     }
 
     /**
-     * Sends multiple senders a message
+     * Sends this recipient a message
      *
-     * @param senders Senders to receive this message
+     * @param recipient Sender to receive this message
      * @param message Message to be displayed
      */
-    public static void sendMessage(CommandSender[] senders, @NotNull String message) {
-        for (CommandSender sender : senders) {
-            sendMessage(sender, message);
+    public static void sendMessage(@NotNull CommandSender recipient, @NotNull String message) {
+        recipient.sendMessage(translateAlternateColorCodes(message));
+    }
+
+    /**
+     * Sends this recipient multiple messages
+     *
+     * @param recipient Sender to receive message
+     * @param messages Messages to be displayed
+     */
+    public static void sendMessage(@NotNull CommandSender recipient, @NotNull String... messages) {
+        sendMessage(recipient, String.join(" ", messages));
+    }
+
+    /**
+     * Sends multiple recipients a message
+     *
+     * @param recipients Senders to receive message
+     * @param message Message to be displayed
+     */
+    public static void sendMessage(CommandSender[] recipients, @NotNull String message) {
+        for (CommandSender recipient : recipients) {
+            sendMessage(recipient, message);
         }
     }
 
     /**
-     * Sends multiple sender multiple messages
+     * Sends multiple recipients, multiple messages
      *
-     * @param senders  Senders to receive this message
+     * @param recipients Senders to receive this message
      * @param messages Messages to be displayed
      */
-    public static void sendMessage(CommandSender[] senders, @NotNull String... messages) {
+    public static void sendMessage(CommandSender[] recipients, @NotNull String... messages) {
         String message = String.join(" ", messages);
-        for (CommandSender sender : senders) {
-            sendMessage(sender, message);
+        for (CommandSender recipient : recipients) {
+            sendMessage(recipient, message);
         }
     }
 
