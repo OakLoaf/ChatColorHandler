@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 public class ChatColorHandler {
     private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static boolean isMiniMessageEnabled = false;
+    private static PlaceholderAPIParser placeholderAPIHook;
 
     /**
      * Sends this recipient a message
@@ -42,7 +43,8 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(@NotNull CommandSender recipient, @NotNull String message) {
-        recipient.sendMessage(translateAlternateColorCodes(message));
+        if (recipient instanceof Player player) recipient.sendMessage(translateAlternateColorCodes(player, message));
+        else recipient.sendMessage(translateAlternateColorCodes(message));
     }
 
     /**
@@ -103,11 +105,26 @@ public class ChatColorHandler {
     }
 
     /**
-     * Translates string
+     * Translates a string to allow for hex colours and placeholders
      *
      * @param string String to be converted
      */
     public static String translateAlternateColorCodes(String string) {
+        return translateAlternateColorCodes(null, string);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param player Player to parse placeholders for
+     * @param string String to be converted
+     */
+    public static String translateAlternateColorCodes(Player player, String string) {
+        // Parse message through PlaceholderAPI
+        if (placeholderAPIHook != null) {
+            string = placeholderAPIHook.parseString(player, string);
+        }
+
         // Parse message through MiniMessage
         if (isMiniMessageEnabled) {
             string = MiniMessageTranslator.translateFromMiniMessage(string);
@@ -127,11 +144,21 @@ public class ChatColorHandler {
     }
 
     /**
-     * Translates string
+     * Translates multiple strings to allow for hex colours and placeholders
      *
      * @param strings Strings to be converted
      */
     public static List<String> translateAlternateColorCodes(List<String> strings) {
+        return translateAlternateColorCodes(null, strings);
+    }
+
+    /**
+     * Translates multiple strings to allow for hex colours and placeholders
+     *
+     * @param player Player to parse placeholders for
+     * @param strings Strings to be converted
+     */
+    public static List<String> translateAlternateColorCodes(Player player, List<String> strings) {
         List<String> outputList = new ArrayList<>();
         for (String string : strings) {
             outputList.add(translateAlternateColorCodes(string));
@@ -177,12 +204,23 @@ public class ChatColorHandler {
     }
 
     /**
-     * Enables MiniMessage to be parsed.
+     * Enables MiniMessage to be parsed
      * This only allows for colours, text decorations and gradients
      *
      * @param enable Whether to enable MiniMessage
      */
     public static void enableMiniMessage(boolean enable) {
         isMiniMessageEnabled = enable;
+    }
+
+    /**
+     * Enables PlaceholderAPI placeholders to be parsed
+     * You must have PlaceholderAPI installed on your server
+     *
+     * @param enable Whether to enable PlaceholderAPI
+     */
+    public static void enablePlaceholderAPI(boolean enable) {
+        if (enable) placeholderAPIHook = new PlaceholderAPIParser();
+        else placeholderAPIHook = null;
     }
 }
