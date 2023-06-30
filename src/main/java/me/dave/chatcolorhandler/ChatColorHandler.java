@@ -220,7 +220,7 @@ public class ChatColorHandler {
      * @param enable Whether to enable PlaceholderAPI
      */
     public static void enablePlaceholderAPI(boolean enable) {
-        if (enable) placeholderAPIHook = new PlaceholderAPIParser();
-        else placeholderAPIHook = null;
+        if (enable && placeholderAPIHook == null) placeholderAPIHook = new PlaceholderAPIParser();
+        else if (!enable) placeholderAPIHook = null;
     }
 }
