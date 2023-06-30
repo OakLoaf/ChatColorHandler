@@ -1,4 +1,5 @@
 # ChatColorHandler
+![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Version&color=4EC921)
 
 ChatColorHandler allows you to easily add Hex Colour support to your Minecraft plugins.
 This Library works with all versions of Spigot and also adds optional MiniMessage support. Please note that MiniMessage support only offers colour, text decoration and gradient support. This is to decrease the file size of projects. If you would like to properly use MiniMessage please look here: https://docs.adventure.kyori.net/minimessage/index.html 
