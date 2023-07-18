@@ -43,6 +43,8 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(@NotNull CommandSender recipient, @NotNull String message) {
+        if (message.isBlank()) return;
+
         if (recipient instanceof Player player) recipient.sendMessage(translateAlternateColorCodes(player, message));
         else recipient.sendMessage(translateAlternateColorCodes(message));
     }
