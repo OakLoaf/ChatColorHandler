@@ -1,11 +1,17 @@
 package me.dave.chatcolorhandler;
 
+import me.dave.chatcolorhandler.parsers.Parsers;
+import me.dave.chatcolorhandler.parsers.custom.LegacyChatParser;
+import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
+import me.dave.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,9 +22,34 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatColorHandler {
+    private static boolean setup = false;
     private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
-    private static boolean isMiniMessageEnabled = false;
-    private static PlaceholderAPIParser placeholderAPIHook;
+
+    /**
+     * Setup ChatColorHandler for use
+     *
+     * @param plugin Plugin instance
+     */
+    public static void setup(Plugin plugin) {
+        if (setup) return;
+
+        Parsers.register(new LegacyChatParser(), 0);
+
+        PluginManager pluginManager = plugin.getServer().getPluginManager();
+        if (pluginManager.getPlugin("PlaceholderAPI") != null) {
+            Parsers.register(new PlaceholderAPIParser(), 100);
+            plugin.getLogger().info("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
+        }
+
+        try {
+            Class.forName("com.destroystokyo.paper.PaperConfig");
+            Parsers.register(new MiniMessageParser(), 99);
+            plugin.getLogger().info("Server running on PaperMC (or fork). MiniMessage support enabled.");
+        } catch (ClassNotFoundException ignored) {}
+
+        setup = true;
+        plugin.getLogger().info("ChatColorHandler has successfully hooked into " + plugin.getName() + ".");
+    }
 
     /**
      * Sends this recipient a message
@@ -49,7 +80,7 @@ public class ChatColorHandler {
     public static void sendMessage(@NotNull CommandSender recipient, @Nullable String message) {
         if (message == null || message.isBlank()) return;
 
-        if (recipient instanceof Player player) recipient.sendMessage(translateAlternateColorCodes(player, message));
+        if (recipient instanceof Player player) recipient.sendMessage(translateAlternateColorCodes(message, player));
         else recipient.sendMessage(translateAlternateColorCodes(message));
     }
 
@@ -122,39 +153,19 @@ public class ChatColorHandler {
      * @param string String to be converted
      */
     public static String translateAlternateColorCodes(@Nullable String string) {
-        return translateAlternateColorCodes(null, string);
+        return translateAlternateColorCodes(string, null);
     }
 
     /**
      * Translates a string to allow for hex colours and placeholders
      *
-     * @param player Player to parse placeholders for
      * @param string String to be converted
+     * @param player Player to parse placeholders for
      */
-    public static String translateAlternateColorCodes(Player player, @Nullable String string) {
+    public static String translateAlternateColorCodes(@Nullable String string, Player player) {
         if (string == null || string.isBlank()) return "";
 
-        // Parse message through PlaceholderAPI
-        if (placeholderAPIHook != null) {
-            string = placeholderAPIHook.parseString(player, string);
-        }
-
-        // Parse message through MiniMessage
-        if (isMiniMessageEnabled) {
-            string = MiniMessageTranslator.translateFromMiniMessage(string);
-        }
-
-        // Replace legacy character
-        string = string.replaceAll("§", "&");
-
-        // Parse message through Default Hex in format "&#rrggbb"
-        Matcher match = hexPattern.matcher(string);
-        while (match.find()) {
-            String color = string.substring(match.start() + 1, match.end());
-            string = string.replace("&" + color, ChatColor.of(color).toString());
-            match = hexPattern.matcher(string);
-        }
-        return ChatColor.translateAlternateColorCodes('&', string);
+        return Parsers.parseString(string, player);
     }
 
     /**
@@ -191,9 +202,9 @@ public class ChatColorHandler {
         if (string == null || string.isBlank()) return "";
 
         // Parse message through MiniMessage
-        if (isMiniMessageEnabled) {
-            string = MiniMessageTranslator.translateFromMiniMessage(string);
-        }
+//        if (isMiniMessageEnabled) {
+//            string = TinyMessageTranslator.translateFromMiniMessage(string);
+//        }
 
         // Replace legacy character
         string = string.replaceAll("§", "&");
@@ -221,26 +232,5 @@ public class ChatColorHandler {
             outputList.add(stripColor(string));
         }
         return outputList;
-    }
-
-    /**
-     * Enables MiniMessage to be parsed
-     * This only allows for colours, text decorations and gradients
-     *
-     * @param enable Whether to enable MiniMessage
-     */
-    public static void enableMiniMessage(boolean enable) {
-        isMiniMessageEnabled = enable;
-    }
-
-    /**
-     * Enables PlaceholderAPI placeholders to be parsed
-     * You must have PlaceholderAPI installed on your server
-     *
-     * @param enable Whether to enable PlaceholderAPI
-     */
-    public static void enablePlaceholderAPI(boolean enable) {
-        if (enable && placeholderAPIHook == null) placeholderAPIHook = new PlaceholderAPIParser();
-        else if (!enable) placeholderAPIHook = null;
     }
 }
