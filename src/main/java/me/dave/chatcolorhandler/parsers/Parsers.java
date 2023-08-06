@@ -1,9 +1,8 @@
 package me.dave.chatcolorhandler.parsers;
 
-import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
 import me.dave.chatcolorhandler.parsers.custom.Parser;
-import me.dave.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -15,8 +14,9 @@ public class Parsers {
         parsers = sortByValue(parsers);
     }
 
-    public static String parseString(String string, Player player) {
+    public static String parseString(String string, @Nullable Player player, @Nullable List<Class<? extends Parser>> ignoredParsers) {
         for (Parser parser : parsers.keySet()) {
+            if (ignoredParsers != null && ignoredParsers.contains(parser.getClass())) continue;
             string = parser.parseString(string, player);
         }
         return string;

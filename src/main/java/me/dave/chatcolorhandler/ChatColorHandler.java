@@ -1,13 +1,14 @@
 package me.dave.chatcolorhandler;
 
+import me.dave.chatcolorhandler.messengers.LegacyMessenger;
+import me.dave.chatcolorhandler.messengers.Messenger;
+import me.dave.chatcolorhandler.messengers.MiniMessageMessenger;
 import me.dave.chatcolorhandler.parsers.Parsers;
 import me.dave.chatcolorhandler.parsers.custom.LegacyChatParser;
 import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
+import me.dave.chatcolorhandler.parsers.custom.Parser;
 import me.dave.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -22,8 +23,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatColorHandler {
-    private static boolean setup = false;
+    private static boolean setupComplete = false;
     private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
+    private static Messenger messenger;
 
     /**
      * Setup ChatColorHandler for use
@@ -31,9 +33,22 @@ public class ChatColorHandler {
      * @param plugin Plugin instance
      */
     public static void setup(Plugin plugin) {
-        if (setup) return;
+        if (setupComplete) {
+            plugin.getLogger().info("ChatColorHandler has already successfully hooked into " + plugin.getName() + ".");
+            return;
+        }
 
         Parsers.register(new LegacyChatParser(), 0);
+
+        try {
+            Class.forName("com.destroystokyo.paper.PaperConfig");
+            Parsers.register(new MiniMessageParser(), 99);
+            messenger = new MiniMessageMessenger(plugin);
+
+            plugin.getLogger().info("Server running on PaperMC (or fork). MiniMessage support enabled.");
+        } catch (ClassNotFoundException ignored) {
+            messenger = new LegacyMessenger();
+        }
 
         PluginManager pluginManager = plugin.getServer().getPluginManager();
         if (pluginManager.getPlugin("PlaceholderAPI") != null) {
@@ -41,34 +56,8 @@ public class ChatColorHandler {
             plugin.getLogger().info("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
 
-        try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
-            Parsers.register(new MiniMessageParser(), 99);
-            plugin.getLogger().info("Server running on PaperMC (or fork). MiniMessage support enabled.");
-        } catch (ClassNotFoundException ignored) {}
-
-        setup = true;
+        setupComplete = true;
         plugin.getLogger().info("ChatColorHandler has successfully hooked into " + plugin.getName() + ".");
-    }
-
-    /**
-     * Sends this recipient a message
-     *
-     * @param message Message to be displayed
-     */
-    public static void broadcastMessage(@Nullable String message) {
-        if (message == null || message.isBlank()) return;
-        Bukkit.broadcastMessage(translateAlternateColorCodes(message));
-    }
-
-    /**
-     * Sends this recipient multiple messages
-     *
-     * @param messages Messages to be displayed
-     */
-    public static void broadcastMessage(@NotNull String... messages) {
-        if (messages == null) return;
-        broadcastMessage(String.join(" ", messages));
     }
 
     /**
@@ -78,10 +67,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(@NotNull CommandSender recipient, @Nullable String message) {
-        if (message == null || message.isBlank()) return;
-
-        if (recipient instanceof Player player) recipient.sendMessage(translateAlternateColorCodes(message, player));
-        else recipient.sendMessage(translateAlternateColorCodes(message));
+        messenger.sendMessage(recipient, message);
     }
 
     /**
@@ -91,7 +77,7 @@ public class ChatColorHandler {
      * @param messages Messages to be displayed
      */
     public static void sendMessage(@NotNull CommandSender recipient, @Nullable String... messages) {
-        sendMessage(recipient, String.join(" ", messages));
+        messenger.sendMessage(recipient, messages);
     }
 
     /**
@@ -101,9 +87,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(CommandSender[] recipients, @Nullable String message) {
-        for (CommandSender recipient : recipients) {
-            sendMessage(recipient, message);
-        }
+        messenger.sendMessage(recipients, message);
     }
 
     /**
@@ -113,12 +97,25 @@ public class ChatColorHandler {
      * @param messages Messages to be displayed
      */
     public static void sendMessage(CommandSender[] recipients, @Nullable String... messages) {
-        if (messages == null) return;
+        messenger.sendMessage(recipients, messages);
+    }
 
-        String message = String.join(" ", messages);
-        for (CommandSender recipient : recipients) {
-            sendMessage(recipient, message);
-        }
+    /**
+     * Sends all online players a message
+     *
+     * @param message Message to be displayed
+     */
+    public static void broadcastMessage(@Nullable String message) {
+        messenger.broadcastMessage(message);
+    }
+
+    /**
+     * Sends all online players multiple messages
+     *
+     * @param messages Messages to be displayed
+     */
+    public static void broadcastMessage(@NotNull String... messages) {
+        messenger.broadcastMessage(messages);
     }
 
     /**
@@ -128,9 +125,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendActionBarMessage(@NotNull Player player, @Nullable String message) {
-        if (message == null || message.isBlank()) return;
-
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(translateAlternateColorCodes(message)));
+        messenger.sendActionBarMessage(player, message);
     }
 
     /**
@@ -140,11 +135,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendActionBarMessage(@NotNull Player[] players, @Nullable String message) {
-        if (message == null || message.isBlank()) return;
-
-        for (Player player : players) {
-            sendActionBarMessage(player, message);
-        }
+        messenger.sendActionBarMessage(players, message);
     }
 
     /**
@@ -153,7 +144,7 @@ public class ChatColorHandler {
      * @param string String to be converted
      */
     public static String translateAlternateColorCodes(@Nullable String string) {
-        return translateAlternateColorCodes(string, null);
+        return translateAlternateColorCodes(string, null, null);
     }
 
     /**
@@ -163,9 +154,20 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      */
     public static String translateAlternateColorCodes(@Nullable String string, Player player) {
+        return translateAlternateColorCodes(string, player, null);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     * @param ignoredParsers Parsers which this message won't be parsed through
+     */
+    public static String translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> ignoredParsers) {
         if (string == null || string.isBlank()) return "";
 
-        return Parsers.parseString(string, player);
+        return Parsers.parseString(string, player, ignoredParsers);
     }
 
     /**
@@ -174,16 +176,27 @@ public class ChatColorHandler {
      * @param strings Strings to be converted
      */
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings) {
-        return translateAlternateColorCodes(null, strings);
+        return translateAlternateColorCodes(strings, null, null);
     }
 
     /**
      * Translates multiple strings to allow for hex colours and placeholders
      *
-     * @param player Player to parse placeholders for
      * @param strings Strings to be converted
+     * @param player Player to parse placeholders for
      */
-    public static List<String> translateAlternateColorCodes(Player player, @Nullable List<String> strings) {
+    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player) {
+        return translateAlternateColorCodes(strings, player, null);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be converted
+     * @param player Player to parse placeholders for
+     * @param ignoredParsers Parsers which this message won't be parsed through
+     */
+    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player, List<Class<? extends Parser>> ignoredParsers) {
         if (strings == null || strings.isEmpty()) return Collections.emptyList();
 
         List<String> outputList = new ArrayList<>();
