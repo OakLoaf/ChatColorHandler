@@ -43,7 +43,7 @@ public class ChatColorHandler {
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
             Parsers.register(new MiniMessageParser(), 99);
-            messenger = new MiniMessageMessenger(plugin);
+            messenger = new MiniMessageMessenger();
 
             plugin.getLogger().info("Server running on PaperMC (or fork). MiniMessage support enabled.");
         } catch (ClassNotFoundException ignored) {
