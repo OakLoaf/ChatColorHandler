@@ -4,10 +4,7 @@ import me.dave.chatcolorhandler.messengers.LegacyMessenger;
 import me.dave.chatcolorhandler.messengers.Messenger;
 import me.dave.chatcolorhandler.messengers.MiniMessageMessenger;
 import me.dave.chatcolorhandler.parsers.Parsers;
-import me.dave.chatcolorhandler.parsers.custom.LegacyChatParser;
-import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
-import me.dave.chatcolorhandler.parsers.custom.Parser;
-import me.dave.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
+import me.dave.chatcolorhandler.parsers.custom.*;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,11 +35,12 @@ public class ChatColorHandler {
             return;
         }
 
-        Parsers.register(new LegacyChatParser(), 0);
+        Parsers.register(new LegacyCharParser(), 100);
+        Parsers.register(new HexParser(), 70);
 
         try {
             Class.forName("com.destroystokyo.paper.PaperConfig");
-            Parsers.register(new MiniMessageParser(), 99);
+            Parsers.register(new MiniMessageParser(), 80);
             messenger = new MiniMessageMessenger();
 
             plugin.getLogger().info("Server running on PaperMC (or fork). MiniMessage support enabled.");
@@ -52,7 +50,7 @@ public class ChatColorHandler {
 
         PluginManager pluginManager = plugin.getServer().getPluginManager();
         if (pluginManager.getPlugin("PlaceholderAPI") != null) {
-            Parsers.register(new PlaceholderAPIParser(), 100);
+            Parsers.register(new PlaceholderAPIParser(), 90);
             plugin.getLogger().info("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
 
