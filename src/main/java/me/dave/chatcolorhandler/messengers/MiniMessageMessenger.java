@@ -3,6 +3,7 @@ package me.dave.chatcolorhandler.messengers;
 import me.dave.chatcolorhandler.ChatColorHandler;
 import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -23,7 +24,10 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) recipient);
         TextComponent legacyParsed = LegacyComponentSerializer.legacy('§').deserialize(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class)));
-        audience.sendMessage(miniMessage.deserialize(legacyParsed.content()));
+        String content = legacyParsed.content();
+        Component parsed = miniMessage.deserialize(content);
+
+        audience.sendMessage(parsed);
     }
 
     @Override
