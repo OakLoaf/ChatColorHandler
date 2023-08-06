@@ -23,7 +23,9 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) recipient);
+        
         TextComponent legacyParsed = LegacyComponentSerializer.legacy('§').deserialize(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class)));
+        TextComponent.Builder legacyBuilder = legacyParsed.toBuilder();
         String content = legacyParsed.content();
         Component parsed = miniMessage.deserialize(content);
 
