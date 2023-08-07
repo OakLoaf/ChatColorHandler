@@ -26,4 +26,15 @@ public class HexParser implements Parser {
     public String parseString(String string, Player player) {
         return parseString(string);
     }
+
+    public static String parseToMiniMessage(String string) {
+        // Parse message through Default Hex in format "&#rrggbb"
+        Matcher match = hexPattern.matcher(string);
+        while (match.find()) {
+            String color = string.substring(match.start() + 1, match.end());
+            string = string.replace("&" + color, "<" + color + ">");
+            match = hexPattern.matcher(string);
+        }
+        return string;
+    }
 }
