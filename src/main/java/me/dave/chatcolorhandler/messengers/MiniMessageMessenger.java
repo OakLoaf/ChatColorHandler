@@ -24,10 +24,17 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) recipient);
         
-        TextComponent legacyParsed = LegacyComponentSerializer.legacy('§').deserialize(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class)));
-        TextComponent.Builder legacyBuilder = legacyParsed.toBuilder();
-        String content = legacyParsed.content();
-        Component parsed = miniMessage.deserialize(content);
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class)));
+
+//        List<Component> legacyComponents = legacyParsed.children();
+//        for (Component legacyComponent : legacyComponents) {
+//            if (legacyComponent instanceof TextComponent legacyTextComponent) {
+//                legacyTextComponent.content();
+//            }
+//        }
+//
+//        String content = legacyParsed.content();
+        Component parsed = miniMessage.deserialize(legacyParsed);
 
         audience.sendMessage(parsed);
     }
@@ -48,5 +55,34 @@ public class MiniMessageMessenger extends AbstractMessenger {
         Audience audience = Audience.audience((Audience) player);
         TextComponent legacyParsed = LegacyComponentSerializer.legacy('§').deserialize(message);
         audience.sendActionBar(miniMessage.deserialize(legacyParsed.content()));
+    }
+
+    private String legacyParser(String string) {
+        return string
+            .replace("§", "&")
+
+            .replaceAll("&0", "<black>")
+            .replaceAll("&1", "<dark_blue>")
+            .replaceAll("&2", "<dark_green>")
+            .replaceAll("&3", "<dark_aqua>")
+            .replaceAll("&4", "<dark_red>")
+            .replaceAll("&5", "<dark_purple>")
+            .replaceAll("&6", "<gold>")
+            .replaceAll("&7", "<grey>")
+            .replaceAll("&8", "<dark_grey>")
+            .replaceAll("&9", "<blue>")
+            .replaceAll("&a", "<green>")
+            .replaceAll("&b", "<aqua>")
+            .replaceAll("&c", "<red>")
+            .replaceAll("&d", "<light_purple>")
+            .replaceAll("&e", "<yellow>")
+            .replaceAll("&f", "<white>")
+
+            .replaceAll("&m", "<strikethrough>")
+            .replaceAll("&k", "<obfuscated>")
+            .replaceAll("&n", "<underlined>")
+            .replaceAll("&o", "<italic>")
+            .replaceAll("&l", "<bold>")
+            .replaceAll("&r", "<reset>");
     }
 }
