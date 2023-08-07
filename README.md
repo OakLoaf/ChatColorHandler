@@ -1,37 +1,57 @@
 # ChatColorHandler
 ![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Version&color=4EC921)
 
-ChatColorHandler allows you to easily add Hex Colour support to your Minecraft plugins.
-This Library works with all versions of Spigot and also adds optional MiniMessage support. Please note that MiniMessage support only offers colour, text decoration and gradient support. This is to decrease the file size of projects. If you would like to properly use MiniMessage please look here: https://docs.adventure.kyori.net/minimessage/index.html 
-<br></br>
+ChatColorHandler allows you to easily add Hex Colour and MiniMessage support to your Minecraft plugins.
+This Library works with all versions of Spigot and also adds [MiniMessage](https://docs.advntr.dev/minimessage/format.html) support for servers running [Paper](https://papermc.io/downloads/paper) (or forks).
+
 ## Using ChatColorHandler
 The hex color format added by ChatColorHandler is `&#rrggbb` and does not add gradient support.
-To add gradient and MiniMessage color support run `ChatColorHandler.enableMiniMessage(true)` in your `onEnable()`
+To setup ChatColorHandler simply run `ChatColorHandler.setup(plugin)` in your plugin's `onEnable()` method
 
 ### Adding Hex Colors to Messages
-There are 2 main methods that you will be wanting to use in ChatColorHandler `.sendMessage` and `.translateAlternateColorCodes`.
+There are 2 main methods that you will be wanting to use in ChatColorHandler `#sendMessage` and `#translateAlternateColorCodes`.
 
-Moving over from Spigot, there are 2 ways you can change your spigot code over to ChatColorHandler code:
+- `sendMessage` - Sends a message to one or more players, this supports using MiniMessage's `click` and `hover` tags
+- `broadcastMessage` - Sends a message to all online players, this supports using MiniMessage's `click` and `hover` tags
+- `sendActionBarMessage` - Sends an action bar message to one or more players
+- `translateAlternateColorCodes` - Translates a string
 
-**Spigot:**
+### Compatibility
+ChatColorHandler provides built in support for:
+
+- PlaceholderAPI - *requires [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) plugin*
+- MiniMessage - *requires server to be running paper (or forks)*
+
+All support built into ChatColorHandler will automatically be applied to all parsed strings, you can skip specific parsers in `#translateAlternateColorCodes` by defining parsers to ignore
+
+eg.
 ```java
-player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cThis is an example message"));
+ChatColorHandler.translateAlternateColorCodes("&#aaee99Example Message", List.of(PlaceholderAPIParser.class, MiniMessageParser.class))
 ```
-**ChatColorHandler:**
-```java
-// Method 1
-player.sendMessage(ChatColorHandler.translateAlternateColorCodes("&cThis is an example message");
 
-// Method 2
-ChatColorHandler.sendMessage(player, "&cThis is an example message");
+<br>
+
+### Moving over from Spigot-API
+Sending messages with ChatColorHandler is as easy as doing:
+
+```java
+ChatColorHandler.sendMessage(&cThis is an example message");
 ```
+
 ### Adding Hex Colors to the rest of Minecraft
-With ChatColorHandler you are able to change gui titles, item names, item lore, etc. All by parsing your text through `ChatColorHandler.translateAlternateColorCodes("Test string")`
+With ChatColorHandler you are able to change gui titles, item names, item lore, etc. All by parsing your text through ChatColorHandler:
 
-<br></br>
+```java
+ChatColorHandler.translateAlternateColorCodes("Test String")
+```
+
+<br>
+
 ## Add ChatColorHandler to your project:
 You can simply add ChatColorHandler to your project by adding the below into your pom.xml
 
+<details open>
+<summary>Maven</summary>
 
 **Repository:**
 ```xml
@@ -48,7 +68,26 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>com.github.CoolDCB</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>v1.3.3</version>
+        <version>v2.0.0</version>
     </dependency>
 </dependencies>
 ```
+</details>
+
+<details>
+<summary>Gradle</summary>
+
+**Repository:**
+```gradle
+repositories {
+    mavenCentral()
+    maven { url = "https://jitpack.io" }
+}
+```
+**Artifact:**
+```gradle
+dependencies {
+    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.0.0"
+}
+```
+</details>
