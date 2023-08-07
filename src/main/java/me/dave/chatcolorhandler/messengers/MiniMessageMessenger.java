@@ -5,9 +5,7 @@ import me.dave.chatcolorhandler.parsers.custom.HexParser;
 import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -26,15 +24,6 @@ public class MiniMessageMessenger extends AbstractMessenger {
         Audience audience = Audience.audience((Audience) recipient);
         
         String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class, HexParser.class)));
-
-//        List<Component> legacyComponents = legacyParsed.children();
-//        for (Component legacyComponent : legacyComponents) {
-//            if (legacyComponent instanceof TextComponent legacyTextComponent) {
-//                legacyTextComponent.content();
-//            }
-//        }
-//
-//        String content = legacyParsed.content();
         Component parsed = miniMessage.deserialize(legacyParsed);
 
         audience.sendMessage(parsed);
@@ -45,8 +34,8 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) Bukkit.getOnlinePlayers());
-        TextComponent legacyParsed = LegacyComponentSerializer.legacy('§').deserialize(message);
-        audience.sendMessage(miniMessage.deserialize(legacyParsed.content()));
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, List.of(MiniMessageParser.class, HexParser.class)));
+        audience.sendMessage(miniMessage.deserialize(legacyParsed));
     }
 
     @Override
@@ -54,8 +43,8 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) player);
-        TextComponent legacyParsed = LegacyComponentSerializer.legacy('§').deserialize(message);
-        audience.sendActionBar(miniMessage.deserialize(legacyParsed.content()));
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(MiniMessageParser.class, HexParser.class)));
+        audience.sendActionBar(miniMessage.deserialize(legacyParsed));
     }
 
     private String legacyParser(String string) {
