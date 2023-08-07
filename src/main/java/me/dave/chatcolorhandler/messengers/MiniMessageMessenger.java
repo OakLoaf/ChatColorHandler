@@ -1,6 +1,7 @@
 package me.dave.chatcolorhandler.messengers;
 
 import me.dave.chatcolorhandler.ChatColorHandler;
+import me.dave.chatcolorhandler.parsers.custom.HexParser;
 import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -24,7 +25,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) recipient);
         
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class)));
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class, HexParser.class)));
 
 //        List<Component> legacyComponents = legacyParsed.children();
 //        for (Component legacyComponent : legacyComponents) {
@@ -58,9 +59,9 @@ public class MiniMessageMessenger extends AbstractMessenger {
     }
 
     private String legacyParser(String string) {
-        return string
-            .replace("§", "&")
+        string = HexParser.parseToMiniMessage(string);
 
+        return string
             .replaceAll("&0", "<black>")
             .replaceAll("&1", "<dark_blue>")
             .replaceAll("&2", "<dark_green>")
