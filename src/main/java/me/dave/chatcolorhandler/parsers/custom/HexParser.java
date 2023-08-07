@@ -32,7 +32,7 @@ public class HexParser implements Parser {
         Matcher match = hexPattern.matcher(string);
         while (match.find()) {
             String color = string.substring(match.start() + 1, match.end());
-            string = string.replace("&" + color, "<" + color + ">");
+            string = string.replace("&" + color, "<reset><" + color + ">");
             match = hexPattern.matcher(string);
         }
         return string;
