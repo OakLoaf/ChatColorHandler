@@ -50,6 +50,10 @@ ChatColorHandler.translateAlternateColorCodes("Test String")
 ## Add ChatColorHandler to your project:
 You can simply add ChatColorHandler to your project by adding the below into your pom.xml
 
+![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Version&color=4EC921)
+
+**Javadocs:** https://cooldcb.github.io/ChatColorHandler/me/dave/chatcolorhandler/ChatColorHandler.html
+
 <details open>
 <summary>Maven</summary>
 
