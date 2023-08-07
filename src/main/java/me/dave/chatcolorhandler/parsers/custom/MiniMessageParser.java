@@ -16,6 +16,4 @@ public class MiniMessageParser implements Parser {
     public String parseString(String string, Player player) {
         return parseString(string);
     }
-
-    // TODO: Add audience support for chat messages to allow for hover and clickable messages
 }
