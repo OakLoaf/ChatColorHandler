@@ -149,6 +149,18 @@ public class ChatColorHandler {
      * Translates a string to allow for hex colours and placeholders
      *
      * @param string String to be converted
+     * @param ignoredParsers Parsers which this message won't be parsed through
+     */
+    public static String translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> ignoredParsers) {
+        if (string == null || string.isBlank()) return "";
+
+        return Parsers.parseString(string, null, ignoredParsers);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be converted
      * @param player Player to parse placeholders for
      */
     public static String translateAlternateColorCodes(@Nullable String string, Player player) {
@@ -178,6 +190,16 @@ public class ChatColorHandler {
     }
 
     /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be converted
+     * @param ignoredParsers Parsers which this message won't be parsed through
+     */
+    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, List<Class<? extends Parser>> ignoredParsers) {
+        return translateAlternateColorCodes(strings, null, ignoredParsers);
+    }
+
+    /**
      * Translates multiple strings to allow for hex colours and placeholders
      *
      * @param strings Strings to be converted
@@ -199,7 +221,7 @@ public class ChatColorHandler {
 
         List<String> outputList = new ArrayList<>();
         for (String string : strings) {
-            outputList.add(translateAlternateColorCodes(string));
+            outputList.add(translateAlternateColorCodes(string, player));
         }
         return outputList;
     }
