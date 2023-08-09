@@ -6,9 +6,9 @@ import me.dave.chatcolorhandler.messengers.MiniMessageMessenger;
 import me.dave.chatcolorhandler.parsers.Parsers;
 import me.dave.chatcolorhandler.parsers.custom.*;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -20,21 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatColorHandler {
-    private static boolean setupComplete = false;
-    private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
+    private static final String LOGGER_PREFIX = "[ChatColorHandler] ";
+    private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static Messenger messenger;
 
-    /**
-     * Setup ChatColorHandler for use
-     *
-     * @param plugin Plugin instance
-     */
-    public static void setup(Plugin plugin) {
-        if (setupComplete) {
-            plugin.getLogger().info("ChatColorHandler has already successfully hooked into " + plugin.getName() + ".");
-            return;
-        }
-
+    static {
         Parsers.register(new LegacyCharParser(), 100);
         Parsers.register(new HexParser(), 70);
 
@@ -43,19 +33,16 @@ public class ChatColorHandler {
             Parsers.register(new MiniMessageParser(), 80);
             messenger = new MiniMessageMessenger();
 
-            plugin.getLogger().info("Server running on PaperMC (or fork). MiniMessage support enabled.");
+            Bukkit.getLogger().info(LOGGER_PREFIX + "Server running on PaperMC (or fork). MiniMessage support enabled.");
         } catch (ClassNotFoundException ignored) {
             messenger = new LegacyMessenger();
         }
 
-        PluginManager pluginManager = plugin.getServer().getPluginManager();
-        if (pluginManager.getPlugin("PlaceholderAPI") != null) {
+        PluginManager pluginManager = Bukkit.getServer().getPluginManager();
+        if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Parsers.register(new PlaceholderAPIParser(), 90);
-            plugin.getLogger().info("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
+            Bukkit.getLogger().info(LOGGER_PREFIX + "Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
-
-        setupComplete = true;
-        plugin.getLogger().info("ChatColorHandler has successfully hooked into " + plugin.getName() + ".");
     }
 
     /**
@@ -243,11 +230,11 @@ public class ChatColorHandler {
         string = string.replaceAll("§", "&");
 
         // Parse message through Default Hex in format "&#rrggbb"
-        Matcher match = hexPattern.matcher(string);
+        Matcher match = HEX_PATTERN.matcher(string);
         while (match.find()) {
             String color = string.substring(match.start() + 1, match.end());
             string = string.replace("&" + color, ChatColor.of(color) + "");
-            match = hexPattern.matcher(string);
+            match = HEX_PATTERN.matcher(string);
         }
         return ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', string));
     }

@@ -9,7 +9,7 @@ The hex color format added by ChatColorHandler is `&#rrggbb` and does not add gr
 ChatColorHandler will automatically setup upon the first use of the library
 
 ### Adding Hex Colors to Messages
-There are 2 main methods that you will be wanting to use in ChatColorHandler `#sendMessage` and `#translateAlternateColorCodes`.
+These are the main methods that you will be wanting to use in ChatColorHandler:
 
 - `sendMessage` - Sends a message to one or more players, this supports using MiniMessage's `click` and `hover` tags
 - `broadcastMessage` - Sends a message to all online players, this supports using MiniMessage's `click` and `hover` tags
