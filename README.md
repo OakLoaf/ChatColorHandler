@@ -6,7 +6,7 @@ This Library works with all versions of Spigot and also adds [MiniMessage](https
 
 ## Using ChatColorHandler
 The hex color format added by ChatColorHandler is `&#rrggbb` and does not add gradient support.
-To setup ChatColorHandler simply run `ChatColorHandler.setup(plugin)` in your plugin's `onEnable()` method
+ChatColorHandler will automatically setup upon the first use of the library
 
 ### Adding Hex Colors to Messages
 There are 2 main methods that you will be wanting to use in ChatColorHandler `#sendMessage` and `#translateAlternateColorCodes`.
@@ -72,7 +72,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>com.github.CoolDCB</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>v2.0.0</version>
+        <version>v2.1.0</version>
     </dependency>
 </dependencies>
 ```
@@ -91,7 +91,7 @@ repositories {
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.0.0"
+    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.1.0"
 }
 ```
 </details>
