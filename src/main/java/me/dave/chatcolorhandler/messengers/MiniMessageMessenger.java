@@ -48,6 +48,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
     }
 
     private String legacyParser(String string) {
+        string = string.replace('§', '&');
         string = HexParser.parseToMiniMessage(string);
 
         return string
