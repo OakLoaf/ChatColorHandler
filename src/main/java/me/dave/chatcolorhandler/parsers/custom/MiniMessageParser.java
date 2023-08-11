@@ -9,6 +9,7 @@ public class MiniMessageParser implements Parser {
 
     @Override
     public String parseString(String string) {
+        string = string.replace('§', '&');
         return LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string));
     }
 
