@@ -35,7 +35,7 @@ ChatColorHandler.translateAlternateColorCodes("&#aaee99Example Message", List.of
 Sending messages with ChatColorHandler is as easy as doing:
 
 ```java
-ChatColorHandler.sendMessage(&cThis is an example message");
+ChatColorHandler.sendMessage("&cThis is an example message");
 ```
 
 ### Adding Hex Colors to the rest of Minecraft
