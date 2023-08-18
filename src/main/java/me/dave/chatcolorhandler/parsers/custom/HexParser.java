@@ -11,6 +11,8 @@ public class HexParser implements Parser {
 
     @Override
     public String parseString(String string) {
+        string = string.replace('§','&');
+
         // Parse message through Default Hex in format "&#rrggbb"
         Matcher match = hexPattern.matcher(string);
         while (match.find()) {
