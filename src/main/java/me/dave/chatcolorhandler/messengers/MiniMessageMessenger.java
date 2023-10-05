@@ -33,7 +33,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
     public void broadcastMessage(@Nullable String message) {
         if (message == null || message.isBlank()) return;
 
-        Audience audience = Audience.audience((Audience) Bukkit.getOnlinePlayers());
+        Audience audience = Audience.audience((Audience) Bukkit.getServer());
         String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, List.of(MiniMessageParser.class, HexParser.class)));
         audience.sendMessage(miniMessage.deserialize(legacyParsed));
     }
