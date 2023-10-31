@@ -72,7 +72,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>com.github.CoolDCB</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>v2.1.3</version>
+        <version>v2.2.0</version>
     </dependency>
 </dependencies>
 ```
