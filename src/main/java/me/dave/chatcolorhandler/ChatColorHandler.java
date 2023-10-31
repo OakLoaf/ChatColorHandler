@@ -29,7 +29,7 @@ public class ChatColorHandler {
         Parsers.register(new HexParser(), 70);
 
         try {
-            Class.forName("com.destroystokyo.paper.PaperConfig");
+            Class.forName("net.kyori.adventure.text.minimessage.MiniMessage");
             Parsers.register(new MiniMessageParser(), 80);
             messenger = new MiniMessageMessenger();
 
