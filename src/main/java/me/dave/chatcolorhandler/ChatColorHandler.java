@@ -34,9 +34,10 @@ public class ChatColorHandler {
             Parsers.register(new MiniMessageParser(), 80);
             messenger = new MiniMessageMessenger();
 
-            Bukkit.getLogger().info(LOGGER_PREFIX + "Server running on PaperMC (or fork). MiniMessage support enabled.");
+            Bukkit.getLogger().info(LOGGER_PREFIX + "Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException ignored) {
             messenger = new LegacyMessenger();
+            Bukkit.getLogger().info(LOGGER_PREFIX + "Unable to find MiniMessage. MiniMessage support not enabled.");
         }
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
