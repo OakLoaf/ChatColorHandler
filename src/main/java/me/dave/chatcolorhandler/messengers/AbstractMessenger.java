@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class AbstractMessenger implements Messenger {
 
     /**
-     * Sends this recipient multiple messages
+     * Sends a recipient multiple messages
      *
      * @param recipient Sender to receive message
      * @param messages Messages to be displayed

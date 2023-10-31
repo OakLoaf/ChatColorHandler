@@ -46,7 +46,7 @@ public class ChatColorHandler {
     }
 
     /**
-     * Sends this recipient a message
+     * Sends a recipient a message
      *
      * @param recipient Sender to receive this message
      * @param message Message to be displayed
@@ -56,7 +56,7 @@ public class ChatColorHandler {
     }
 
     /**
-     * Sends this recipient multiple messages
+     * Sends a recipient multiple messages
      *
      * @param recipient Sender to receive message
      * @param messages Messages to be displayed
@@ -104,7 +104,7 @@ public class ChatColorHandler {
     }
 
     /**
-     * Sends this player an ACTION_BAR message
+     * Sends a player an ACTION_BAR message
      *
      * @param player Player to receive this action bar message
      * @param message Message to be displayed
