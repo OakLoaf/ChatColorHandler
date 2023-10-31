@@ -14,10 +14,11 @@ public class Parsers {
         parsers = sortByValue(parsers);
     }
 
-    public static String parseString(String string, @Nullable Player player, @Nullable List<Class<? extends Parser>> ignoredParsers) {
-        for (Parser parser : parsers.keySet()) {
-            if (ignoredParsers != null && ignoredParsers.contains(parser.getClass())) continue;
-            string = parser.parseString(string, player);
+    public static String parseString(String string, @Nullable Player player, @Nullable List<Class<? extends Parser>> parsers) {
+        for (Parser parser : Parsers.parsers.keySet()) {
+            if (parsers == null || parsers.contains(parser.getClass())) {
+                string = parser.parseString(string, player);
+            }
         }
         return string;
     }

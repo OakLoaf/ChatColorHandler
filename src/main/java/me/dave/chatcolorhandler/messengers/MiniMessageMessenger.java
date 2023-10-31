@@ -2,7 +2,8 @@ package me.dave.chatcolorhandler.messengers;
 
 import me.dave.chatcolorhandler.ChatColorHandler;
 import me.dave.chatcolorhandler.parsers.custom.HexParser;
-import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
+import me.dave.chatcolorhandler.parsers.custom.LegacyCharParser;
+import me.dave.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -23,7 +24,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) recipient);
         
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(MiniMessageParser.class, HexParser.class)));
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
         Component parsed = miniMessage.deserialize(legacyParsed);
 
         audience.sendMessage(parsed);
@@ -34,7 +35,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) Bukkit.getServer());
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, List.of(MiniMessageParser.class, HexParser.class)));
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
         audience.sendMessage(miniMessage.deserialize(legacyParsed));
     }
 
@@ -43,7 +44,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) player);
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(MiniMessageParser.class, HexParser.class)));
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
         audience.sendActionBar(miniMessage.deserialize(legacyParsed));
     }
 

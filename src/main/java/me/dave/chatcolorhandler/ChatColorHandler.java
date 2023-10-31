@@ -136,12 +136,12 @@ public class ChatColorHandler {
      * Translates a string to allow for hex colours and placeholders
      *
      * @param string String to be converted
-     * @param ignoredParsers Parsers which this message won't be parsed through
+     * @param parsers Parsers which this message won't be parsed through
      */
-    public static String translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> ignoredParsers) {
+    public static String translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
-        return Parsers.parseString(string, null, ignoredParsers);
+        return Parsers.parseString(string, null, parsers);
     }
 
     /**
@@ -159,12 +159,12 @@ public class ChatColorHandler {
      *
      * @param string String to be converted
      * @param player Player to parse placeholders for
-     * @param ignoredParsers Parsers which this message won't be parsed through
+     * @param parsers Parsers which this message will be parsed through
      */
-    public static String translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> ignoredParsers) {
+    public static String translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
-        return Parsers.parseString(string, player, ignoredParsers);
+        return Parsers.parseString(string, player, parsers);
     }
 
     /**
@@ -180,10 +180,10 @@ public class ChatColorHandler {
      * Translates a string to allow for hex colours and placeholders
      *
      * @param strings Strings to be converted
-     * @param ignoredParsers Parsers which this message won't be parsed through
+     * @param parsers Parsers which this message will be parsed through
      */
-    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, List<Class<? extends Parser>> ignoredParsers) {
-        return translateAlternateColorCodes(strings, null, ignoredParsers);
+    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, List<Class<? extends Parser>> parsers) {
+        return translateAlternateColorCodes(strings, null, parsers);
     }
 
     /**
@@ -201,14 +201,14 @@ public class ChatColorHandler {
      *
      * @param strings Strings to be converted
      * @param player Player to parse placeholders for
-     * @param ignoredParsers Parsers which this message won't be parsed through
+     * @param parsers Parsers which this message will be parsed through
      */
-    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player, List<Class<? extends Parser>> ignoredParsers) {
+    public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player, List<Class<? extends Parser>> parsers) {
         if (strings == null || strings.isEmpty()) return Collections.emptyList();
 
         List<String> outputList = new ArrayList<>();
         for (String string : strings) {
-            outputList.add(translateAlternateColorCodes(string, player));
+            outputList.add(translateAlternateColorCodes(string, player, parsers));
         }
         return outputList;
     }
