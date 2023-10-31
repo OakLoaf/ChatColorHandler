@@ -15,7 +15,9 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void sendMessage(@NotNull CommandSender recipient, @Nullable String... messages) {
-        sendMessage(recipient, String.join(" ", messages));
+        for (String message : messages) {
+            sendMessage(recipient, message);
+        }
     }
 
     /**
@@ -41,9 +43,10 @@ public abstract class AbstractMessenger implements Messenger {
     public void sendMessage(CommandSender[] recipients, @Nullable String... messages) {
         if (messages == null) return;
 
-        String message = String.join(" ", messages);
         for (CommandSender recipient : recipients) {
-            sendMessage(recipient, message);
+            for (String message : messages) {
+                sendMessage(recipient, message);
+            }
         }
     }
 
@@ -55,7 +58,10 @@ public abstract class AbstractMessenger implements Messenger {
     @Override
     public void broadcastMessage(@NotNull String... messages) {
         if (messages == null) return;
-        broadcastMessage(String.join(" ", messages));
+
+        for (String message : messages) {
+            broadcastMessage(message);
+        }
     }
 
     /**
