@@ -324,7 +324,7 @@ public class ChatColorHandler {
 //        }
 
         // Replace legacy character
-        string = string.replaceAll("§", "&");
+        string = string.replace("§", "&");
 
         // Parse message through Default Hex in format "&#rrggbb"
         Matcher match = HEX_PATTERN.matcher(string);

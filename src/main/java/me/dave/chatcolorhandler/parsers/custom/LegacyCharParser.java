@@ -7,7 +7,7 @@ public class LegacyCharParser implements Parser {
     @Override
     public String parseString(String string) {
         // Replace legacy character
-        return string.replaceAll("§", "&");
+        return string.replace("§", "&");
     }
 
     @Override
