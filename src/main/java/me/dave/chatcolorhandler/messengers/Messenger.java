@@ -68,4 +68,84 @@ public interface Messenger {
      * @param message Message to be displayed
      */
     void sendActionBarMessage(@NotNull Player[] players, @Nullable String message);
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     */
+    void sendTitle(@NotNull Player player, @Nullable String title);
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     */
+    void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle);
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param fadeOut Duration for title to fade out
+     */
+    void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut);
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param stay Duration for title to appear
+     * @param fadeOut Duration for title to fade out
+     */
+    void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut);
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     */
+    void sendTitle(@NotNull Player[] players, @Nullable String title);
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     */
+    void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle);
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param fadeOut Duration for title to fade out
+     */
+    void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut);
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param stay Duration for title to appear
+     * @param fadeOut Duration for title to fade out
+     */
+    void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut);
 }

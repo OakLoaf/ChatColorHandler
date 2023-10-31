@@ -48,6 +48,30 @@ public class MiniMessageMessenger extends AbstractMessenger {
         audience.sendActionBar(miniMessage.deserialize(legacyParsed));
     }
 
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title) {
+        if (title == null || title.isBlank()) return;
+
+        Audience audience = Audience.audience((Audience) player);
+        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
+        audience.sendActionBar(miniMessage.deserialize(legacyParsed));
+    }
+
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle) {
+
+    }
+
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
+
+    }
+
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
+
+    }
+
     private String legacyParser(String string) {
         string = string.replace('§', '&');
         string = HexParser.parseToMiniMessage(string);

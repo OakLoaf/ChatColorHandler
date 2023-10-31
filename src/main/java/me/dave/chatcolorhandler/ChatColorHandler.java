@@ -124,6 +124,102 @@ public class ChatColorHandler {
     }
 
     /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     */
+    public void sendTitle(@NotNull Player player, @Nullable String title) {
+        messenger.sendTitle(player, title);
+    }
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     */
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle) {
+        messenger.sendTitle(player, title, subtitle);
+    }
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param fadeOut Duration for title to fade out
+     */
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
+        messenger.sendTitle(player, title, subtitle, fadeIn, fadeOut);
+    }
+
+    /**
+     * Send a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param stay Duration for title to appear
+     * @param fadeOut Duration for title to fade out
+     */
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
+        messenger.sendTitle(player, title, subtitle, fadeIn, stay, fadeOut);
+    }
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     */
+    public void sendTitle(@NotNull Player[] players, @Nullable String title) {
+        messenger.sendTitle(players, title);
+    }
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     */
+    public void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle) {
+        messenger.sendTitle(players, title, subtitle);
+    }
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param fadeOut Duration for title to fade out
+     */
+    public void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
+        messenger.sendTitle(players, title, subtitle, fadeIn, fadeOut);
+    }
+
+    /**
+     * Send multiple players a TITLE message
+     *
+     * @param players Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param stay Duration for title to appear
+     * @param fadeOut Duration for title to fade out
+     */
+    public void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
+        messenger.sendTitle(players, title, subtitle, fadeIn, stay, fadeOut);
+    }
+
+    /**
      * Translates a string to allow for hex colours and placeholders
      *
      * @param string String to be converted
