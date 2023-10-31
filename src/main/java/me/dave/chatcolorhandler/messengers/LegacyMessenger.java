@@ -29,26 +29,26 @@ public class LegacyMessenger extends AbstractMessenger {
     public void sendActionBarMessage(@NotNull Player player, @Nullable String message) {
         if (message == null || message.isBlank()) return;
 
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColorHandler.translateAlternateColorCodes(message)));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(ChatColorHandler.translateAlternateColorCodes(message, player)));
     }
 
     @Override
     public void sendTitle(@NotNull Player player, @Nullable String title) {
-        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title), null, 10, 70, 20);
+        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title, player), null, 10, 70, 20);
     }
 
     @Override
     public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle) {
-        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title), ChatColorHandler.translateAlternateColorCodes(subtitle), 10, 70, 20);
+        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title, player), ChatColorHandler.translateAlternateColorCodes(subtitle, player), 10, 70, 20);
     }
 
     @Override
     public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
-        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title), ChatColorHandler.translateAlternateColorCodes(subtitle), fadeIn, 70, fadeOut);
+        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title, player), ChatColorHandler.translateAlternateColorCodes(subtitle, player), fadeIn, 70, fadeOut);
     }
 
     @Override
     public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
-        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title), ChatColorHandler.translateAlternateColorCodes(subtitle), fadeIn, stay, fadeOut);
+        player.sendTitle(ChatColorHandler.translateAlternateColorCodes(title, player), ChatColorHandler.translateAlternateColorCodes(subtitle, player), fadeIn, stay, fadeOut);
     }
 }
