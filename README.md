@@ -20,9 +20,9 @@ These are the main methods that you will be wanting to use in ChatColorHandler:
 ChatColorHandler provides built in support for:
 
 - PlaceholderAPI - *requires [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) plugin*
-- MiniMessage - *requires server to be running paper (or forks)*
+- MiniMessage - *requires server to be running PaperMC (or forks)*
 
-All support built into ChatColorHandler will automatically be applied to all parsed strings, you can skip specific parsers in `#translateAlternateColorCodes` by defining parsers to ignore
+All support built into ChatColorHandler will automatically be applied to all parsed strings, you can define specific parsers to use in `#translateAlternateColorCodes`
 
 eg.
 ```java
@@ -35,7 +35,7 @@ ChatColorHandler.translateAlternateColorCodes("&#aaee99Example Message", List.of
 Sending messages with ChatColorHandler is as easy as doing:
 
 ```java
-ChatColorHandler.sendMessage("&cThis is an example message");
+ChatColorHandler.sendMessage(player, "&cThis is an example message");
 ```
 
 ### Adding Hex Colors to the rest of Minecraft
