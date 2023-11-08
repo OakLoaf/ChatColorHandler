@@ -6,7 +6,7 @@
 
     <groupId>me.dave</groupId>
     <artifactId>chatcolorhandler</artifactId>
-    <version>v2.2.1-BETA</version>
+    <version>v2.2.1</version>
     <packaging>jar</packaging>
 
     <name>ChatColorHandler</name>
