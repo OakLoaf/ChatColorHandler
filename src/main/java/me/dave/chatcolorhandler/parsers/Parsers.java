@@ -17,7 +17,11 @@ public class Parsers {
     public static String parseString(String string, @Nullable Player player, @Nullable List<Class<? extends Parser>> parsers) {
         for (Parser parser : Parsers.parsers.keySet()) {
             if (parsers == null || parsers.contains(parser.getClass())) {
-                string = parser.parseString(string, player);
+                try {
+                    string = parser.parseString(string, player);
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         }
         return string;
