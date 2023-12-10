@@ -1,8 +1,8 @@
 package me.dave.chatcolorhandler.messengers;
 
 import me.dave.chatcolorhandler.ChatColorHandler;
-import me.dave.chatcolorhandler.parsers.custom.HexParser;
 import me.dave.chatcolorhandler.parsers.custom.LegacyCharParser;
+import me.dave.chatcolorhandler.parsers.custom.MiniMessageParser;
 import me.dave.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -27,7 +27,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) recipient);
         
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
+        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
         Component parsed = miniMessage.deserialize(legacyParsed);
 
         audience.sendMessage(parsed);
@@ -38,7 +38,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) Bukkit.getServer());
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
+        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
         audience.sendMessage(miniMessage.deserialize(legacyParsed));
     }
 
@@ -47,7 +47,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) player);
-        String legacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
+        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
         audience.sendActionBar(miniMessage.deserialize(legacyParsed));
     }
 
@@ -73,41 +73,11 @@ public class MiniMessageMessenger extends AbstractMessenger {
         Audience audience = Audience.audience((Audience) player);
 
         Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn * 50L), Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L));
-        String subtitleLegacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(subtitle, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
-        String titleLegacyParsed = legacyParser(ChatColorHandler.translateAlternateColorCodes(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
+        String subtitleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(subtitle, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
+        String titleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)));
 
         audience.sendTitlePart(TitlePart.TIMES, times);
         audience.sendTitlePart(TitlePart.SUBTITLE, miniMessage.deserialize(subtitleLegacyParsed));
         audience.sendTitlePart(TitlePart.TITLE, miniMessage.deserialize(titleLegacyParsed));
-    }
-
-    private String legacyParser(String string) {
-        string = string.replace('§', '&');
-        string = HexParser.parseToMiniMessage(string);
-
-        return string
-            .replace("&0", "<reset><black>")
-            .replace("&1", "<reset><dark_blue>")
-            .replace("&2", "<reset><dark_green>")
-            .replace("&3", "<reset><dark_aqua>")
-            .replace("&4", "<reset><dark_red>")
-            .replace("&5", "<reset><dark_purple>")
-            .replace("&6", "<reset><gold>")
-            .replace("&7", "<reset><grey>")
-            .replace("&8", "<reset><dark_grey>")
-            .replace("&9", "<reset><blue>")
-            .replace("&a", "<reset><green>")
-            .replace("&b", "<reset><aqua>")
-            .replace("&c", "<reset><red>")
-            .replace("&d", "<reset><light_purple>")
-            .replace("&e", "<reset><yellow>")
-            .replace("&f", "<reset><white>")
-
-            .replace("&m", "<strikethrough>")
-            .replace("&k", "<obfuscated>")
-            .replace("&n", "<underlined>")
-            .replace("&o", "<italic>")
-            .replace("&l", "<bold>")
-            .replace("&r", "<reset>");
     }
 }
