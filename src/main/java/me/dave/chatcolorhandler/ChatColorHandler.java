@@ -24,6 +24,7 @@ public class ChatColorHandler {
     private static final String LOGGER_PREFIX = "[ChatColorHandler] ";
     private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static Messenger messenger;
+    private static ModernChatColorHandler modernHandler;
 
     static {
         Parsers.register(new LegacyCharParser(), 100);
@@ -45,6 +46,18 @@ public class ChatColorHandler {
             Parsers.register(new PlaceholderAPIParser(), 90);
             Bukkit.getLogger().info(LOGGER_PREFIX + "Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
+    }
+
+    protected static Messenger getMessenger() {
+        return messenger;
+    }
+
+    public static ModernChatColorHandler modern() {
+        if (modernHandler == null) {
+            modernHandler = new ModernChatColorHandler();
+        }
+
+        return modernHandler;
     }
 
     /**
@@ -318,11 +331,6 @@ public class ChatColorHandler {
      */
     public static String stripColor(@Nullable String string) {
         if (string == null || string.isBlank()) return "";
-
-        // Parse message through MiniMessage
-//        if (isMiniMessageEnabled) {
-//            string = TinyMessageTranslator.translateFromMiniMessage(string);
-//        }
 
         // Replace legacy character
         string = string.replace("§", "&");
