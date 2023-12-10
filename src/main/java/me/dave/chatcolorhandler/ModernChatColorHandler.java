@@ -57,8 +57,14 @@ public class ModernChatColorHandler {
     public static Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return Component.empty();
 
-        boolean parseHex = parsers.remove(HexParser.class);
-        parsers.remove(MiniMessageParser.class);
+        boolean parseHex;
+        if (parsers == null) {
+            parseHex = true;
+            parsers = List.of(LegacyCharParser.class, PlaceholderAPIParser.class);
+        } else {
+            parseHex = parsers.remove(HexParser.class);
+            parsers.remove(MiniMessageParser.class);
+        }
 
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, player, parsers), parseHex);
         return MiniMessage.miniMessage().deserialize(legacyParsed);
