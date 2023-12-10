@@ -10,7 +10,6 @@ public class Parsers {
     private static Map<Parser, Integer> parsers = new HashMap<>();
 
     /**
-     *
      * @param parser parser to register
      * @param priority priority of parser, higher value will go first
      */
