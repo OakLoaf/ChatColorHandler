@@ -18,9 +18,12 @@ public class MiniMessageParser implements Parser {
         return parseString(string);
     }
 
-    public static String legacyToMiniMessage(String string) {
+    public static String legacyToMiniMessage(String string, boolean parseHex) {
         string = string.replace('§', '&');
-        string = HexParser.parseToMiniMessage(string);
+
+        if (parseHex) {
+            string = HexParser.parseToMiniMessage(string);
+        }
 
         return string
             .replace("&0", "<reset><black>")
