@@ -52,14 +52,6 @@ public class ChatColorHandler {
         return messenger;
     }
 
-    public static ModernChatColorHandler modern() {
-        if (modernHandler == null) {
-            modernHandler = new ModernChatColorHandler();
-        }
-
-        return modernHandler;
-    }
-
     /**
      * Sends a recipient a message
      *

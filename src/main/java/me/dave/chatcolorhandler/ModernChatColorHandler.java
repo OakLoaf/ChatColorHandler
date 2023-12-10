@@ -16,7 +16,7 @@ public class ModernChatColorHandler {
      *
      * @param string String to be converted
      */
-    public Component translateAlternateColorCodes(@Nullable String string) {
+    public static Component translateAlternateColorCodes(@Nullable String string) {
         return translateAlternateColorCodes(string, null, null);
     }
 
@@ -26,7 +26,7 @@ public class ModernChatColorHandler {
      * @param string String to be converted
      * @param parsers Parsers which this message won't be parsed through
      */
-    public Component translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
+    public static Component translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return Component.empty();
 
         boolean parseHex = parsers.remove(HexParser.class);
@@ -42,7 +42,7 @@ public class ModernChatColorHandler {
      * @param string String to be converted
      * @param player Player to parse placeholders for
      */
-    public Component translateAlternateColorCodes(@Nullable String string, Player player) {
+    public static Component translateAlternateColorCodes(@Nullable String string, Player player) {
         return translateAlternateColorCodes(string, player, null);
     }
 
@@ -53,7 +53,7 @@ public class ModernChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
+    public static Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return Component.empty();
 
         boolean parseHex = parsers.remove(HexParser.class);
