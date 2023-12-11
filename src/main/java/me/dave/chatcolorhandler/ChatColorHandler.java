@@ -238,8 +238,8 @@ public class ChatColorHandler {
      *
      * @param string String to be converted
      */
-    public static String translateAlternateColorCodes(@Nullable String string) {
-        return translateAlternateColorCodes(string, null, null);
+    public static String translate(@Nullable String string) {
+        return translate(string, null, null);
     }
 
     /**
@@ -248,7 +248,7 @@ public class ChatColorHandler {
      * @param string String to be converted
      * @param parsers Parsers which this message won't be parsed through
      */
-    public static String translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
+    public static String translate(@Nullable String string, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
         return Parsers.parseString(string, null, parsers);
@@ -260,8 +260,8 @@ public class ChatColorHandler {
      * @param string String to be converted
      * @param player Player to parse placeholders for
      */
-    public static String translateAlternateColorCodes(@Nullable String string, Player player) {
-        return translateAlternateColorCodes(string, player, null);
+    public static String translate(@Nullable String string, Player player) {
+        return translate(string, player, null);
     }
 
     /**
@@ -271,10 +271,54 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public static String translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
+    public static String translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
         return Parsers.parseString(string, player, parsers);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ChatColorHandler#translate(String)}.
+     *
+     * @param string String to be converted
+     */
+    @Deprecated(forRemoval = true)
+    public static String translateAlternateColorCodes(@Nullable String string) {
+        return translate(string);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ChatColorHandler#translate(String, List)}.
+     *
+     * @param string String to be converted
+     * @param parsers Parsers which this message won't be parsed through
+     */
+    @Deprecated(forRemoval = true)
+    public static String translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
+        return translate(string, parsers);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ChatColorHandler#translate(String, Player)}.
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     */
+    @Deprecated(forRemoval = true)
+    public static String translateAlternateColorCodes(@Nullable String string, Player player) {
+        return translate(string, player);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ChatColorHandler#translate(String, Player, List)}.
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     */
+    @Deprecated(forRemoval = true)
+    public static String translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
+        return translate(string, player, parsers);
     }
 
     /**
@@ -282,7 +326,7 @@ public class ChatColorHandler {
      *
      * @param strings Strings to be converted
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings) {
         return translateAlternateColorCodes(strings, null, null);
     }
@@ -293,7 +337,7 @@ public class ChatColorHandler {
      * @param strings Strings to be converted
      * @param parsers Parsers which this message will be parsed through
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, List<Class<? extends Parser>> parsers) {
         return translateAlternateColorCodes(strings, null, parsers);
     }
@@ -304,7 +348,7 @@ public class ChatColorHandler {
      * @param strings Strings to be converted
      * @param player Player to parse placeholders for
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player) {
         return translateAlternateColorCodes(strings, player, null);
     }
@@ -316,13 +360,13 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    @Deprecated
+    @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player, List<Class<? extends Parser>> parsers) {
         if (strings == null || strings.isEmpty()) return Collections.emptyList();
 
         List<String> outputList = new ArrayList<>();
         for (String string : strings) {
-            outputList.add(translateAlternateColorCodes(string, player, parsers));
+            outputList.add(translate(string, player, parsers));
         }
         return outputList;
     }

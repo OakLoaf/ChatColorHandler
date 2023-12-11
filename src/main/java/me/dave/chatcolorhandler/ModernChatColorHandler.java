@@ -17,7 +17,7 @@ import java.util.List;
 public class ModernChatColorHandler {
 
     static {
-        ChatColorHandler.translateAlternateColorCodes("init");
+        ChatColorHandler.translate("init");
     }
 
     /**
@@ -25,8 +25,8 @@ public class ModernChatColorHandler {
      *
      * @param string String to be converted
      */
-    public static Component translateAlternateColorCodes(@Nullable String string) {
-        return translateAlternateColorCodes(string, null, null);
+    public static Component translate(@Nullable String string) {
+        return translate(string, null, null, null);
     }
 
     /**
@@ -35,18 +35,8 @@ public class ModernChatColorHandler {
      * @param string String to be converted
      * @param parsers Parsers which this message won't be parsed through
      */
-    public static Component translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
-        if (string == null || string.isBlank()) return Component.empty();
-
-        boolean parseHex = false;
-        if (parsers != null) {
-            parsers = new ArrayList<>(parsers);
-            parseHex = parsers.remove(HexParser.class);
-            parsers.remove(MiniMessageParser.class);
-        }
-
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, null, parsers), parseHex);
-        return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver(null, null));
+    public static Component translate(@Nullable String string, List<Class<? extends Parser>> parsers) {
+        return translate(string, null, parsers, null);
     }
 
     /**
@@ -55,8 +45,8 @@ public class ModernChatColorHandler {
      * @param string String to be converted
      * @param player Player to parse placeholders for
      */
-    public static Component translateAlternateColorCodes(@Nullable String string, Player player) {
-        return translateAlternateColorCodes(string, player, null, null);
+    public static Component translate(@Nullable String string, Player player) {
+        return translate(string, player, null, null);
     }
 
     /**
@@ -66,8 +56,8 @@ public class ModernChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public static Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
-        return translateAlternateColorCodes(string, player, parsers, null);
+    public static Component translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
+        return translate(string, player, parsers, null);
     }
 
     /**
@@ -78,7 +68,7 @@ public class ModernChatColorHandler {
      * @param parsers Parsers which this message will be parsed through
      * @param resolvers Resolvers which will be used for this message (Paper + forks only)
      */
-    public static Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers, List<Class<? extends Resolver>> resolvers) {
+    public static Component translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers, List<Class<? extends Resolver>> resolvers) {
         if (string == null || string.isBlank()) return Component.empty();
 
         boolean parseHex;
@@ -93,5 +83,62 @@ public class ModernChatColorHandler {
 
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, player, parsers), parseHex);
         return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver((Audience) player, resolvers));
+    }
+
+    /**
+     * @deprecated Refactored to {@link ModernChatColorHandler#translate(String)}.
+     *
+     * @param string String to be converted
+     */
+    @Deprecated(forRemoval = true)
+    public static Component translateAlternateColorCodes(@Nullable String string) {
+        return translate(string, null, null, null);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ModernChatColorHandler#translate(String, List)}.
+     *
+     * @param string String to be converted
+     * @param parsers Parsers which this message won't be parsed through
+     */
+    @Deprecated(forRemoval = true)
+    public static Component translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
+        return translate(string, null, parsers, null);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ModernChatColorHandler#translate(String, Player)}.
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     */
+    @Deprecated(forRemoval = true)
+    public static Component translateAlternateColorCodes(@Nullable String string, Player player) {
+        return translate(string, player, null, null);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ModernChatColorHandler#translate(String, Player, List)}.
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     */
+    @Deprecated(forRemoval = true)
+    public static Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
+        return translate(string, player, parsers, null);
+    }
+
+    /**
+     * @deprecated Refactored to {@link ModernChatColorHandler#translate(String, Player, List, List)}.
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     * @param resolvers Resolvers which will be used for this message (Paper + forks only)
+     */
+    @Deprecated(forRemoval = true)
+    public static Component translateAlternateColorCodes(@Nullable String string, Player player, List<Class<? extends Parser>> parsers, List<Class<? extends Resolver>> resolvers) {
+        return translate(string, player, parsers, resolvers);
     }
 }

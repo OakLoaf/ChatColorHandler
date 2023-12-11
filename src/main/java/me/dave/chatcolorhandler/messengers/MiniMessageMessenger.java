@@ -29,7 +29,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) recipient);
         
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
+        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
         Component parsed = miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null));
 
         audience.sendMessage(parsed);
@@ -40,7 +40,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) Bukkit.getServer());
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
+        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
         audience.sendMessage(miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null)));
     }
 
@@ -49,7 +49,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) player);
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
+        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
         audience.sendActionBar(miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null)));
     }
 
@@ -76,8 +76,8 @@ public class MiniMessageMessenger extends AbstractMessenger {
         TagResolver resolver = Resolvers.getResolver(audience, null);
 
         Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn * 50L), Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L));
-        String subtitleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(subtitle, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        String titleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
+        String subtitleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(subtitle, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
+        String titleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
 
         audience.sendTitlePart(TitlePart.TIMES, times);
         audience.sendTitlePart(TitlePart.SUBTITLE, miniMessage.deserialize(subtitleLegacyParsed, resolver));
