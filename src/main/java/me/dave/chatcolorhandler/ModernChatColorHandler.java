@@ -41,7 +41,7 @@ public class ModernChatColorHandler {
         parsers.remove(MiniMessageParser.class);
 
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, null, parsers), parseHex);
-        return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolvers(null, null));
+        return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver(null, null));
     }
 
     /**
@@ -86,6 +86,6 @@ public class ModernChatColorHandler {
         }
 
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, player, parsers), parseHex);
-        return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolvers((Audience) player, resolvers));
+        return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver((Audience) player, resolvers));
     }
 }

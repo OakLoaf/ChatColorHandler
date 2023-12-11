@@ -19,8 +19,8 @@ public class MiniMessageParser implements Parser {
     public String parseString(String string, Player player) {
         string = string.replace('§', '&');
 
-        TagResolver[] resolvers = Resolvers.getResolvers(player != null ? (Audience) player : null, null);
-        return LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string, resolvers));
+        TagResolver resolver = Resolvers.getResolver(player != null ? (Audience) player : null, null);
+        return LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string, resolver));
     }
 
     public static String legacyToMiniMessage(String string, boolean parseHex) {

@@ -30,7 +30,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         Audience audience = Audience.audience((Audience) recipient);
         
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        Component parsed = miniMessage.deserialize(legacyParsed, Resolvers.getResolvers(audience, null));
+        Component parsed = miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null));
 
         audience.sendMessage(parsed);
     }
@@ -41,7 +41,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) Bukkit.getServer());
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        audience.sendMessage(miniMessage.deserialize(legacyParsed, Resolvers.getResolvers(audience, null)));
+        audience.sendMessage(miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null)));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
         Audience audience = Audience.audience((Audience) player);
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        audience.sendActionBar(miniMessage.deserialize(legacyParsed, Resolvers.getResolvers(audience, null)));
+        audience.sendActionBar(miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null)));
     }
 
     @Override
@@ -73,14 +73,14 @@ public class MiniMessageMessenger extends AbstractMessenger {
     @Override
     public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
         Audience audience = Audience.audience((Audience) player);
-        TagResolver[] resolvers = Resolvers.getResolvers(audience, null);
+        TagResolver resolver = Resolvers.getResolver(audience, null);
 
         Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn * 50L), Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L));
         String subtitleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(subtitle, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
         String titleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translateAlternateColorCodes(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
 
         audience.sendTitlePart(TitlePart.TIMES, times);
-        audience.sendTitlePart(TitlePart.SUBTITLE, miniMessage.deserialize(subtitleLegacyParsed, resolvers));
-        audience.sendTitlePart(TitlePart.TITLE, miniMessage.deserialize(titleLegacyParsed, resolvers));
+        audience.sendTitlePart(TitlePart.SUBTITLE, miniMessage.deserialize(subtitleLegacyParsed, resolver));
+        audience.sendTitlePart(TitlePart.TITLE, miniMessage.deserialize(titleLegacyParsed, resolver));
     }
 }

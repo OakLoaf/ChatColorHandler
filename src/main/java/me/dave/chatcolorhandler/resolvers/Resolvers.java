@@ -13,18 +13,18 @@ public class Resolvers {
         resolvers.add(resolver);
     }
 
-    public static TagResolver[] getResolvers(@Nullable Audience audience, @Nullable List<Class<? extends Resolver>> resolvers) {
-        List<TagResolver> requiredResolvers = new ArrayList<>();
+    public static TagResolver getResolver(@Nullable Audience audience, @Nullable List<Class<? extends Resolver>> resolvers) {
+        TagResolver.Builder tagResolver = TagResolver.builder();
         for (Resolver resolver : Resolvers.resolvers) {
             if (resolvers == null || resolvers.contains(resolver.getClass())) {
                 try {
-                    requiredResolvers.add(audience != null ? resolver.getResolver(audience) : resolver.getResolver());
+                    tagResolver.resolver(audience != null ? resolver.getResolver(audience) : resolver.getResolver());
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        return requiredResolvers.toArray(new TagResolver[0]);
+        return tagResolver.build();
     }
 }
