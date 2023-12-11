@@ -15,6 +15,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ModernChatColorHandler {
 
+    static {
+        ChatColorHandler.translateAlternateColorCodes("init");
+    }
+
     /**
      * Translates a string to allow for hex colours and placeholders
      *
