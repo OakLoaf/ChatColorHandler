@@ -72,7 +72,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>com.github.CoolDCB</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>v2.2.0</version>
+        <version>v2.3.0</version>
     </dependency>
 </dependencies>
 ```
@@ -91,7 +91,7 @@ repositories {
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.1.0"
+    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.3.0"
 }
 ```
 </details>
