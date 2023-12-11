@@ -10,6 +10,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -37,8 +38,12 @@ public class ModernChatColorHandler {
     public static Component translateAlternateColorCodes(@Nullable String string, List<Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return Component.empty();
 
-        boolean parseHex = parsers.remove(HexParser.class);
-        parsers.remove(MiniMessageParser.class);
+        boolean parseHex = false;
+        if (parsers != null) {
+            parsers = new ArrayList<>(parsers);
+            parseHex = parsers.remove(HexParser.class);
+            parsers.remove(MiniMessageParser.class);
+        }
 
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, null, parsers), parseHex);
         return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver(null, null));
@@ -81,6 +86,7 @@ public class ModernChatColorHandler {
             parseHex = true;
             parsers = List.of(LegacyCharParser.class, PlaceholderAPIParser.class);
         } else {
+            parsers = new ArrayList<>(parsers);
             parseHex = parsers.remove(HexParser.class);
             parsers.remove(MiniMessageParser.class);
         }
