@@ -1,5 +1,8 @@
 package me.dave.chatcolorhandler.parsers.custom;
 
+import me.dave.chatcolorhandler.resolvers.Resolvers;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
@@ -9,13 +12,15 @@ public class MiniMessageParser implements Parser {
 
     @Override
     public String parseString(String string) {
-        string = string.replace('§', '&');
-        return LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string));
+        return parseString(string, null);
     }
 
     @Override
     public String parseString(String string, Player player) {
-        return parseString(string);
+        string = string.replace('§', '&');
+
+        TagResolver[] resolvers = Resolvers.getResolvers(player != null ? (Audience) player : null, null);
+        return LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string, resolvers));
     }
 
     public static String legacyToMiniMessage(String string, boolean parseHex) {
