@@ -11,22 +11,23 @@ ChatColorHandler will automatically setup upon the first use of the library
 ### Adding Hex Colors to Messages
 These are the main methods that you will be wanting to use in ChatColorHandler:
 
-- `sendMessage` - Sends a message to one or more players, this supports using MiniMessage's `click` and `hover` tags
-- `broadcastMessage` - Sends a message to all online players, this supports using MiniMessage's `click` and `hover` tags
+- `sendMessage` - Sends a message to one or more players
+- `broadcastMessage` - Sends a message to all online players
 - `sendActionBarMessage` - Sends an action bar message to one or more players
-- `translateAlternateColorCodes` - Translates a string
+- `translate` - Translates a string
 
 ### Compatibility
 ChatColorHandler provides built in support for:
 
 - PlaceholderAPI - *requires [PlaceholderAPI](https://www.spigotmc.org/resources/placeholderapi.6245/) plugin*
+- MiniPlaceholders - *requires [MiniPlaceholders](https://modrinth.com/plugin/miniplaceholders) plugin*
 - MiniMessage - *requires server to be running PaperMC (or forks)*
 
-All support built into ChatColorHandler will automatically be applied to all parsed strings, you can define specific parsers to use in `#translateAlternateColorCodes`
+All support built into ChatColorHandler will automatically be applied to all parsed strings, you can define specific parsers to use in `#translate`
 
 eg.
 ```java
-ChatColorHandler.translateAlternateColorCodes("&#aaee99Example Message", List.of(PlaceholderAPIParser.class, MiniMessageParser.class))
+ChatColorHandler.translate("&#aaee99Example Message", List.of(PlaceholderAPIParser.class, MiniMessageParser.class))
 ```
 
 <br>
@@ -42,7 +43,7 @@ ChatColorHandler.sendMessage(player, "&cThis is an example message");
 With ChatColorHandler you are able to change gui titles, item names, item lore, etc. All by parsing your text through ChatColorHandler:
 
 ```java
-ChatColorHandler.translateAlternateColorCodes("Test String")
+ChatColorHandler.translate("Test String")
 ```
 
 <br>
@@ -72,7 +73,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>com.github.CoolDCB</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>v2.3.0</version>
+        <version>v2.5.0</version>
     </dependency>
 </dependencies>
 ```
@@ -91,7 +92,7 @@ repositories {
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.3.0"
+    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.5.0"
 }
 ```
 </details>
