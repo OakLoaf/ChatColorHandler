@@ -282,6 +282,7 @@ public class ChatColorHandler {
      *
      * @param strings Strings to be converted
      */
+    @Deprecated
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings) {
         return translateAlternateColorCodes(strings, null, null);
     }
@@ -292,6 +293,7 @@ public class ChatColorHandler {
      * @param strings Strings to be converted
      * @param parsers Parsers which this message will be parsed through
      */
+    @Deprecated
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, List<Class<? extends Parser>> parsers) {
         return translateAlternateColorCodes(strings, null, parsers);
     }
@@ -302,6 +304,7 @@ public class ChatColorHandler {
      * @param strings Strings to be converted
      * @param player Player to parse placeholders for
      */
+    @Deprecated
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player) {
         return translateAlternateColorCodes(strings, player, null);
     }
@@ -313,6 +316,7 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
+    @Deprecated
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player, List<Class<? extends Parser>> parsers) {
         if (strings == null || strings.isEmpty()) return Collections.emptyList();
 
