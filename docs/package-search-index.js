@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.dave.chatcolorhandler"},{"l":"me.dave.chatcolorhandler.parsers"},{"l":"me.dave.chatcolorhandler.parsers.custom"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.dave.chatcolorhandler"},{"l":"me.dave.chatcolorhandler.parsers"},{"l":"me.dave.chatcolorhandler.parsers.custom"},{"l":"me.dave.chatcolorhandler.resolvers"}];updateSearchResults();
