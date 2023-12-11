@@ -13,6 +13,6 @@ public class MiniPlaceholdersResolver implements Resolver {
 
     @Override
     public TagResolver getResolver(Audience audience) {
-        return MiniPlaceholders.getAudiencePlaceholders(audience);
+        return MiniPlaceholders.getAudienceGlobalPlaceholders(audience);
     }
 }

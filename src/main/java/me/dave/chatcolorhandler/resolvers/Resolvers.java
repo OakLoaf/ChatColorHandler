@@ -18,11 +18,7 @@ public class Resolvers {
         for (Resolver resolver : Resolvers.resolvers) {
             if (resolvers == null || resolvers.contains(resolver.getClass())) {
                 try {
-                    requiredResolvers.add(resolver.getResolver());
-
-                    if (audience != null) {
-                        requiredResolvers.add(resolver.getResolver(audience));
-                    }
+                    requiredResolvers.add(audience != null ? resolver.getResolver(audience) : resolver.getResolver());
                 } catch (Throwable e) {
                     e.printStackTrace();
                 }
