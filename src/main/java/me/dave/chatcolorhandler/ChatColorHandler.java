@@ -5,6 +5,8 @@ import me.dave.chatcolorhandler.messengers.Messenger;
 import me.dave.chatcolorhandler.messengers.MiniMessageMessenger;
 import me.dave.chatcolorhandler.parsers.Parsers;
 import me.dave.chatcolorhandler.parsers.custom.*;
+import me.dave.chatcolorhandler.resolvers.MiniPlaceholdersResolver;
+import me.dave.chatcolorhandler.resolvers.Resolvers;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -45,6 +47,11 @@ public class ChatColorHandler {
         if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Parsers.register(new PlaceholderAPIParser(), 90);
             Bukkit.getLogger().info(LOGGER_PREFIX + "Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
+        }
+
+        if (pluginManager.getPlugin("MiniPlaceholders") != null && pluginManager.isPluginEnabled("MiniPlaceholders")) {
+            Resolvers.register(new MiniPlaceholdersResolver());
+            Bukkit.getLogger().info(LOGGER_PREFIX + "Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
         }
     }
 
