@@ -13,6 +13,10 @@ public class Resolvers {
         resolvers.add(resolver);
     }
 
+    public static void register(TagResolver tagResolver) {
+        resolvers.add(() -> tagResolver);
+    }
+
     public static TagResolver getResolver(@Nullable Audience audience, @Nullable List<Class<? extends Resolver>> resolvers) {
         TagResolver.Builder tagResolver = TagResolver.builder();
         for (Resolver resolver : Resolvers.resolvers) {
