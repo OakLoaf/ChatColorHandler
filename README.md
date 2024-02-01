@@ -1,5 +1,5 @@
 # ChatColorHandler
-![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Version&color=4EC921)
+![Version Number](https://repo.smrt-1.com/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
 
 ChatColorHandler allows you to easily add Hex Colour and MiniMessage support to your Minecraft plugins.
 This Library works with all versions of Spigot and also adds [MiniMessage](https://docs.advntr.dev/minimessage/format.html) support for servers running [Paper](https://papermc.io/downloads/paper) (or forks).
@@ -51,7 +51,7 @@ ChatColorHandler.translate("Test String")
 ## Add ChatColorHandler to your project:
 You can simply add ChatColorHandler to your project by adding the below into your pom.xml
 
-![Version Number](https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Version&color=4EC921)
+![Version Number]([https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Maven&color=4EC921](https://repo.smrt-1.com/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven))
 
 **Javadocs:** https://cooldcb.github.io/ChatColorHandler/me/dave/chatcolorhandler/ChatColorHandler.html
 
@@ -62,8 +62,8 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```xml
 <repositories>
     <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
+        <id>smrt-1.com</id>
+        <url>https://repo.smrt-1.com/releases/</url>
     </repository>
 </repositories>
 ```
@@ -71,9 +71,9 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```xml
 <dependencies>
     <dependency>
-        <groupId>com.github.CoolDCB</groupId>
+        <groupId>me.dave</groupId>
         <artifactId>ChatColorHandler</artifactId>
-        <version>v2.5.0</version>
+        <version>v2.5.3</version>
     </dependency>
 </dependencies>
 ```
@@ -86,13 +86,13 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```gradle
 repositories {
     mavenCentral()
-    maven { url = "https://jitpack.io" }
+    maven { url = "https://repo.smrt-1.com" }
 }
 ```
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "com.github.CoolDCB:ChatColorHandler:v2.5.0"
+    compileOnly "me.dave:ChatColorHandler:v2.5.3"
 }
 ```
 </details>
