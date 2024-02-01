@@ -51,7 +51,7 @@ ChatColorHandler.translate("Test String")
 ## Add ChatColorHandler to your project:
 You can simply add ChatColorHandler to your project by adding the below into your pom.xml
 
-![Version Number]([https://img.shields.io/jitpack/version/com.github.cooldcb/ChatColorHandler?label=Maven&color=4EC921](https://repo.smrt-1.com/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven))
+![Version Number](https://repo.smrt-1.com/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
 
 **Javadocs:** https://cooldcb.github.io/ChatColorHandler/me/dave/chatcolorhandler/ChatColorHandler.html
 
