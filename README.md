@@ -86,7 +86,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```gradle
 repositories {
     mavenCentral()
-    maven { url = "https://repo.smrt-1.com" }
+    maven { url = "https://repo.smrt-1.com/releases/" }
 }
 ```
 **Artifact:**
