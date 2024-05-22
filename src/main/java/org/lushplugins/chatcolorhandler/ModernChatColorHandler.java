@@ -1,5 +1,6 @@
 package org.lushplugins.chatcolorhandler;
 
+import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.Parsers;
 import org.lushplugins.chatcolorhandler.parsers.custom.*;
 import org.lushplugins.chatcolorhandler.resolvers.Resolver;
@@ -11,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -83,6 +85,46 @@ public class ModernChatColorHandler {
 
         String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, player, parsers), parseHex);
         return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver((Audience) player, resolvers));
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     */
+    public static List<Component> translate(@NotNull Collection<String> strings) {
+        return strings.stream().map(ModernChatColorHandler::translate).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param parsers Parsers which this message won't be parsed through
+     */
+    public static List<Component> translate(@NotNull Collection<String> strings, List<Class<? extends Parser>> parsers) {
+        return strings.stream().map(string -> ModernChatColorHandler.translate(string, parsers)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     */
+    public static List<Component> translate(@NotNull Collection<String> strings, Player player) {
+        return strings.stream().map(string -> ModernChatColorHandler.translate(string, player)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     */
+    public static List<Component> translate(@NotNull Collection<String> strings, Player player, List<Class<? extends Parser>> parsers) {
+        return strings.stream().map(string -> ModernChatColorHandler.translate(string, player, parsers)).toList();
     }
 
     /**
