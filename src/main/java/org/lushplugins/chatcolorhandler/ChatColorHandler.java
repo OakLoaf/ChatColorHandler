@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -236,7 +237,7 @@ public class ChatColorHandler {
     /**
      * Translates a string to allow for hex colours and placeholders
      *
-     * @param string String to be converted
+     * @param string String to be translated
      */
     public static String translate(@Nullable String string) {
         return translate(string, null, null);
@@ -245,7 +246,7 @@ public class ChatColorHandler {
     /**
      * Translates a string to allow for hex colours and placeholders
      *
-     * @param string String to be converted
+     * @param string String to be translated
      * @param parsers Parsers which this message won't be parsed through
      */
     public static String translate(@Nullable String string, List<Class<? extends Parser>> parsers) {
@@ -257,7 +258,7 @@ public class ChatColorHandler {
     /**
      * Translates a string to allow for hex colours and placeholders
      *
-     * @param string String to be converted
+     * @param string String to be translated
      * @param player Player to parse placeholders for
      */
     public static String translate(@Nullable String string, Player player) {
@@ -267,7 +268,7 @@ public class ChatColorHandler {
     /**
      * Translates a string to allow for hex colours and placeholders
      *
-     * @param string String to be converted
+     * @param string String to be translated
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
@@ -275,6 +276,46 @@ public class ChatColorHandler {
         if (string == null || string.isBlank()) return "";
 
         return Parsers.parseString(string, player, parsers);
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     */
+    public static List<String> translate(@NotNull Collection<String> strings) {
+        return strings.stream().map(ChatColorHandler::translate).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param parsers Parsers which this message won't be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, List<Class<? extends Parser>> parsers) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, parsers)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, Player player) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, player)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, Player player, List<Class<? extends Parser>> parsers) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, player, parsers)).toList();
     }
 
     /**
@@ -325,6 +366,7 @@ public class ChatColorHandler {
      * Translates multiple strings to allow for hex colours and placeholders
      *
      * @param strings Strings to be converted
+     * @deprecated Refactored to {@link ChatColorHandler#translate(Collection)}.
      */
     @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings) {
@@ -336,6 +378,7 @@ public class ChatColorHandler {
      *
      * @param strings Strings to be converted
      * @param parsers Parsers which this message will be parsed through
+     * @deprecated Refactored to {@link ChatColorHandler#translate(Collection, List)}.
      */
     @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, List<Class<? extends Parser>> parsers) {
@@ -347,6 +390,7 @@ public class ChatColorHandler {
      *
      * @param strings Strings to be converted
      * @param player Player to parse placeholders for
+     * @deprecated Refactored to {@link ChatColorHandler#translate(Collection, Player)}.
      */
     @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player) {
@@ -359,6 +403,7 @@ public class ChatColorHandler {
      * @param strings Strings to be converted
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
+     * @deprecated Refactored to {@link ChatColorHandler#translate(Collection, Player, List)}.
      */
     @Deprecated(forRemoval = true)
     public static List<String> translateAlternateColorCodes(@Nullable List<String> strings, Player player, List<Class<? extends Parser>> parsers) {
