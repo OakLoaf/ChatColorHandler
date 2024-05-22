@@ -38,8 +38,8 @@ tasks {
 publishing {
     repositories {
         maven {
-            name = "smrt1Releases"
-            url = uri("https://repo.smrt-1.com/releases")
+            name = "lushReleases"
+            url = uri("https://repo.lushplugins.org/releases")
             credentials(PasswordCredentials::class)
             authentication {
                 isAllowInsecureProtocol = true
@@ -48,8 +48,8 @@ publishing {
         }
 
         maven {
-            name = "smrt1Snapshots"
-            url = uri("https://repo.smrt-1.com/snapshots")
+            name = "lushSnapshots"
+            url = uri("https://repo.lushplugins.org/snapshots")
             credentials(PasswordCredentials::class)
             authentication {
                 isAllowInsecureProtocol = true

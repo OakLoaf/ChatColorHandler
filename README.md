@@ -1,5 +1,5 @@
 # ChatColorHandler
-![Version Number](https://repo.smrt-1.com/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
+![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
 
 ChatColorHandler allows you to easily add Hex Colour and MiniMessage support to your Minecraft plugins.
 This Library works with all versions of Spigot and also adds [MiniMessage](https://docs.advntr.dev/minimessage/format.html) support for servers running [Paper](https://papermc.io/downloads/paper) (or forks).
@@ -51,7 +51,7 @@ ChatColorHandler.translate("Test String")
 ## Add ChatColorHandler to your project:
 You can simply add ChatColorHandler to your project by adding the below into your pom.xml
 
-![Version Number](https://repo.smrt-1.com/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
+![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
 
 **Javadocs:** https://cooldcb.github.io/ChatColorHandler/me/dave/chatcolorhandler/ChatColorHandler.html
 
