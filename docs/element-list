@@ -1,4 +1,4 @@
-me.dave.chatcolorhandler
-me.dave.chatcolorhandler.parsers
-me.dave.chatcolorhandler.parsers.custom
-me.dave.chatcolorhandler.resolvers
+org.lushplugins.chatcolorhandler
+org.lushplugins.chatcolorhandler.parsers
+org.lushplugins.chatcolorhandler.parsers.custom
+org.lushplugins.chatcolorhandler.resolvers

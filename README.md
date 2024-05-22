@@ -62,8 +62,8 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```xml
 <repositories>
     <repository>
-        <id>smrt-1.com</id>
-        <url>https://repo.smrt-1.com/releases/</url>
+        <id>lushplugins.org</id>
+        <url>https://repo.lushplugins.org/releases/</url>
     </repository>
 </repositories>
 ```
@@ -71,7 +71,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```xml
 <dependencies>
     <dependency>
-        <groupId>me.dave</groupId>
+        <groupId>org.lushplugins</groupId>
         <artifactId>ChatColorHandler</artifactId>
         <version>v2.5.3</version>
     </dependency>
@@ -86,13 +86,13 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```gradle
 repositories {
     mavenCentral()
-    maven { url = "https://repo.smrt-1.com/releases/" }
+    maven { url = "https://repo.lushplugins.org/releases/" }
 }
 ```
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "me.dave:ChatColorHandler:v2.5.3"
+    compileOnly "org.lushplugins:ChatColorHandler:v2.5.3"
 }
 ```
 </details>
