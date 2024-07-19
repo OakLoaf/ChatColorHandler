@@ -27,7 +27,6 @@ public class ChatColorHandler {
     private static final String LOGGER_PREFIX = "[ChatColorHandler] ";
     private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static Messenger messenger;
-    private static ModernChatColorHandler modernHandler;
 
     static {
         Parsers.register(new LegacyCharParser(), 100);
