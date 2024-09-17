@@ -53,7 +53,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
 
 ![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/me/dave/ChatColorHandler?color=40c14a&name=Maven)
 
-**Javadocs:** https://cooldcb.github.io/ChatColorHandler/me/dave/chatcolorhandler/ChatColorHandler.html
+**Javadocs:** https://oakloaf.github.io/ChatColorHandler/me/dave/chatcolorhandler/ChatColorHandler.html
 
 <details open>
 <summary>Maven</summary>
