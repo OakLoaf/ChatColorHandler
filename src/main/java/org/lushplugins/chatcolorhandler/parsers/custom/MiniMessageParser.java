@@ -1,5 +1,7 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
+import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
+import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -8,7 +10,14 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 
 public class MiniMessageParser implements Parser {
-    private static final MiniMessage miniMessage = MiniMessage.miniMessage();
+    public static final MiniMessage MINI_MESSAGE = MiniMessage.builder()
+        .tags(TagResolver.empty())
+        .build();
+
+    @Override
+    public String getType() {
+        return ParserTypes.COLOR;
+    }
 
     @Override
     public String parseString(String string) {
@@ -20,7 +29,7 @@ public class MiniMessageParser implements Parser {
         string = string.replace('§', '&');
 
         TagResolver resolver = Resolvers.getResolver(player != null ? (Audience) player : null, null);
-        return LegacyComponentSerializer.builder().hexColors().build().serialize(miniMessage.deserialize(string, resolver));
+        return LegacyComponentSerializer.builder().hexColors().build().serialize(MINI_MESSAGE.deserialize(string, StandardTags.defaults()));
     }
 
     public static String legacyToMiniMessage(String string, boolean parseHex) {

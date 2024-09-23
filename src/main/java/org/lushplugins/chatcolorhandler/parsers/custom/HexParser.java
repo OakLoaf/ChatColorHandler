@@ -2,12 +2,18 @@ package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
+import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HexParser implements Parser {
     private static final Pattern hexPattern = Pattern.compile("&#[a-fA-F0-9]{6}");
+
+    @Override
+    public String getType() {
+        return ParserTypes.COLOR;
+    }
 
     @Override
     public String parseString(String string) {

@@ -2,8 +2,15 @@ package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;
+import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class PlaceholderAPIParser implements Parser {
+
+
+    @Override
+    public String getType() {
+        return ParserTypes.PLACEHOLDER;
+    }
 
     @Override
     public String parseString(String string) {

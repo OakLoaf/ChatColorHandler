@@ -1,5 +1,6 @@
 package org.lushplugins.chatcolorhandler.parsers;
 
+import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.custom.Parser;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +30,18 @@ public class Parsers {
             }
         }
         return string;
+    }
+
+    public static Collection<Parser> getColourParsers() {
+        return getParsersByType(ParserTypes.COLOR);
+    }
+
+    public static Collection<Parser> getPlaceholderParsers() {
+        return getParsersByType(ParserTypes.PLACEHOLDER);
+    }
+
+    public static Collection<Parser> getParsersByType(@NotNull String type) {
+        return parsers.keySet().stream().filter(parser -> parser.getType().equals(type)).toList();
     }
 
     private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
