@@ -338,21 +338,6 @@ public class ChatColorHandler {
         return ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', string));
     }
 
-    /**
-     * Strips colour from strings
-     *
-     * @param strings Strings to be converted
-     */
-    public static List<String> stripColor(@Nullable List<String> strings) {
-        if (strings == null || strings.isEmpty()) return Collections.emptyList();
-
-        List<String> outputList = new ArrayList<>();
-        for (String string : strings) {
-            outputList.add(stripColor(string));
-        }
-        return outputList;
-    }
-
     public static void debug(boolean debug) {
         ChatColorHandler.debug = debug;
     }
