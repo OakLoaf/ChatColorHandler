@@ -24,9 +24,9 @@ import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class ChatColorHandler {
-    private static final String LOGGER_PREFIX = "[ChatColorHandler] ";
     private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static Messenger messenger;
+    private static boolean debug = false;
 
     static {
         Parsers.register(new LegacyCharParser(), 100);
@@ -37,21 +37,21 @@ public class ChatColorHandler {
             Parsers.register(new MiniMessageParser(), 80);
             messenger = new MiniMessageMessenger();
 
-            Bukkit.getLogger().info(LOGGER_PREFIX + "Found MiniMessage in Server. MiniMessage support enabled.");
+            debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException | NoSuchMethodException ignored) {
             messenger = new LegacyMessenger();
-            Bukkit.getLogger().info(LOGGER_PREFIX + "Unable to find MiniMessage. MiniMessage support not enabled.");
+            debugLog("Unable to find MiniMessage. MiniMessage support not enabled.");
         }
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Parsers.register(new PlaceholderAPIParser(), 90);
-            Bukkit.getLogger().info(LOGGER_PREFIX + "Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
+            debugLog("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
 
         if (pluginManager.getPlugin("MiniPlaceholders") != null && pluginManager.isPluginEnabled("MiniPlaceholders")) {
             Resolvers.register(new MiniPlaceholdersResolver());
-            Bukkit.getLogger().info(LOGGER_PREFIX + "Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
+            debugLog("Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
         }
     }
 
@@ -351,5 +351,15 @@ public class ChatColorHandler {
             outputList.add(stripColor(string));
         }
         return outputList;
+    }
+
+    public static void debug(boolean debug) {
+        ChatColorHandler.debug = debug;
+    }
+
+    private static void debugLog(String log) {
+        if (debug) {
+            Bukkit.getLogger().info("[ChatColorHandler] " + log);
+        }
     }
 }
