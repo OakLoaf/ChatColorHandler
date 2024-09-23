@@ -1,7 +1,6 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.entity.Player;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 import java.util.regex.Matcher;
@@ -24,11 +23,6 @@ public class HexParser implements Parser {
         string = match.replaceAll(result -> "<reset><" + ChatColor.of(result.group()).toString() + ">");
 
         return ChatColor.translateAlternateColorCodes('&', string);
-    }
-
-    @Override
-    public String parseString(String string, Player player) {
-        return parseString(string);
     }
 
     public static String parseToMiniMessage(String string) {
