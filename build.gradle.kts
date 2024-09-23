@@ -10,7 +10,7 @@ version = "3.1.0"
 repositories {
     mavenCentral() // Adventure, MiniPlaceholders
     maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
-    maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi/") } // PlaceholderAPI
+    maven { url = uri("https://repo.helpch.at/releases") } // PlaceholderAPI
 }
 
 dependencies {
@@ -18,7 +18,7 @@ dependencies {
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.15.0")
     compileOnly("net.kyori:adventure-text-minimessage:4.15.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
-    compileOnly("me.clip:placeholderapi:2.11.3")
+    compileOnly("me.clip:placeholderapi:2.11.6")
 }
 
 java {

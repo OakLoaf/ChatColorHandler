@@ -6,7 +6,6 @@ import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class PlaceholderAPIParser implements Parser {
 
-
     @Override
     public String getType() {
         return ParserTypes.PLACEHOLDER;
