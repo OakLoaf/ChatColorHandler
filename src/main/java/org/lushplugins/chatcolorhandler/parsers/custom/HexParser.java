@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HexParser implements Parser {
-    private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
+    public static final Pattern HEX_PATTERN = Pattern.compile("&(#[a-fA-F0-9]{6})");
 
     @Override
     public String getType() {
@@ -21,11 +21,7 @@ public class HexParser implements Parser {
 
         // Parse message through Default Hex in format "&#rrggbb"
         Matcher match = HEX_PATTERN.matcher(string);
-        while (match.find()) {
-            String color = string.substring(match.start() + 1, match.end());
-            string = string.replace("&" + color, ChatColor.of(color).toString());
-            match = HEX_PATTERN.matcher(string);
-        }
+        string = match.replaceAll(result -> "<reset><" + ChatColor.of(result.group()).toString() + ">");
 
         return ChatColor.translateAlternateColorCodes('&', string);
     }
@@ -38,11 +34,6 @@ public class HexParser implements Parser {
     public static String parseToMiniMessage(String string) {
         // Parse message through Default Hex in format "&#rrggbb"
         Matcher match = HEX_PATTERN.matcher(string);
-        while (match.find()) {
-            String color = string.substring(match.start() + 1, match.end());
-            string = string.replace("&" + color, "<reset><" + color + ">");
-            match = HEX_PATTERN.matcher(string);
-        }
-        return string;
+        return match.replaceAll("<reset><$1>");
     }
 }
