@@ -20,7 +20,7 @@ public class HexParser implements Parser {
 
         // Parse message through Default Hex in format "&#rrggbb"
         Matcher match = HEX_PATTERN.matcher(string);
-        string = match.replaceAll(result -> "<reset><" + ChatColor.of(result.group()).toString() + ">");
+        string = match.replaceAll(result -> ChatColor.of(result.group()).toString());
 
         return ChatColor.translateAlternateColorCodes('&', string);
     }
