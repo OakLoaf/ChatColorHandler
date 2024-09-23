@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HexParser implements Parser {
-    public static final Pattern HEX_PATTERN = Pattern.compile("&(#[a-fA-F0-9]{6})");
+    public static final Pattern HEX_PATTERN = Pattern.compile("&?(#[a-fA-F0-9]{6})");
 
     @Override
     public String getType() {
