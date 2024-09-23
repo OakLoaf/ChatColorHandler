@@ -19,18 +19,18 @@ public class Parsers {
         parsers = sortByValue(parsers);
     }
 
-    public static String parseString(String string, @Nullable Player player, @NotNull List<? extends Class<? extends Parser>> parsers) {
-        return parseString(string, player, Parsers.parsers.keySet().stream().filter(parser -> parsers.isEmpty() || parsers.contains(parser.getClass())).toArray(Parser[]::new));
+    public static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull List<? extends Class<? extends Parser>> parsers) {
+        return parseString(string, outputType, player, Parsers.parsers.keySet().stream().filter(parser -> parsers.isEmpty() || parsers.contains(parser.getClass())).toArray(Parser[]::new));
     }
 
-    public static String parseString(String string, @Nullable Player player, @NotNull String... parserTypes) {
-        return parseString(string, player, Parsers.parsers.keySet().stream().filter(parser -> List.of(parserTypes).contains(parser.getType())).toArray(Parser[]::new));
+    public static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull String... parserTypes) {
+        return parseString(string, outputType, player, Parsers.parsers.keySet().stream().filter(parser -> List.of(parserTypes).contains(parser.getType())).toArray(Parser[]::new));
     }
 
-    private static String parseString(String string, @Nullable Player player, @NotNull Parser... parsers) {
+    private static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull Parser... parsers) {
         for (Parser parser : parsers) {
             try {
-                string = parser.parseString(string, player);
+                string = parser.parseString(string, outputType, player);
             } catch (Throwable e) {
                 e.printStackTrace();
             }

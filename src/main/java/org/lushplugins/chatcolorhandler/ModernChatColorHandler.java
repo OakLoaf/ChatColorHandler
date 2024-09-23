@@ -1,22 +1,24 @@
 package org.lushplugins.chatcolorhandler;
 
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import org.jetbrains.annotations.NotNull;
+import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.Parsers;
 import org.lushplugins.chatcolorhandler.parsers.custom.*;
 import org.lushplugins.chatcolorhandler.resolvers.Resolver;
 import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class ModernChatColorHandler {
+    // TODO: Consider accepting an audience instead of player
 
     static {
         ChatColorHandler.translate("init");
@@ -73,18 +75,17 @@ public class ModernChatColorHandler {
     public static Component translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers, List<Class<? extends Resolver>> resolvers) {
         if (string == null || string.isBlank()) return Component.empty();
 
-        boolean parseHex;
-        if (parsers == null) {
-            parseHex = true;
-            parsers = List.of(LegacyCharParser.class, PlaceholderAPIParser.class);
-        } else {
-            parsers = new ArrayList<>(parsers);
-            parseHex = parsers.remove(HexParser.class);
-            parsers.remove(MiniMessageParser.class);
+        TagResolver.Builder resolverBuilder = TagResolver.builder();
+        if (parsers.isEmpty() || parsers.contains(MiniMessageColorParser.class)) {
+            resolverBuilder.resolver(StandardTags.defaults());
         }
 
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(Parsers.parseString(string, player, parsers), parseHex);
-        return MiniMessage.miniMessage().deserialize(legacyParsed, Resolvers.getResolver((Audience) player, resolvers));
+        if (parsers.isEmpty() || parsers.contains(MiniMessageResolverParser.class)) {
+            resolverBuilder.resolver(Resolvers.getResolver((Audience) player, resolvers));
+        }
+
+        String legacyParsed = Parsers.parseString(string, Parser.OutputType.MINI_MESSAGE, player, parsers);
+        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, resolverBuilder.build());
     }
 
     /**

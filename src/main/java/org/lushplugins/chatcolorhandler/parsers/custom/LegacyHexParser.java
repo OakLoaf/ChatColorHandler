@@ -1,15 +1,14 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
-import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// Hex in format "&#rrggbb" or "#rrggbb"
-public class HexParser implements Parser {
-    private static final Pattern HEX_PATTERN = Pattern.compile("(?<![<\\\\])&?(#[a-fA-F0-9]{6})(?!>)");
+// Hex in format '§x§r§r§g§g§b§b'
+public class LegacyHexParser implements Parser {
+    private static final Pattern HEX_PATTERN = Pattern.compile("§x§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])");
 
     @Override
     public String getType() {
@@ -18,10 +17,12 @@ public class HexParser implements Parser {
 
     @Override
     public String parseString(@NotNull String string, @NotNull OutputType outputType) {
-        Matcher match = HEX_PATTERN.matcher(string);
         return switch (outputType) {
-            case SPIGOT -> match.replaceAll(result -> ChatColor.of(result.group()).toString());
-            case MINI_MESSAGE -> match.replaceAll("<reset><$1>");
+            case SPIGOT -> string;
+            case MINI_MESSAGE -> {
+                Matcher match = HEX_PATTERN.matcher(string);
+                yield match.replaceAll("<reset><#$1$2$3$4$5$6>");
+            }
         };
     }
 }

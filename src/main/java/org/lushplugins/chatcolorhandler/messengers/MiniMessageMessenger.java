@@ -1,10 +1,7 @@
 package org.lushplugins.chatcolorhandler.messengers;
 
-import org.lushplugins.chatcolorhandler.ChatColorHandler;
-import org.lushplugins.chatcolorhandler.parsers.custom.LegacyCharParser;
-import org.lushplugins.chatcolorhandler.parsers.custom.MiniMessageParser;
-import org.lushplugins.chatcolorhandler.parsers.custom.PlaceholderAPIParser;
-import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.lushplugins.chatcolorhandler.ModernChatColorHandler;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -18,20 +15,20 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
-import java.util.List;
 
 public class MiniMessageMessenger extends AbstractMessenger {
-    private final MiniMessage miniMessage = MiniMessage.miniMessage();
+    public static final MiniMessage MINI_MESSAGE = MiniMessage.builder()
+        .tags(TagResolver.empty())
+        .build();
+    public static final LegacyComponentSerializer LEGACY_COMPONENT_SERIALIZER = LegacyComponentSerializer.builder().build();
+
 
     @Override
     public void sendMessage(@NotNull CommandSender recipient, @Nullable String message) {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) recipient);
-        
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(message, (recipient instanceof Player player ? player : null), List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        Component parsed = miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null));
-
+        Component parsed = ModernChatColorHandler.translate(message, (recipient instanceof Player player ? player : null));
         audience.sendMessage(parsed);
     }
 
@@ -40,8 +37,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) Bukkit.getServer());
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(message, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        audience.sendMessage(miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null)));
+        audience.sendMessage(ModernChatColorHandler.translate(message));
     }
 
     @Override
@@ -49,8 +45,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
         if (message == null || message.isBlank()) return;
 
         Audience audience = Audience.audience((Audience) player);
-        String legacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(message, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        audience.sendActionBar(miniMessage.deserialize(legacyParsed, Resolvers.getResolver(audience, null)));
+        audience.sendActionBar(ModernChatColorHandler.translate(message, player));
     }
 
     @Override
@@ -73,14 +68,9 @@ public class MiniMessageMessenger extends AbstractMessenger {
     @Override
     public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
         Audience audience = Audience.audience((Audience) player);
-        TagResolver resolver = Resolvers.getResolver(audience, null);
-
         Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn * 50L), Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L));
-        String subtitleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(subtitle, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-        String titleLegacyParsed = MiniMessageParser.legacyToMiniMessage(ChatColorHandler.translate(title, player, List.of(LegacyCharParser.class, PlaceholderAPIParser.class)), true);
-
         audience.sendTitlePart(TitlePart.TIMES, times);
-        audience.sendTitlePart(TitlePart.SUBTITLE, miniMessage.deserialize(subtitleLegacyParsed, resolver));
-        audience.sendTitlePart(TitlePart.TITLE, miniMessage.deserialize(titleLegacyParsed, resolver));
+        audience.sendTitlePart(TitlePart.SUBTITLE, ModernChatColorHandler.translate(subtitle, player));
+        audience.sendTitlePart(TitlePart.TITLE, ModernChatColorHandler.translate(title, player));
     }
 }

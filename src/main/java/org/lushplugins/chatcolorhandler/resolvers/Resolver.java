@@ -5,7 +5,9 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 
 public interface Resolver {
+
     @NotNull TagResolver getResolver();
+
     default @NotNull TagResolver getResolver(Audience audience) {
         return getResolver();
     }

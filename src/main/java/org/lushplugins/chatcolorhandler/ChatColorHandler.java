@@ -23,17 +23,19 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ChatColorHandler {
     private static Messenger messenger;
+    // TODO: Work out how to setup debug (Impossible to set to true before class initialises)
     private static boolean debug = false;
 
     static {
-        Parsers.register(new LegacyCharParser(), 100);
-        Parsers.register(new HexParser(), 70);
+        Parsers.register(new LegacySpigotParser(), 85);
+        Parsers.register(new LegacyHexParser(), 84);
+        Parsers.register(new HexParser(), 83);
 
         try {
             Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
-            Parsers.register(new MiniMessageParser(), 80);
             messenger = new MiniMessageMessenger();
-
+            Parsers.register(new MiniMessageColorParser(), 70);
+            Parsers.register(new MiniMessageResolverParser(), 89);
             debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException | NoSuchMethodException ignored) {
             messenger = new LegacyMessenger();
@@ -246,9 +248,7 @@ public class ChatColorHandler {
      * @param parsers Parsers which this message won't be parsed through
      */
     public static String translate(@Nullable String string, @NotNull List<? extends Class<? extends Parser>> parsers) {
-        if (string == null || string.isBlank()) return "";
-
-        return Parsers.parseString(string, null, parsers);
+        return translate(string, null, parsers);
     }
 
     /**
@@ -258,9 +258,7 @@ public class ChatColorHandler {
      * @param parserTypes Parsers which this message won't be parsed through
      */
     public static String translate(@Nullable String string, @NotNull String... parserTypes) {
-        if (string == null || string.isBlank()) return "";
-
-        return Parsers.parseString(string, null, parserTypes);
+        return translate(string, null, parserTypes);
     }
 
     /**
@@ -283,7 +281,7 @@ public class ChatColorHandler {
     public static String translate(@Nullable String string, Player player, List<? extends Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
-        return Parsers.parseString(string, player, parsers);
+        return Parsers.parseString(string, Parser.OutputType.SPIGOT, player, parsers);
     }
 
     /**
@@ -296,7 +294,7 @@ public class ChatColorHandler {
     public static String translate(@Nullable String string, Player player, String... parserTypes) {
         if (string == null || string.isBlank()) return "";
 
-        return Parsers.parseString(string, player, parserTypes);
+        return Parsers.parseString(string, Parser.OutputType.SPIGOT, player, parserTypes);
     }
 
     /**
@@ -370,9 +368,7 @@ public class ChatColorHandler {
             return "";
         }
 
-        string = ChatColorHandler.translate(string, ParserTypes.COLOR);
-
-        return ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', string));
+        return ChatColor.stripColor(ChatColorHandler.translate(string, ParserTypes.COLOR));
     }
 
     public static void debug(boolean debug) {

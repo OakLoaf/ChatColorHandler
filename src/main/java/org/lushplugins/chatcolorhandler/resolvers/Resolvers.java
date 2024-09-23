@@ -2,6 +2,7 @@ package org.lushplugins.chatcolorhandler.resolvers;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -17,10 +18,10 @@ public class Resolvers {
         resolvers.add(() -> tagResolver);
     }
 
-    public static TagResolver getResolver(@Nullable Audience audience, @Nullable List<Class<? extends Resolver>> resolvers) {
+    public static TagResolver getResolver(@Nullable Audience audience, @NotNull List<Class<? extends Resolver>> resolvers) {
         TagResolver.Builder tagResolver = TagResolver.builder();
         for (Resolver resolver : Resolvers.resolvers) {
-            if (resolvers == null || resolvers.contains(resolver.getClass())) {
+            if (resolvers.isEmpty() || resolvers.contains(resolver.getClass())) {
                 try {
                     tagResolver.resolver(audience != null ? resolver.getResolver(audience) : resolver.getResolver());
                 } catch (Throwable e) {
