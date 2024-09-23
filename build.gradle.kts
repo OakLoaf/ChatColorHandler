@@ -1,7 +1,7 @@
 plugins {
     java
     `maven-publish`
-    id("com.github.johnrengelman.shadow") version("8.1.1")
+    id("io.github.goooler.shadow") version("8.1.7")
 }
 
 group = "org.lushplugins"
@@ -9,8 +9,8 @@ version = "3.1.0"
 
 repositories {
     mavenCentral() // Adventure, MiniPlaceholders
-    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") } // Spigot
-    maven { url = uri("https://repo.helpch.at/releases") } // PlaceholderAPI
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
+    maven("https://repo.helpch.at/releases") // PlaceholderAPI
 }
 
 dependencies {
