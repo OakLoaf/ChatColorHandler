@@ -3,6 +3,7 @@ package org.lushplugins.chatcolorhandler;
 import org.lushplugins.chatcolorhandler.messengers.LegacyMessenger;
 import org.lushplugins.chatcolorhandler.messengers.Messenger;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
+import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 import org.lushplugins.chatcolorhandler.parsers.Parsers;
 import org.lushplugins.chatcolorhandler.parsers.custom.*;
 import org.lushplugins.chatcolorhandler.resolvers.MiniPlaceholdersResolver;
@@ -15,16 +16,12 @@ import org.bukkit.plugin.PluginManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class ChatColorHandler {
-    private static final Pattern HEX_PATTERN = Pattern.compile("&#[a-fA-F0-9]{6}");
     private static Messenger messenger;
     private static boolean debug = false;
 
@@ -239,7 +236,7 @@ public class ChatColorHandler {
      * @param string String to be translated
      */
     public static String translate(@Nullable String string) {
-        return translate(string, null, null);
+        return translate(string, null, Collections.emptyList());
     }
 
     /**
@@ -248,7 +245,7 @@ public class ChatColorHandler {
      * @param string String to be translated
      * @param parsers Parsers which this message won't be parsed through
      */
-    public static String translate(@Nullable String string, List<Class<? extends Parser>> parsers) {
+    public static String translate(@Nullable String string, @NotNull List<? extends Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
         return Parsers.parseString(string, null, parsers);
@@ -258,10 +255,22 @@ public class ChatColorHandler {
      * Translates a string to allow for hex colours and placeholders
      *
      * @param string String to be translated
+     * @param parserTypes Parsers which this message won't be parsed through
+     */
+    public static String translate(@Nullable String string, @NotNull String... parserTypes) {
+        if (string == null || string.isBlank()) return "";
+
+        return Parsers.parseString(string, null, parserTypes);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
      * @param player Player to parse placeholders for
      */
     public static String translate(@Nullable String string, Player player) {
-        return translate(string, player, null);
+        return translate(string, player, Collections.emptyList());
     }
 
     /**
@@ -271,10 +280,23 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public static String translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
+    public static String translate(@Nullable String string, Player player, List<? extends Class<? extends Parser>> parsers) {
         if (string == null || string.isBlank()) return "";
 
         return Parsers.parseString(string, player, parsers);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     * @param player Player to parse placeholders for
+     * @param parserTypes Parser types which this message will be parsed through
+     */
+    public static String translate(@Nullable String string, Player player, String... parserTypes) {
+        if (string == null || string.isBlank()) return "";
+
+        return Parsers.parseString(string, player, parserTypes);
     }
 
     /**
@@ -290,10 +312,20 @@ public class ChatColorHandler {
      * Translates a collection of strings to allow for hex colours and placeholders
      *
      * @param strings Strings to be translated
-     * @param parsers Parsers which this message won't be parsed through
+     * @param parsers Parsers which this message will be parsed through
      */
-    public static List<String> translate(@NotNull Collection<String> strings, List<Class<? extends Parser>> parsers) {
+    public static List<String> translate(@NotNull Collection<String> strings, List<? extends Class<? extends Parser>> parsers) {
         return strings.stream().map(string -> ChatColorHandler.translate(string, parsers)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param parserTypes Parser types which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, String... parserTypes) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, parserTypes)).toList();
     }
 
     /**
@@ -313,8 +345,19 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public static List<String> translate(@NotNull Collection<String> strings, Player player, List<Class<? extends Parser>> parsers) {
+    public static List<String> translate(@NotNull Collection<String> strings, Player player, List<? extends Class<? extends Parser>> parsers) {
         return strings.stream().map(string -> ChatColorHandler.translate(string, player, parsers)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     * @param parserTypes Parser types which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, Player player, String... parserTypes) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, player, parserTypes)).toList();
     }
 
     /**
@@ -323,18 +366,12 @@ public class ChatColorHandler {
      * @param string String to be converted
      */
     public static String stripColor(@Nullable String string) {
-        if (string == null || string.isBlank()) return "";
-
-        // Replace legacy character
-        string = string.replace("§", "&");
-
-        // Parse message through Default Hex in format "&#rrggbb"
-        Matcher match = HEX_PATTERN.matcher(string);
-        while (match.find()) {
-            String color = string.substring(match.start() + 1, match.end());
-            string = string.replace("&" + color, ChatColor.of(color) + "");
-            match = HEX_PATTERN.matcher(string);
+        if (string == null || string.isBlank()) {
+            return "";
         }
+
+        string = ChatColorHandler.translate(string, ParserTypes.COLOR);
+
         return ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', string));
     }
 
