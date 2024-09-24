@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 // Hex in format '§x§r§r§g§g§b§b'
 public class LegacyHexParser implements Parser {
-    private static final Pattern HEX_PATTERN = Pattern.compile("§x§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])§([a-fA-F0-9])");
+    private static final Pattern HEX_PATTERN = Pattern.compile("[§&]x([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])");
 
     @Override
     public String getType() {
