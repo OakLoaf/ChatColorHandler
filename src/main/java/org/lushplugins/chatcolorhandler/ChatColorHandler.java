@@ -27,8 +27,8 @@ public class ChatColorHandler {
     private static boolean debug = false;
 
     static {
-        Parsers.register(new LegacySpigotParser(), 85);
-        Parsers.register(new LegacyHexParser(), 84);
+        Parsers.register(new LegacyHexParser(), 85);
+        Parsers.register(new LegacySpigotParser(), 84);
         Parsers.register(new HexParser(), 83);
 
         try {
