@@ -23,8 +23,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ChatColorHandler {
     private static Messenger messenger;
-    // TODO: Work out how to setup debug (Impossible to set to true before class initialises)
-    private static boolean debug = false;
 
     static {
         Parsers.register(new LegacyHexParser(), 85);
@@ -371,12 +369,8 @@ public class ChatColorHandler {
         return ChatColor.stripColor(ChatColorHandler.translate(string, ParserTypes.COLOR));
     }
 
-    public static void debug(boolean debug) {
-        ChatColorHandler.debug = debug;
-    }
-
     private static void debugLog(String log) {
-        if (debug) {
+        if (ChatColorHandlerDebugger.debug()) {
             Bukkit.getLogger().info("[ChatColorHandler] " + log);
         }
     }
