@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unused")
@@ -30,17 +31,17 @@ public class ModernChatColorHandler {
      * @param string String to be converted
      */
     public static Component translate(@Nullable String string) {
-        return translate(string, null, null, null);
+        return translate(string, null, Collections.emptyList(), Collections.emptyList());
     }
 
     /**
      * Translates a string to allow for hex colours and placeholders
      *
      * @param string String to be converted
-     * @param parsers Parsers which this message won't be parsed through
+     * @param parsers Parsers which this message will be parsed through (Empty will allow all parsers)
      */
-    public static Component translate(@Nullable String string, List<Class<? extends Parser>> parsers) {
-        return translate(string, null, parsers, null);
+    public static Component translate(@Nullable String string, @NotNull List<Class<? extends Parser>> parsers) {
+        return translate(string, null, parsers, Collections.emptyList());
     }
 
     /**
@@ -50,7 +51,7 @@ public class ModernChatColorHandler {
      * @param player Player to parse placeholders for
      */
     public static Component translate(@Nullable String string, Player player) {
-        return translate(string, player, null, null);
+        return translate(string, player, Collections.emptyList(), Collections.emptyList());
     }
 
     /**
@@ -60,8 +61,8 @@ public class ModernChatColorHandler {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public static Component translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers) {
-        return translate(string, player, parsers, null);
+    public static Component translate(@Nullable String string, Player player, @NotNull List<Class<? extends Parser>> parsers) {
+        return translate(string, player, parsers, Collections.emptyList());
     }
 
     /**
@@ -72,7 +73,7 @@ public class ModernChatColorHandler {
      * @param parsers Parsers which this message will be parsed through
      * @param resolvers Resolvers which will be used for this message (Paper + forks only)
      */
-    public static Component translate(@Nullable String string, Player player, List<Class<? extends Parser>> parsers, List<Class<? extends Resolver>> resolvers) {
+    public static Component translate(@Nullable String string, Player player, @NotNull List<Class<? extends Parser>> parsers, @NotNull List<Class<? extends Resolver>> resolvers) {
         if (string == null || string.isBlank()) return Component.empty();
 
         TagResolver.Builder resolverBuilder = TagResolver.builder();
@@ -103,7 +104,7 @@ public class ModernChatColorHandler {
      * @param strings Strings to be translated
      * @param parsers Parsers which this message won't be parsed through
      */
-    public static List<Component> translate(@NotNull Collection<String> strings, List<Class<? extends Parser>> parsers) {
+    public static List<Component> translate(@NotNull Collection<String> strings, @NotNull List<Class<? extends Parser>> parsers) {
         return strings.stream().map(string -> ModernChatColorHandler.translate(string, parsers)).toList();
     }
 
