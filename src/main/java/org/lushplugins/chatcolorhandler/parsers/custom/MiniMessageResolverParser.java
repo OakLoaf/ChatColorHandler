@@ -11,6 +11,7 @@ import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
 import java.util.Collections;
 
 public class MiniMessageResolverParser implements Parser {
+    protected static final MiniMessageResolverParser INSTANCE = new MiniMessageResolverParser();
 
     @Override
     public String getType() {

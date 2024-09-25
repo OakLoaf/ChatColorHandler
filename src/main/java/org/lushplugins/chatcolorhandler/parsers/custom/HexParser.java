@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 // Hex in format "&#rrggbb" or "#rrggbb"
 public class HexParser implements Parser {
+    protected static final HexParser INSTANCE = new HexParser();
     private static final Pattern HEX_PATTERN = Pattern.compile("(?<![<\\\\])&?(#[a-fA-F0-9]{6})(?!>)");
 
     @Override
