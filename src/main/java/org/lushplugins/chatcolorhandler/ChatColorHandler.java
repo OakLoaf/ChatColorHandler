@@ -33,11 +33,11 @@ public class ChatColorHandler {
             Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
             messenger = new MiniMessageMessenger();
 
+            Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
             Parsers.register(MiniMessageColorParser.INSTANCE, 73);
             Parsers.register(MiniMessageInteractionParser.INSTANCE, 72);
             Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
             Parsers.register(MiniMessageTextFormattingParser.INSTANCE, 70);
-            Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
             ChatColorHandlerDebugger.debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException | NoSuchMethodException ignored) {
             messenger = new LegacyMessenger();
