@@ -12,6 +12,8 @@ public class HexParser implements Parser {
     public static final HexParser INSTANCE = new HexParser();
     private static final Pattern HEX_PATTERN = Pattern.compile("(?<![<\\\\])&?(#[a-fA-F0-9]{6})(?!>)");
 
+    private HexParser() {}
+
     @Override
     public String getType() {
         return ParserTypes.COLOR;

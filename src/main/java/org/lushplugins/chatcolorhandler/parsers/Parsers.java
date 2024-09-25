@@ -39,10 +39,25 @@ public class Parsers {
         return string;
     }
 
-    public static List<? extends Class<? extends Parser>> getParsersByType(@NotNull String type) {
-        return parsers.keySet().stream()
-            .filter(parser -> parser.getType().equals(type))
-            .map(Parser::getClass)
+    public static List<Parser> getRegisteredParsers() {
+        return parsers.keySet().stream().toList();
+    }
+
+    public static List<Parser> ofType(@NotNull String type) {
+        return ofTypes(type);
+    }
+
+    public static List<Parser> ofTypes(@NotNull String... types) {
+        return getRegisteredParsers().stream()
+            .filter(parser -> {
+                for (String type : types) {
+                    if (parser.getType().equals(type)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            })
             .toList();
     }
 

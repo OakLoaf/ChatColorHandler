@@ -25,15 +25,18 @@ public class ChatColorHandler {
     private static Messenger messenger;
 
     static {
-        Parsers.register(new LegacyHexParser(), 85);
-        Parsers.register(new LegacySpigotParser(), 84);
-        Parsers.register(new HexParser(), 83);
+        Parsers.register(LegacyHexParser.INSTANCE, 85);
+        Parsers.register(LegacySpigotParser.INSTANCE, 84);
+        Parsers.register(HexParser.INSTANCE, 83);
 
         try {
             Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
             messenger = new MiniMessageMessenger();
-            Parsers.register(new MiniMessageColorParser(), 70);
-            Parsers.register(new MiniMessageResolverParser(), 89);
+            Parsers.register(MiniMessageColorParser.INSTANCE, 73);
+            Parsers.register(MiniMessageInteractionParser.INSTANCE, 72);
+            Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
+            Parsers.register(MiniMessageTextFormattingParser.INSTANCE, 70);
+            Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
             debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException | NoSuchMethodException ignored) {
             messenger = new LegacyMessenger();
@@ -42,7 +45,7 @@ public class ChatColorHandler {
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
-            Parsers.register(new PlaceholderAPIParser(), 90);
+            Parsers.register(PlaceholderAPIParser.INSTANCE, 90);
             debugLog("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
 

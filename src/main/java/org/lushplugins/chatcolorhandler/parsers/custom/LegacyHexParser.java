@@ -11,6 +11,8 @@ public class LegacyHexParser implements Parser {
     public static final LegacyHexParser INSTANCE = new LegacyHexParser();
     private static final Pattern HEX_PATTERN = Pattern.compile("[§&]x[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])");
 
+    private LegacyHexParser() {}
+
     @Override
     public String getType() {
         return ParserTypes.COLOR;

@@ -7,6 +7,8 @@ import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 public class LegacySpigotParser implements Parser {
     public static final LegacySpigotParser INSTANCE = new LegacySpigotParser();
 
+    private LegacySpigotParser() {}
+
     @Override
     public String getType() {
         return ParserTypes.COLOR;

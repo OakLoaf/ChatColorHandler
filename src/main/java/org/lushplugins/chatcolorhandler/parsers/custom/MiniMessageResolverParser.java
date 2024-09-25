@@ -13,6 +13,8 @@ import java.util.Collections;
 public class MiniMessageResolverParser implements Parser {
     public static final MiniMessageResolverParser INSTANCE = new MiniMessageResolverParser();
 
+    private MiniMessageResolverParser() {}
+
     @Override
     public String getType() {
         return ParserTypes.PLACEHOLDER;

@@ -6,24 +6,21 @@ import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
-public class MiniMessageColorParser implements Parser {
-    public static final MiniMessageColorParser INSTANCE = new MiniMessageColorParser();
-    private static final TagResolver BASIC_COLORS = TagResolver.builder()
+public class MiniMessageInteractionParser implements Parser {
+    public static final MiniMessageInteractionParser INSTANCE = new MiniMessageInteractionParser();
+    private static final TagResolver INTERACTION = TagResolver.builder()
         .resolvers(
-            StandardTags.color(),
-            StandardTags.decorations(),
-            StandardTags.gradient(),
-            StandardTags.rainbow(),
-            StandardTags.reset(),
-            StandardTags.transition()
+            StandardTags.hoverEvent(),
+            StandardTags.clickEvent(),
+            StandardTags.insertion()
         )
         .build();
 
-    private MiniMessageColorParser() {}
+    private MiniMessageInteractionParser() {}
 
     @Override
     public String getType() {
-        return ParserTypes.COLOR;
+        return ParserTypes.INTERACTION;
     }
 
     @Override
@@ -31,7 +28,7 @@ public class MiniMessageColorParser implements Parser {
         return switch (outputType) {
             case SPIGOT -> {
                 string = string.replace('§', '&');
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, BASIC_COLORS));
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, INTERACTION));
             }
             case MINI_MESSAGE -> string;
         };

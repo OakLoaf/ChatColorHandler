@@ -8,6 +8,8 @@ import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 public class PlaceholderAPIParser implements Parser {
     public static final PlaceholderAPIParser INSTANCE = new PlaceholderAPIParser();
 
+    private PlaceholderAPIParser() {}
+
     @Override
     public String getType() {
         return ParserTypes.PLACEHOLDER;
