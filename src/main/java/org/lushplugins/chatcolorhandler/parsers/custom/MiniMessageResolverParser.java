@@ -1,10 +1,11 @@
-package org.lushplugins.chatcolorhandler.parsers;
+package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
+import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
 
 import java.util.Collections;
