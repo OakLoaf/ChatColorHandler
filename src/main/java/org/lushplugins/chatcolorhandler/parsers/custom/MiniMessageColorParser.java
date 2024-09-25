@@ -7,6 +7,7 @@ import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class MiniMessageColorParser implements Parser {
+    public static final MiniMessageColorParser INSTANCE = new MiniMessageColorParser();
     private static final TagResolver BASIC_COLORS = TagResolver.builder()
         .resolvers(
             StandardTags.color(),

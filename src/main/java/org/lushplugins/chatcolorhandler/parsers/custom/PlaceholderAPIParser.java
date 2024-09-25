@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class PlaceholderAPIParser implements Parser {
-    protected static final PlaceholderAPIParser INSTANCE = new PlaceholderAPIParser();
+    public static final PlaceholderAPIParser INSTANCE = new PlaceholderAPIParser();
 
     @Override
     public String getType() {

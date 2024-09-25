@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class LegacySpigotParser implements Parser {
-    protected static final LegacySpigotParser INSTANCE = new LegacySpigotParser();
+    public static final LegacySpigotParser INSTANCE = new LegacySpigotParser();
 
     @Override
     public String getType() {
