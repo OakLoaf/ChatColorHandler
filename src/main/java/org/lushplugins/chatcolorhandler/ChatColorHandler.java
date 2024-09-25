@@ -32,6 +32,7 @@ public class ChatColorHandler {
         try {
             Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
             messenger = new MiniMessageMessenger();
+
             Parsers.register(MiniMessageColorParser.INSTANCE, 73);
             Parsers.register(MiniMessageInteractionParser.INSTANCE, 72);
             Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
