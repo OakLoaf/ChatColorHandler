@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,7 +28,7 @@ public class ModernChatColorHandler {
      * @param string String to be translated
      */
     public static Component translate(@Nullable String string) {
-        return translate(string, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(string, ChatColorHandler.settings().defaultParsers());
     }
 
     /**
@@ -49,7 +48,7 @@ public class ModernChatColorHandler {
      * @param player Player to parse placeholders for
      */
     public static Component translate(@Nullable String string, Player player) {
-        return translate(string, player, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(string, player, ChatColorHandler.settings().defaultParsers());
     }
 
     /**
@@ -80,7 +79,7 @@ public class ModernChatColorHandler {
      * @param strings Strings to be translated
      */
     public static List<Component> translate(@NotNull Collection<String> strings) {
-        return translate(strings, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(strings, ChatColorHandler.settings().defaultParsers());
     }
 
     /**
@@ -100,7 +99,7 @@ public class ModernChatColorHandler {
      * @param player  Player to parse placeholders for
      */
     public static List<Component> translate(@NotNull Collection<String> strings, Player player) {
-        return translate(strings, player, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(strings, player, ChatColorHandler.settings().defaultParsers());
     }
 
     /**

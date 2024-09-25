@@ -1,7 +1,6 @@
 package org.lushplugins.chatcolorhandler;
 
 import org.lushplugins.chatcolorhandler.messengers.LegacyMessenger;
-import org.lushplugins.chatcolorhandler.messengers.Messenger;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
@@ -16,43 +15,44 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unused")
 public class ChatColorHandler {
-    private static Messenger messenger;
+    private static final ChatColorHandlerSettings settings = new ChatColorHandlerSettings();
 
-    static {
+    protected static void init() {
         Parsers.register(LegacyHexParser.INSTANCE, 85);
         Parsers.register(LegacySpigotParser.INSTANCE, 84);
         Parsers.register(HexParser.INSTANCE, 83);
 
         try {
             Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
-            messenger = new MiniMessageMessenger();
+            settings.messenger(new MiniMessageMessenger());
 
             Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
             Parsers.register(MiniMessageColorParser.INSTANCE, 73);
             Parsers.register(MiniMessageInteractionParser.INSTANCE, 72);
             Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
             Parsers.register(MiniMessageTextFormattingParser.INSTANCE, 70);
-            ChatColorHandlerDebugger.debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
+            debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException | NoSuchMethodException ignored) {
-            messenger = new LegacyMessenger();
-            ChatColorHandlerDebugger.debugLog("Unable to find MiniMessage. MiniMessage support not enabled.");
+            settings.messenger(new LegacyMessenger());
+            debugLog("Unable to find MiniMessage. MiniMessage support not enabled.");
         }
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Parsers.register(PlaceholderAPIParser.INSTANCE, 90);
-            ChatColorHandlerDebugger.debugLog("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
+            debugLog("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
 
         if (pluginManager.getPlugin("MiniPlaceholders") != null && pluginManager.isPluginEnabled("MiniPlaceholders")) {
             Parsers.register(MiniPlaceholdersParser.INSTANCE, -1);
-            ChatColorHandlerDebugger.debugLog("Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
+            debugLog("Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
         }
+
+        settings.defaultParsers(ParserTypes.all());
     }
 
     /**
@@ -61,7 +61,7 @@ public class ChatColorHandler {
      * @param string String to be translated
      */
     public static String translate(@Nullable String string) {
-        return translate(string, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(string, settings.defaultParsers());
     }
 
     /**
@@ -81,7 +81,7 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      */
     public static String translate(@Nullable String string, Player player) {
-        return translate(string, player, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(string, player, settings.defaultParsers());
     }
 
     /**
@@ -105,7 +105,7 @@ public class ChatColorHandler {
      * @param strings Strings to be translated
      */
     public static List<String> translate(@NotNull Collection<String> strings) {
-        return translate(strings, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(strings, settings.defaultParsers());
     }
 
     /**
@@ -125,7 +125,7 @@ public class ChatColorHandler {
      * @param player Player to parse placeholders for
      */
     public static List<String> translate(@NotNull Collection<String> strings, Player player) {
-        return translate(strings, player, Collections.emptyList()); // TODO: Add default parsers option
+        return translate(strings, player, settings.defaultParsers());
     }
 
     /**
@@ -159,7 +159,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(@NotNull CommandSender recipient, @Nullable String message) {
-        messenger.sendMessage(recipient, message);
+        settings.messenger().sendMessage(recipient, message);
     }
 
     /**
@@ -169,7 +169,7 @@ public class ChatColorHandler {
      * @param messages Messages to be displayed
      */
     public static void sendMessage(@NotNull CommandSender recipient, @Nullable String... messages) {
-        messenger.sendMessage(recipient, messages);
+        settings.messenger().sendMessage(recipient, messages);
     }
 
     /**
@@ -179,7 +179,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendMessage(CommandSender[] recipients, @Nullable String message) {
-        messenger.sendMessage(recipients, message);
+        settings.messenger().sendMessage(recipients, message);
     }
 
     /**
@@ -189,7 +189,7 @@ public class ChatColorHandler {
      * @param messages Messages to be displayed
      */
     public static void sendMessage(CommandSender[] recipients, @Nullable String... messages) {
-        messenger.sendMessage(recipients, messages);
+        settings.messenger().sendMessage(recipients, messages);
     }
 
     /**
@@ -198,7 +198,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void broadcastMessage(@Nullable String message) {
-        messenger.broadcastMessage(message);
+        settings.messenger().broadcastMessage(message);
     }
 
     /**
@@ -207,7 +207,7 @@ public class ChatColorHandler {
      * @param messages Messages to be displayed
      */
     public static void broadcastMessage(@NotNull String... messages) {
-        messenger.broadcastMessage(messages);
+        settings.messenger().broadcastMessage(messages);
     }
 
     /**
@@ -217,7 +217,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendActionBarMessage(@NotNull Player player, @Nullable String message) {
-        messenger.sendActionBarMessage(player, message);
+        settings.messenger().sendActionBarMessage(player, message);
     }
 
     /**
@@ -227,7 +227,7 @@ public class ChatColorHandler {
      * @param message Message to be displayed
      */
     public static void sendActionBarMessage(@NotNull Player[] players, @Nullable String message) {
-        messenger.sendActionBarMessage(players, message);
+        settings.messenger().sendActionBarMessage(players, message);
     }
 
     /**
@@ -237,7 +237,7 @@ public class ChatColorHandler {
      * @param title Title to be displayed
      */
     public static void sendTitle(@NotNull Player player, @Nullable String title) {
-        messenger.sendTitle(player, title);
+        settings.messenger().sendTitle(player, title);
     }
 
     /**
@@ -248,7 +248,7 @@ public class ChatColorHandler {
      * @param subtitle Subtitle to be displayed
      */
     public static void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle) {
-        messenger.sendTitle(player, title, subtitle);
+        settings.messenger().sendTitle(player, title, subtitle);
     }
 
     /**
@@ -261,7 +261,7 @@ public class ChatColorHandler {
      * @param fadeOut Duration for title to fade out
      */
     public static void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
-        messenger.sendTitle(player, title, subtitle, fadeIn, fadeOut);
+        settings.messenger().sendTitle(player, title, subtitle, fadeIn, fadeOut);
     }
 
     /**
@@ -275,7 +275,7 @@ public class ChatColorHandler {
      * @param fadeOut Duration for title to fade out
      */
     public static void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
-        messenger.sendTitle(player, title, subtitle, fadeIn, stay, fadeOut);
+        settings.messenger().sendTitle(player, title, subtitle, fadeIn, stay, fadeOut);
     }
 
     /**
@@ -285,7 +285,7 @@ public class ChatColorHandler {
      * @param title Title to be displayed
      */
     public static void sendTitle(@NotNull Player[] players, @Nullable String title) {
-        messenger.sendTitle(players, title);
+        settings.messenger().sendTitle(players, title);
     }
 
     /**
@@ -296,7 +296,7 @@ public class ChatColorHandler {
      * @param subtitle Subtitle to be displayed
      */
     public static void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle) {
-        messenger.sendTitle(players, title, subtitle);
+        settings.messenger().sendTitle(players, title, subtitle);
     }
 
     /**
@@ -309,7 +309,7 @@ public class ChatColorHandler {
      * @param fadeOut Duration for title to fade out
      */
     public static void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
-        messenger.sendTitle(players, title, subtitle, fadeIn, fadeOut);
+        settings.messenger().sendTitle(players, title, subtitle, fadeIn, fadeOut);
     }
 
     /**
@@ -323,10 +323,16 @@ public class ChatColorHandler {
      * @param fadeOut Duration for title to fade out
      */
     public static void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
-        messenger.sendTitle(players, title, subtitle, fadeIn, stay, fadeOut);
+        settings.messenger().sendTitle(players, title, subtitle, fadeIn, stay, fadeOut);
     }
 
-    protected static Messenger getMessenger() {
-        return messenger;
+    public static ChatColorHandlerSettings settings() {
+        return settings;
+    }
+
+    protected static void debugLog(String log) {
+        if (settings.debug()) {
+            Bukkit.getLogger().info("[ChatColorHandler] " + log);
+        }
     }
 }
