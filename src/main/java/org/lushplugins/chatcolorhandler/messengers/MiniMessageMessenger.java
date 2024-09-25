@@ -25,7 +25,9 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
     @Override
     public void sendMessage(@NotNull CommandSender recipient, @Nullable String message) {
-        if (message == null || message.isBlank()) return;
+        if (message == null || message.isBlank()) {
+            return;
+        }
 
         Audience audience = Audience.audience((Audience) recipient);
         Component parsed = ModernChatColorHandler.translate(message, (recipient instanceof Player player ? player : null));
@@ -34,7 +36,9 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
     @Override
     public void broadcastMessage(@Nullable String message) {
-        if (message == null || message.isBlank()) return;
+        if (message == null || message.isBlank()) {
+            return;
+        }
 
         Audience audience = Audience.audience((Audience) Bukkit.getServer());
         audience.sendMessage(ModernChatColorHandler.translate(message));
@@ -42,31 +46,20 @@ public class MiniMessageMessenger extends AbstractMessenger {
 
     @Override
     public void sendActionBarMessage(@NotNull Player player, @Nullable String message) {
-        if (message == null || message.isBlank()) return;
+        if (message == null || message.isBlank()) {
+            return;
+        }
 
         Audience audience = Audience.audience((Audience) player);
         audience.sendActionBar(ModernChatColorHandler.translate(message, player));
     }
 
     @Override
-    public void sendTitle(@NotNull Player player, @Nullable String title) {
-        if (title == null || title.isBlank()) return;
-
-        sendTitle(player, title, null, 10, 70, 20);
-    }
-
-    @Override
-    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle) {
-        sendTitle(player, title, subtitle, 10, 70, 20);
-    }
-
-    @Override
-    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
-        sendTitle(player, title, subtitle, fadeIn, 70, fadeOut);
-    }
-
-    @Override
     public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
+        if ((title == null || title.isBlank()) && (subtitle == null || subtitle.isBlank())) {
+            return;
+        }
+
         Audience audience = Audience.audience((Audience) player);
         Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn * 50L), Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L));
         audience.sendTitlePart(TitlePart.TIMES, times);

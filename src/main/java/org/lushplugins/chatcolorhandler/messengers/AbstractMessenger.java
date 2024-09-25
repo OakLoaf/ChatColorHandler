@@ -10,11 +10,15 @@ public abstract class AbstractMessenger implements Messenger {
     /**
      * Sends a recipient multiple messages
      *
-     * @param recipient Sender to receive message
+     * @param recipient Sender to receive messages
      * @param messages Messages to be displayed
      */
     @Override
     public void sendMessage(@NotNull CommandSender recipient, @Nullable String... messages) {
+        if (messages == null) {
+            return;
+        }
+
         for (String message : messages) {
             sendMessage(recipient, message);
         }
@@ -28,6 +32,10 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void sendMessage(CommandSender[] recipients, @Nullable String message) {
+        if (message == null || message.isBlank()) {
+            return;
+        }
+
         for (CommandSender recipient : recipients) {
             sendMessage(recipient, message);
         }
@@ -36,12 +44,14 @@ public abstract class AbstractMessenger implements Messenger {
     /**
      * Sends multiple recipients, multiple messages
      *
-     * @param recipients Senders to receive this message
+     * @param recipients Senders to receive messages
      * @param messages Messages to be displayed
      */
     @Override
     public void sendMessage(CommandSender[] recipients, @Nullable String... messages) {
-        if (messages == null) return;
+        if (messages == null) {
+            return;
+        }
 
         for (CommandSender recipient : recipients) {
             for (String message : messages) {
@@ -57,7 +67,9 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void broadcastMessage(@NotNull String... messages) {
-        if (messages == null) return;
+        if (messages == null) {
+            return;
+        }
 
         for (String message : messages) {
             broadcastMessage(message);
@@ -72,7 +84,9 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void sendActionBarMessage(@NotNull Player[] players, @Nullable String message) {
-        if (message == null || message.isBlank()) return;
+        if (message == null || message.isBlank()) {
+            return;
+        }
 
         for (Player player : players) {
             sendActionBarMessage(player, message);
@@ -80,16 +94,51 @@ public abstract class AbstractMessenger implements Messenger {
     }
 
     /**
+     * Sends a player a TITLE message
+     *
+     * @param player Players to receive this action bar message
+     * @param title Title to be displayed
+     */
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title) {
+        sendTitle(player, title, null);
+    }
+
+    /**
+     * Sends a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     */
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle) {
+        sendTitle(player, title, subtitle, 10, 20);
+    }
+
+    /**
+     * Sends a player a TITLE message
+     *
+     * @param player Player to receive this title
+     * @param title Title to be displayed
+     * @param subtitle Subtitle to be displayed
+     * @param fadeIn Duration for title to fade in
+     * @param fadeOut Duration for title to fade out
+     */
+    @Override
+    public void sendTitle(@NotNull Player player, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
+        sendTitle(player, title, subtitle, fadeIn, 70, fadeOut);
+    }
+
+    /**
      * Sends multiple players a TITLE message
      *
-     * @param players Players to receive this action bar message
+     * @param players Players to receive this title message
      * @param title Title to be displayed
      */
     @Override
     public void sendTitle(@NotNull Player[] players, @Nullable String title) {
-        for (Player player : players) {
-            sendTitle(player, title);
-        }
+        sendTitle(players, title, null);
     }
 
     /**
@@ -101,9 +150,7 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle) {
-        for (Player player : players) {
-            sendTitle(player, title, subtitle);
-        }
+        sendTitle(players, title, subtitle, 10, 20);
     }
 
     /**
@@ -117,9 +164,7 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int fadeOut) {
-        for (Player player : players) {
-            sendTitle(player, title, subtitle, fadeIn, fadeOut);
-        }
+        sendTitle(players, title, subtitle, fadeIn, 70, fadeOut);
     }
 
     /**
@@ -134,6 +179,10 @@ public abstract class AbstractMessenger implements Messenger {
      */
     @Override
     public void sendTitle(@NotNull Player[] players, @Nullable String title, @Nullable String subtitle, int fadeIn, int stay, int fadeOut) {
+        if ((title == null || title.isBlank()) && (subtitle == null || subtitle.isBlank())) {
+            return;
+        }
+
         for (Player player : players) {
             sendTitle(player, title, subtitle, fadeIn, stay, fadeOut);
         }
