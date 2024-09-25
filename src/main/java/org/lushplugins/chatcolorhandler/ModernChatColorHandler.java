@@ -66,30 +66,6 @@ public class ModernChatColorHandler {
     }
 
     /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be converted
-     * @param player Player to parse placeholders for
-     * @param parsers Parsers which this message will be parsed through
-     * @param resolvers Resolvers which will be used for this message (Paper + forks only)
-     */
-    public static Component translate(@Nullable String string, Player player, @NotNull List<Class<? extends Parser>> parsers, @NotNull List<Class<? extends Resolver>> resolvers) {
-        if (string == null || string.isBlank()) return Component.empty();
-
-        TagResolver.Builder resolverBuilder = TagResolver.builder();
-        if (parsers.isEmpty() || parsers.contains(MiniMessageColorParser.class)) {
-            resolverBuilder.resolver(StandardTags.defaults());
-        }
-
-        if (parsers.isEmpty() || parsers.contains(MiniMessageResolverParser.class)) {
-            resolverBuilder.resolver(Resolvers.getResolver((Audience) player, resolvers));
-        }
-
-        String legacyParsed = Parsers.parseString(string, Parser.OutputType.MINI_MESSAGE, player, parsers);
-        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, resolverBuilder.build());
-    }
-
-    /**
      * Translates a collection of strings to allow for hex colours and placeholders
      *
      * @param strings Strings to be translated
@@ -127,5 +103,29 @@ public class ModernChatColorHandler {
      */
     public static List<Component> translate(@NotNull Collection<String> strings, Player player, List<Class<? extends Parser>> parsers) {
         return strings.stream().map(string -> ModernChatColorHandler.translate(string, player, parsers)).toList();
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be converted
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     * @param resolvers Resolvers which will be used for this message (Paper + forks only)
+     */
+    public static Component translate(@Nullable String string, Player player, @NotNull List<Class<? extends Parser>> parsers, @NotNull List<Class<? extends Resolver>> resolvers) {
+        if (string == null || string.isBlank()) return Component.empty();
+
+        TagResolver.Builder resolverBuilder = TagResolver.builder();
+        if (parsers.isEmpty() || parsers.contains(MiniMessageColorParser.class)) {
+            resolverBuilder.resolver(StandardTags.defaults());
+        }
+
+        if (parsers.isEmpty() || parsers.contains(MiniMessageResolverParser.class)) {
+            resolverBuilder.resolver(Resolvers.getResolver((Audience) player, resolvers));
+        }
+
+        String legacyParsed = Parsers.parseString(string, Parser.OutputType.MINI_MESSAGE, player, parsers);
+        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, resolverBuilder.build());
     }
 }
