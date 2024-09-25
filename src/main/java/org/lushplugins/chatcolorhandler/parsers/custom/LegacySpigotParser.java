@@ -15,6 +15,8 @@ public class LegacySpigotParser implements Parser {
         return switch (outputType) {
             case SPIGOT -> string;
             case MINI_MESSAGE -> string
+                // Legacy Ampersand
+                .replace("§", "&")
                 // Colours
                 .replace("&0", "<reset><black>")
                 .replace("&1", "<reset><dark_blue>")

@@ -20,7 +20,7 @@ public class HexParser implements Parser {
     public String parseString(@NotNull String string, @NotNull OutputType outputType) {
         Matcher match = HEX_PATTERN.matcher(string);
         return switch (outputType) {
-            case SPIGOT -> match.replaceAll(result -> ChatColor.of(result.group()).toString());
+            case SPIGOT -> match.replaceAll(result -> ChatColor.of(result.group(1)).toString());
             case MINI_MESSAGE -> match.replaceAll("<reset><$1>");
         };
     }
