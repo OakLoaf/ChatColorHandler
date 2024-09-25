@@ -335,4 +335,6 @@ public class ChatColorHandler {
             Bukkit.getLogger().info("[ChatColorHandler] " + log);
         }
     }
+
+    private ChatColorHandler() {}
 }

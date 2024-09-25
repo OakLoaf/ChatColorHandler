@@ -112,4 +112,6 @@ public class ModernChatColorHandler {
     public static List<Component> translate(@NotNull Collection<String> strings, Player player, List<Parser> parsers) {
         return strings.stream().map(string -> translate(string, player, parsers)).toList();
     }
+
+    private ModernChatColorHandler() {}
 }
