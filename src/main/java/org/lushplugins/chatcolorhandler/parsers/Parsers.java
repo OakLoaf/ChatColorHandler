@@ -1,11 +1,13 @@
 package org.lushplugins.chatcolorhandler.parsers;
 
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.custom.Parser;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.logging.Level;
 
 public class Parsers {
     private static Map<Parser, Integer> parsers = new HashMap<>();
@@ -32,7 +34,7 @@ public class Parsers {
             try {
                 string = parser.parseString(string, outputType, player);
             } catch (Throwable e) {
-                e.printStackTrace();
+                Bukkit.getLogger().log(Level.WARNING, "[ChatColorHandler] Failed to parse string '" + string + "' through parser: ", e);
             }
         }
 
