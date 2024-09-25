@@ -1,10 +1,9 @@
-package org.lushplugins.chatcolorhandler.parsers.custom;
+package org.lushplugins.chatcolorhandler.parsers;
 
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.*;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
-import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class MiniMessageColorParser implements Parser {
     private static final TagResolver BASIC_COLORS = TagResolver.builder()

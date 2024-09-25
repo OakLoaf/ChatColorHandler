@@ -1,8 +1,7 @@
-package org.lushplugins.chatcolorhandler.parsers.custom;
+package org.lushplugins.chatcolorhandler.parsers;
 
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
-import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class LegacySpigotParser implements Parser {
     protected static final LegacySpigotParser INSTANCE = new LegacySpigotParser();

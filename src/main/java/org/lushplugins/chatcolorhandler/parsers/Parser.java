@@ -1,8 +1,7 @@
-package org.lushplugins.chatcolorhandler.parsers.custom;
+package org.lushplugins.chatcolorhandler.parsers;
 
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public interface Parser {
 

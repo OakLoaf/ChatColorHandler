@@ -3,9 +3,7 @@ package org.lushplugins.chatcolorhandler;
 import org.lushplugins.chatcolorhandler.messengers.LegacyMessenger;
 import org.lushplugins.chatcolorhandler.messengers.Messenger;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
-import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
-import org.lushplugins.chatcolorhandler.parsers.Parsers;
-import org.lushplugins.chatcolorhandler.parsers.custom.*;
+import org.lushplugins.chatcolorhandler.parsers.*;
 import org.lushplugins.chatcolorhandler.resolvers.MiniPlaceholdersResolver;
 import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
 import net.md_5.bungee.api.ChatColor;
@@ -17,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unused")
