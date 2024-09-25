@@ -2,6 +2,7 @@ package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
+import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 public class LegacySpigotParser implements Parser {

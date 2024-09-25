@@ -5,8 +5,9 @@ import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
+import org.lushplugins.chatcolorhandler.parsers.Resolver;
 
-public class MiniMessageTextFormattingParser implements Parser {
+public class MiniMessageTextFormattingParser implements Resolver {
     public static final MiniMessageTextFormattingParser INSTANCE = new MiniMessageTextFormattingParser();
     private static final TagResolver TEXT_FORMATTING = TagResolver.builder()
         .resolvers(
@@ -31,5 +32,10 @@ public class MiniMessageTextFormattingParser implements Parser {
             }
             case MINI_MESSAGE -> string;
         };
+    }
+
+    @Override
+    public @NotNull TagResolver getResolver() {
+        return TEXT_FORMATTING;
     }
 }

@@ -5,8 +5,9 @@ import net.kyori.adventure.text.minimessage.tag.standard.*;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
+import org.lushplugins.chatcolorhandler.parsers.Resolver;
 
-public class MiniMessageColorParser implements Parser {
+public class MiniMessageColorParser implements Resolver {
     public static final MiniMessageColorParser INSTANCE = new MiniMessageColorParser();
     private static final TagResolver BASIC_COLORS = TagResolver.builder()
         .resolvers(
@@ -35,5 +36,10 @@ public class MiniMessageColorParser implements Parser {
             }
             case MINI_MESSAGE -> string;
         };
+    }
+
+    @Override
+    public @NotNull TagResolver getResolver() {
+        return BASIC_COLORS;
     }
 }

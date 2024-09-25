@@ -1,8 +1,9 @@
 package org.lushplugins.chatcolorhandler.parsers;
 
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
-import org.lushplugins.chatcolorhandler.parsers.custom.Parser;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,15 +22,7 @@ public class Parsers {
         parsers = sortByValue(parsers);
     }
 
-    public static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull List<? extends Class<? extends Parser>> parsers) {
-        return parseString(string, outputType, player, Parsers.parsers.keySet().stream().filter(parser -> parsers.isEmpty() || parsers.contains(parser.getClass())).toArray(Parser[]::new));
-    }
-
-    public static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull String... parserTypes) {
-        return parseString(string, outputType, player, Parsers.parsers.keySet().stream().filter(parser -> List.of(parserTypes).contains(parser.getType())).toArray(Parser[]::new));
-    }
-
-    private static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull Parser... parsers) {
+    public static String parseString(@NotNull String string, @NotNull Parser.OutputType outputType, @Nullable Player player, @NotNull List<Parser> parsers) {
         for (Parser parser : parsers) {
             try {
                 string = parser.parseString(string, outputType, player);
@@ -45,12 +38,19 @@ public class Parsers {
         return parsers.keySet().stream().toList();
     }
 
+    public static List<Resolver> getRegisteredResolvers() {
+        return parsers.keySet().stream()
+            .map(parser -> parser instanceof Resolver resolver ? resolver : null)
+            .filter(Objects::nonNull)
+            .toList();
+    }
+
     public static List<Parser> ofType(@NotNull String type) {
         return ofTypes(type);
     }
 
     public static List<Parser> ofTypes(@NotNull String... types) {
-        return getRegisteredParsers().stream()
+        return parsers.keySet().stream()
             .filter(parser -> {
                 for (String type : types) {
                     if (parser.getType().equals(type)) {
@@ -61,6 +61,23 @@ public class Parsers {
                 return false;
             })
             .toList();
+    }
+
+    public static TagResolver getCombinedResolvers(@Nullable Audience audience) {
+        return getCombinedResolvers(audience, getRegisteredResolvers());
+    }
+
+    public static TagResolver getCombinedResolvers(@Nullable Audience audience, @NotNull List<Resolver> resolvers) {
+        TagResolver.Builder tagResolver = TagResolver.builder();
+        for (Resolver resolver : resolvers) {
+            try {
+                tagResolver.resolver(audience != null ? resolver.getResolver(audience) : resolver.getResolver());
+            } catch (Throwable e) {
+                Bukkit.getLogger().log(Level.WARNING, "[ChatColorHandler] Failed to combine resolver: ", e);
+            }
+        }
+
+        return tagResolver.build();
     }
 
     private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {

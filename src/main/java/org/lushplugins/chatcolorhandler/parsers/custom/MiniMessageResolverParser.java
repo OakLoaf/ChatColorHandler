@@ -5,10 +5,9 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
+import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
-import org.lushplugins.chatcolorhandler.resolvers.Resolvers;
-
-import java.util.Collections;
+import org.lushplugins.chatcolorhandler.parsers.Parsers;
 
 public class MiniMessageResolverParser implements Parser {
     public static final MiniMessageResolverParser INSTANCE = new MiniMessageResolverParser();
@@ -31,7 +30,7 @@ public class MiniMessageResolverParser implements Parser {
             case SPIGOT -> {
                 string = string.replace('§', '&');
 
-                TagResolver resolver = Resolvers.getResolver(player != null ? (Audience) player : null, Collections.emptyList());
+                TagResolver resolver = Parsers.getCombinedResolvers(player instanceof Audience audience ? audience : null);
                 yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, resolver));
             }
             case MINI_MESSAGE -> string;

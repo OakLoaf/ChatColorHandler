@@ -5,8 +5,9 @@ import net.kyori.adventure.text.minimessage.tag.standard.*;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
+import org.lushplugins.chatcolorhandler.parsers.Resolver;
 
-public class MiniMessageInteractionParser implements Parser {
+public class MiniMessageInteractionParser implements Resolver {
     public static final MiniMessageInteractionParser INSTANCE = new MiniMessageInteractionParser();
     private static final TagResolver INTERACTION = TagResolver.builder()
         .resolvers(
@@ -32,5 +33,10 @@ public class MiniMessageInteractionParser implements Parser {
             }
             case MINI_MESSAGE -> string;
         };
+    }
+
+    @Override
+    public @NotNull TagResolver getResolver() {
+        return INTERACTION;
     }
 }

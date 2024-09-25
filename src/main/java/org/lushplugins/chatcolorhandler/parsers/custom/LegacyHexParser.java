@@ -1,6 +1,7 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import org.jetbrains.annotations.NotNull;
+import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
 import java.util.regex.Matcher;

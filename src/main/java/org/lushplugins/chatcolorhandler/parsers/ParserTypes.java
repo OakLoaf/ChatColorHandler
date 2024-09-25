@@ -1,7 +1,5 @@
 package org.lushplugins.chatcolorhandler.parsers;
 
-import org.lushplugins.chatcolorhandler.parsers.custom.Parser;
-
 import java.util.List;
 
 public class ParserTypes {
