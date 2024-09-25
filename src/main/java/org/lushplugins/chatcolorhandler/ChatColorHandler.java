@@ -37,26 +37,161 @@ public class ChatColorHandler {
             Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
             Parsers.register(MiniMessageTextFormattingParser.INSTANCE, 70);
             Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
-            debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
+            ChatColorHandlerDebugger.debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } catch (ClassNotFoundException | NoSuchMethodException ignored) {
             messenger = new LegacyMessenger();
-            debugLog("Unable to find MiniMessage. MiniMessage support not enabled.");
+            ChatColorHandlerDebugger.debugLog("Unable to find MiniMessage. MiniMessage support not enabled.");
         }
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         if (pluginManager.getPlugin("PlaceholderAPI") != null && pluginManager.isPluginEnabled("PlaceholderAPI")) {
             Parsers.register(PlaceholderAPIParser.INSTANCE, 90);
-            debugLog("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
+            ChatColorHandlerDebugger.debugLog("Found plugin \"PlaceholderAPI\". PlaceholderAPI support enabled.");
         }
 
         if (pluginManager.getPlugin("MiniPlaceholders") != null && pluginManager.isPluginEnabled("MiniPlaceholders")) {
             Resolvers.register(new MiniPlaceholdersResolver());
-            debugLog("Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
+            ChatColorHandlerDebugger.debugLog("Found plugin \"MiniPlaceholders\". MiniPlaceholders support enabled.");
         }
     }
 
-    protected static Messenger getMessenger() {
-        return messenger;
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     */
+    public static String translate(@Nullable String string) {
+        return translate(string, null, Collections.emptyList());
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     * @param parsers Parsers which this message won't be parsed through
+     */
+    public static String translate(@Nullable String string, @NotNull List<? extends Class<? extends Parser>> parsers) {
+        return translate(string, null, parsers);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     * @param parserTypes Parsers which this message won't be parsed through
+     */
+    public static String translate(@Nullable String string, @NotNull String... parserTypes) {
+        return translate(string, null, parserTypes);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     * @param player Player to parse placeholders for
+     */
+    public static String translate(@Nullable String string, Player player) {
+        return translate(string, player, Collections.emptyList());
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     */
+    public static String translate(@Nullable String string, Player player, List<? extends Class<? extends Parser>> parsers) {
+        if (string == null || string.isBlank()) return "";
+
+        return Parsers.parseString(string, Parser.OutputType.SPIGOT, player, parsers);
+    }
+
+    /**
+     * Translates a string to allow for hex colours and placeholders
+     *
+     * @param string String to be translated
+     * @param player Player to parse placeholders for
+     * @param parserTypes Parser types which this message will be parsed through
+     */
+    public static String translate(@Nullable String string, Player player, String... parserTypes) {
+        if (string == null || string.isBlank()) return "";
+
+        return Parsers.parseString(string, Parser.OutputType.SPIGOT, player, parserTypes);
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     */
+    public static List<String> translate(@NotNull Collection<String> strings) {
+        return strings.stream().map(ChatColorHandler::translate).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param parsers Parsers which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, List<? extends Class<? extends Parser>> parsers) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, parsers)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param parserTypes Parser types which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, String... parserTypes) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, parserTypes)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, Player player) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, player)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     * @param parsers Parsers which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, Player player, List<? extends Class<? extends Parser>> parsers) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, player, parsers)).toList();
+    }
+
+    /**
+     * Translates a collection of strings to allow for hex colours and placeholders
+     *
+     * @param strings Strings to be translated
+     * @param player Player to parse placeholders for
+     * @param parserTypes Parser types which this message will be parsed through
+     */
+    public static List<String> translate(@NotNull Collection<String> strings, Player player, String... parserTypes) {
+        return strings.stream().map(string -> ChatColorHandler.translate(string, player, parserTypes)).toList();
+    }
+
+    /**
+     * Strips colour from string
+     *
+     * @param string String to be converted
+     */
+    public static String stripColor(@Nullable String string) {
+        if (string == null || string.isBlank()) {
+            return "";
+        }
+
+        return ChatColor.stripColor(ChatColorHandler.translate(string, ParserTypes.COLOR));
     }
 
     /**
@@ -233,148 +368,7 @@ public class ChatColorHandler {
         messenger.sendTitle(players, title, subtitle, fadeIn, stay, fadeOut);
     }
 
-    /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be translated
-     */
-    public static String translate(@Nullable String string) {
-        return translate(string, null, Collections.emptyList());
-    }
-
-    /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be translated
-     * @param parsers Parsers which this message won't be parsed through
-     */
-    public static String translate(@Nullable String string, @NotNull List<? extends Class<? extends Parser>> parsers) {
-        return translate(string, null, parsers);
-    }
-
-    /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be translated
-     * @param parserTypes Parsers which this message won't be parsed through
-     */
-    public static String translate(@Nullable String string, @NotNull String... parserTypes) {
-        return translate(string, null, parserTypes);
-    }
-
-    /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be translated
-     * @param player Player to parse placeholders for
-     */
-    public static String translate(@Nullable String string, Player player) {
-        return translate(string, player, Collections.emptyList());
-    }
-
-    /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be translated
-     * @param player Player to parse placeholders for
-     * @param parsers Parsers which this message will be parsed through
-     */
-    public static String translate(@Nullable String string, Player player, List<? extends Class<? extends Parser>> parsers) {
-        if (string == null || string.isBlank()) return "";
-
-        return Parsers.parseString(string, Parser.OutputType.SPIGOT, player, parsers);
-    }
-
-    /**
-     * Translates a string to allow for hex colours and placeholders
-     *
-     * @param string String to be translated
-     * @param player Player to parse placeholders for
-     * @param parserTypes Parser types which this message will be parsed through
-     */
-    public static String translate(@Nullable String string, Player player, String... parserTypes) {
-        if (string == null || string.isBlank()) return "";
-
-        return Parsers.parseString(string, Parser.OutputType.SPIGOT, player, parserTypes);
-    }
-
-    /**
-     * Translates a collection of strings to allow for hex colours and placeholders
-     *
-     * @param strings Strings to be translated
-     */
-    public static List<String> translate(@NotNull Collection<String> strings) {
-        return strings.stream().map(ChatColorHandler::translate).toList();
-    }
-
-    /**
-     * Translates a collection of strings to allow for hex colours and placeholders
-     *
-     * @param strings Strings to be translated
-     * @param parsers Parsers which this message will be parsed through
-     */
-    public static List<String> translate(@NotNull Collection<String> strings, List<? extends Class<? extends Parser>> parsers) {
-        return strings.stream().map(string -> ChatColorHandler.translate(string, parsers)).toList();
-    }
-
-    /**
-     * Translates a collection of strings to allow for hex colours and placeholders
-     *
-     * @param strings Strings to be translated
-     * @param parserTypes Parser types which this message will be parsed through
-     */
-    public static List<String> translate(@NotNull Collection<String> strings, String... parserTypes) {
-        return strings.stream().map(string -> ChatColorHandler.translate(string, parserTypes)).toList();
-    }
-
-    /**
-     * Translates a collection of strings to allow for hex colours and placeholders
-     *
-     * @param strings Strings to be translated
-     * @param player Player to parse placeholders for
-     */
-    public static List<String> translate(@NotNull Collection<String> strings, Player player) {
-        return strings.stream().map(string -> ChatColorHandler.translate(string, player)).toList();
-    }
-
-    /**
-     * Translates a collection of strings to allow for hex colours and placeholders
-     *
-     * @param strings Strings to be translated
-     * @param player Player to parse placeholders for
-     * @param parsers Parsers which this message will be parsed through
-     */
-    public static List<String> translate(@NotNull Collection<String> strings, Player player, List<? extends Class<? extends Parser>> parsers) {
-        return strings.stream().map(string -> ChatColorHandler.translate(string, player, parsers)).toList();
-    }
-
-    /**
-     * Translates a collection of strings to allow for hex colours and placeholders
-     *
-     * @param strings Strings to be translated
-     * @param player Player to parse placeholders for
-     * @param parserTypes Parser types which this message will be parsed through
-     */
-    public static List<String> translate(@NotNull Collection<String> strings, Player player, String... parserTypes) {
-        return strings.stream().map(string -> ChatColorHandler.translate(string, player, parserTypes)).toList();
-    }
-
-    /**
-     * Strips colour from string
-     *
-     * @param string String to be converted
-     */
-    public static String stripColor(@Nullable String string) {
-        if (string == null || string.isBlank()) {
-            return "";
-        }
-
-        return ChatColor.stripColor(ChatColorHandler.translate(string, ParserTypes.COLOR));
-    }
-
-    private static void debugLog(String log) {
-        if (ChatColorHandlerDebugger.debug()) {
-            Bukkit.getLogger().info("[ChatColorHandler] " + log);
-        }
+    protected static Messenger getMessenger() {
+        return messenger;
     }
 }
