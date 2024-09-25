@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.lushplugins.chatcolorhandler"},{"l":"org.lushplugins.chatcolorhandler.parsers"},{"l":"org.lushplugins.chatcolorhandler.parsers.custom"},{"l":"org.lushplugins.chatcolorhandler.resolvers"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.lushplugins.chatcolorhandler"},{"l":"org.lushplugins.chatcolorhandler.parsers"},{"l":"org.lushplugins.chatcolorhandler.parsers.custom"}];updateSearchResults();
