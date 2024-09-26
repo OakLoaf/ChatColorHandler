@@ -70,6 +70,8 @@ public class ChatColorHandlerSettings {
     }
 
     private void init() {
+        initialised = true;
+
         Parsers.register(LegacyHexParser.INSTANCE, 85);
         Parsers.register(LegacySpigotParser.INSTANCE, 84);
         Parsers.register(HexParser.INSTANCE, 83);
@@ -101,6 +103,5 @@ public class ChatColorHandlerSettings {
         }
 
         defaultParsers(ParserTypes.all());
-        initialised = true;
     }
 }
