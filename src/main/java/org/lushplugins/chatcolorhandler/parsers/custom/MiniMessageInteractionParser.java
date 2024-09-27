@@ -29,7 +29,8 @@ public class MiniMessageInteractionParser implements Resolver {
         return switch (outputType) {
             case SPIGOT -> {
                 string = string.replace('§', '&');
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, INTERACTION));
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, INTERACTION))
+                    .replace('&', '§');
             }
             case MINI_MESSAGE -> string;
         };

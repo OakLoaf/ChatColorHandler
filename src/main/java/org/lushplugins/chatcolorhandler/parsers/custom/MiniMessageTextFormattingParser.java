@@ -28,7 +28,8 @@ public class MiniMessageTextFormattingParser implements Resolver {
         return switch (outputType) {
             case SPIGOT -> {
                 string = string.replace('§', '&');
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, TEXT_FORMATTING));
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, TEXT_FORMATTING))
+                    .replace('&', '§');
             }
             case MINI_MESSAGE -> string;
         };

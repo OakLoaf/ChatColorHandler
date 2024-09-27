@@ -31,7 +31,8 @@ public class MiniMessageResolverParser implements Parser {
                 string = string.replace('§', '&');
 
                 TagResolver resolver = Parsers.getCombinedResolvers(player instanceof Audience audience ? audience : null);
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, resolver));
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, resolver))
+                    .replace('&', '§');
             }
             case MINI_MESSAGE -> string;
         };

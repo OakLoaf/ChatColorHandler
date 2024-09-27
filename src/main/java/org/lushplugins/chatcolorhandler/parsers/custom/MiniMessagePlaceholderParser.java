@@ -32,7 +32,8 @@ public class MiniMessagePlaceholderParser implements Resolver {
         return switch (outputType) {
             case SPIGOT -> {
                 string = string.replace('§', '&');
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, VANILLA_PLACEHOLDERS));
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, VANILLA_PLACEHOLDERS))
+                    .replace('&', '§');
             }
             case MINI_MESSAGE -> string;
         };

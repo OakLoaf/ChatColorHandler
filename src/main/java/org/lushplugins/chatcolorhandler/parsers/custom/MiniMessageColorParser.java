@@ -32,7 +32,8 @@ public class MiniMessageColorParser implements Resolver {
         return switch (outputType) {
             case SPIGOT -> {
                 string = string.replace('§', '&');
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, BASIC_COLORS));
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, BASIC_COLORS))
+                    .replace('&', '§');
             }
             case MINI_MESSAGE -> string;
         };
