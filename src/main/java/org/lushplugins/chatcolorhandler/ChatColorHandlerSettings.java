@@ -75,8 +75,7 @@ public class ChatColorHandlerSettings {
         Parsers.register(HexParser.INSTANCE, 83);
         Parsers.register(SpigotParser.INSTANCE, 65);
 
-        try {
-            Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
+        if (isPaper()) {
             messenger(new MiniMessageMessenger());
 
             Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
@@ -87,7 +86,7 @@ public class ChatColorHandlerSettings {
             Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
             Parsers.register(MiniMessageTextFormattingParser.INSTANCE, 70);
             ChatColorHandler.debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
-        } catch (ClassNotFoundException | NoSuchMethodException ignored) {
+        } else {
             messenger(new LegacyMessenger());
             ChatColorHandler.debugLog("Unable to find MiniMessage. MiniMessage support not enabled.");
         }
@@ -104,5 +103,25 @@ public class ChatColorHandlerSettings {
         }
 
         defaultParsers(ParserTypes.all());
+    }
+
+    private boolean isPaper() {
+        if (hasClass("com.destroystokyo.paper.PaperConfig") || hasClass("io.papermc.paper.configuration.Configuration")) {
+            try {
+                Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
+                return true;
+            } catch (ClassNotFoundException | NoSuchMethodException ignored) {}
+        }
+
+        return false;
+    }
+
+    private boolean hasClass(String className) {
+        try {
+            Class.forName(className);
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
     }
 }
