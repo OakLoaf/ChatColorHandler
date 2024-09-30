@@ -72,15 +72,16 @@ public class ChatColorHandlerSettings {
     private void init() {
         initialised = true;
 
-        Parsers.register(LegacyHexParser.INSTANCE, 85);
-        Parsers.register(LegacySpigotParser.INSTANCE, 84);
         Parsers.register(HexParser.INSTANCE, 83);
+        Parsers.register(SpigotParser.INSTANCE, 65);
 
         try {
             Class.forName("net.kyori.adventure.text.minimessage.MiniMessage").getMethod("miniMessage");
             messenger(new MiniMessageMessenger());
 
             Parsers.register(MiniMessageResolverParser.INSTANCE, 89);
+            Parsers.register(LegacyHexParser.INSTANCE, 75);
+            Parsers.register(LegacySpigotParser.INSTANCE, 74);
             Parsers.register(MiniMessageColorParser.INSTANCE, 73);
             Parsers.register(MiniMessageInteractionParser.INSTANCE, 72);
             Parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);

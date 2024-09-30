@@ -8,6 +8,10 @@ import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 import org.lushplugins.chatcolorhandler.parsers.Parsers;
+import org.lushplugins.chatcolorhandler.parsers.Resolver;
+
+import java.util.List;
+import java.util.Objects;
 
 public class MiniMessageResolverParser implements Parser {
     public static final MiniMessageResolverParser INSTANCE = new MiniMessageResolverParser();
@@ -30,11 +34,17 @@ public class MiniMessageResolverParser implements Parser {
             case SPIGOT -> {
                 string = string.replace('§', '&');
 
-                TagResolver resolver = Parsers.getCombinedResolvers(player instanceof Audience audience ? audience : null);
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, resolver))
-                    .replace('&', '§');
+                TagResolver resolver = Parsers.getCombinedResolvers(player instanceof Audience audience ? audience : null, getPlaceholderResolvers());
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, resolver));
             }
             case MINI_MESSAGE -> string;
         };
+    }
+
+    private static List<Resolver> getPlaceholderResolvers() {
+        return ParserTypes.placeholder().stream()
+            .map(parser -> parser instanceof Resolver parserResolver ? parserResolver : null)
+            .filter(Objects::nonNull)
+            .toList();
     }
 }

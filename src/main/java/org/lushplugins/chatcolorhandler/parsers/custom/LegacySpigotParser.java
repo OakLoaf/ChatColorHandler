@@ -1,6 +1,5 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
-import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
@@ -18,7 +17,7 @@ public class LegacySpigotParser implements Parser {
     @Override
     public String parseString(@NotNull String string, @NotNull OutputType outputType) {
         return switch (outputType) {
-            case SPIGOT -> ChatColor.translateAlternateColorCodes('&', string);
+            case SPIGOT -> string;
             case MINI_MESSAGE -> string
                 // Legacy Ampersand
                 .replace("§", "&")
