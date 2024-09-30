@@ -12,28 +12,28 @@ public class ParserTypes {
      * @return A list of color and decoration based parsers
      */
     public static List<Parser> color() {
-        return Parsers.ofTypes(COLOR);
+        return Parsers.ofType(COLOR);
     }
 
     /**
      * @return A list of interaction based parsers, this includes hover, click and nbt elements
      */
     public static List<Parser> interact() {
-        return Parsers.ofTypes(INTERACTION);
+        return Parsers.ofType(INTERACTION);
     }
 
     /**
      * @return A list of placeholder based parsers
      */
     public static List<Parser> placeholder() {
-        return Parsers.ofTypes(PLACEHOLDER);
+        return Parsers.ofType(PLACEHOLDER);
     }
 
     /**
      * @return A list of text formatting based parsers, this includes font and newlines
      */
     public static List<Parser> textFormatting() {
-        return Parsers.ofTypes(TEXT_FORMATTING);
+        return Parsers.ofType(TEXT_FORMATTING);
     }
 
 
