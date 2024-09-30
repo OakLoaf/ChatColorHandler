@@ -4,7 +4,6 @@ import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.Parser;
-import org.lushplugins.chatcolorhandler.parsers.Parsers;
 import org.lushplugins.chatcolorhandler.parsers.Resolver;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
@@ -17,10 +16,6 @@ import java.util.Objects;
 
 @SuppressWarnings("unused")
 public class ModernChatColorHandler {
-
-    static {
-        ChatColorHandler.translate("init");
-    }
 
     /**
      * Translates a string to allow for hex colours and placeholders
@@ -63,9 +58,9 @@ public class ModernChatColorHandler {
             return Component.empty();
         }
 
-        String legacyParsed = Parsers.parseString(string, Parser.OutputType.MINI_MESSAGE, player, parsers);
+        String legacyParsed = ChatColorHandler.parsers().parseString(string, Parser.OutputType.MINI_MESSAGE, player, parsers);
 
-        TagResolver tagResolver = Parsers.getCombinedResolvers((Audience) player, parsers.stream()
+        TagResolver tagResolver = Resolver.combineResolvers((Audience) player, parsers.stream()
             .map(parser -> parser instanceof Resolver resolver ? resolver : null)
             .filter(Objects::nonNull)
             .toList());
