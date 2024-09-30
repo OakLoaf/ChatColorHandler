@@ -20,7 +20,11 @@ public class MiniMessageMessenger extends AbstractMessenger {
     public static final MiniMessage MINI_MESSAGE = MiniMessage.builder()
         .tags(TagResolver.empty())
         .build();
-    public static final LegacyComponentSerializer LEGACY_COMPONENT_SERIALIZER = LegacyComponentSerializer.builder().build();
+    public static final LegacyComponentSerializer LEGACY_COMPONENT_SERIALIZER = LegacyComponentSerializer.builder()
+        .character('§')
+        .hexColors()
+        .useUnusualXRepeatedCharacterHexFormat()
+        .build();
 
 
     @Override
