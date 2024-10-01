@@ -54,6 +54,8 @@ public class ModernChatColorHandler {
      * @param parsers   Parsers which this message will be parsed through
      */
     public static Component translate(@Nullable String string, Player player, @NotNull List<Parser> parsers) {
+        ChatColorHandler.ensureInitialised();
+
         if (string == null || string.isBlank()) {
             return Component.empty();
         }
