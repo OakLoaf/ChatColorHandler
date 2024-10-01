@@ -11,6 +11,7 @@ public class ChatColorHandlerSettings {
     private boolean debug = false;
 
     public List<Parser> defaultParsers() {
+        ChatColorHandler.ensureInitialised();
         return defaultParsers;
     }
 
