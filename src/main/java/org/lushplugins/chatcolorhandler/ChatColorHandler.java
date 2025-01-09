@@ -314,6 +314,7 @@ public class ChatColorHandler {
     }
 
     public static Parsers parsers() {
+        ChatColorHandler.ensureInitialised();
         return parsers;
     }
 
