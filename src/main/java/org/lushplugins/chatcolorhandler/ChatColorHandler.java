@@ -328,7 +328,7 @@ public class ChatColorHandler {
         }
     }
 
-    public static void ensureInitialised() {
+    public static synchronized void ensureInitialised() {
         if (!initialised) {
             init();
         }
@@ -336,7 +336,7 @@ public class ChatColorHandler {
 
     private static void init() {
         initialised = true;
-        Parsers parsers = ChatColorHandler.parsers;
+        Parsers parsers = ChatColorHandler.parsers();
 
         parsers.register(HexParser.INSTANCE, 83);
         parsers.register(SpigotParser.INSTANCE, 65);
