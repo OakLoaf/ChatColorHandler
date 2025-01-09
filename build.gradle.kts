@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "org.lushplugins"
-version = "5.1.2-alpha1"
+version = "5.1.2-alpha2"
 
 repositories {
     mavenCentral() // Adventure, MiniPlaceholders
