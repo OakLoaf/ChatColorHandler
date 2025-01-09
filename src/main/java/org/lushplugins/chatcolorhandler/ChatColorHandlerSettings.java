@@ -1,13 +1,13 @@
 package org.lushplugins.chatcolorhandler;
 
 import org.lushplugins.chatcolorhandler.parsers.Parser;
-import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 
+import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ChatColorHandlerSettings {
-    private List<Parser> defaultParsers = ParserTypes.all();
+    private List<Parser> defaultParsers = Collections.emptyList();
     private boolean debug = false;
 
     public List<Parser> defaultParsers() {
