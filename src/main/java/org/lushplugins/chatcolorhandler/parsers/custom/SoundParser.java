@@ -20,6 +20,8 @@ public class SoundParser implements Parser {
 
     public static final SoundParser INSTANCE = new SoundParser();
 
+    private SoundParser() {}
+
     @Override
     public String getType() {
         return ParserTypes.SOUND;
