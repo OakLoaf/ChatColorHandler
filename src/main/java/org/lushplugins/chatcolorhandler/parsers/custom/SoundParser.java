@@ -1,7 +1,6 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.parsers.Parser;
@@ -48,9 +47,7 @@ public class SoundParser implements Parser {
 
         while (soundMatcher.find()) {
             try {
-                String soundName = soundMatcher.group(1);
-                Sound sound = Sound.valueOf(soundName);
-
+                String sound = soundMatcher.group(1).toLowerCase();
                 float volume = soundMatcher.group(2) != null ?
                         Float.parseFloat(soundMatcher.group(2)) : DEFAULT_VOLUME;
                 float pitch = soundMatcher.group(3) != null ?
