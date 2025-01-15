@@ -339,6 +339,7 @@ public class ChatColorHandler {
 
         parsers.register(HexParser.INSTANCE, 83);
         parsers.register(SpigotParser.INSTANCE, 65);
+        parsers.register(SoundParser.INSTANCE, 60);
 
         if (isPaper()) {
             ChatColorHandler.messenger(new MiniMessageMessenger());

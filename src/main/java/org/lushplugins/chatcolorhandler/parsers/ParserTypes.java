@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ParserTypes {
     public static final String COLOR = "color";
+    public static final String SOUND = "sound";
     public static final String INTERACTION = "interaction";
     public static final String PLACEHOLDER = "placeholder";
     public static final String TEXT_FORMATTING = "text-formatting";
@@ -15,6 +16,13 @@ public class ParserTypes {
      */
     public static List<Parser> color() {
         return ChatColorHandler.parsers().ofType(COLOR);
+    }
+
+    /**
+     * @return A list of sound based parsers
+     */
+    public static List<Parser> sound() {
+        return ChatColorHandler.parsers().ofType(SOUND);
     }
 
     /**
