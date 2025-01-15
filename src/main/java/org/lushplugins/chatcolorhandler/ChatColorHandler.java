@@ -339,6 +339,7 @@ public class ChatColorHandler {
 
         parsers.register(HexParser.INSTANCE, 83);
         parsers.register(SpigotParser.INSTANCE, 65);
+        parsers.register(SoundParser.INSTANCE, 60);
 
         if (isPaper()) {
             ChatColorHandler.messenger(new MiniMessageMessenger());
@@ -350,7 +351,6 @@ public class ChatColorHandler {
             parsers.register(MiniMessageInteractionParser.INSTANCE, 72);
             parsers.register(MiniMessagePlaceholderParser.INSTANCE, 71);
             parsers.register(MiniMessageTextFormattingParser.INSTANCE, 70);
-            parsers().register(SoundParser.INSTANCE, 69);
             ChatColorHandler.debugLog("Found MiniMessage in Server. MiniMessage support enabled.");
         } else {
             ChatColorHandler.messenger(new LegacyMessenger());
