@@ -13,11 +13,12 @@ import java.util.regex.Pattern;
 public class SoundParser implements Parser {
 
     private static final Pattern SOUND_PATTERN =
-            Pattern.compile("<sound:([A-Z_]+):([0-9.]+):([0-9.]+)>");
+            Pattern.compile("<sound:([A-Za-z0-9._-]+)(?::([0-9.]+))?(?::([0-9.]+))?>");
+
+    private static final float DEFAULT_VOLUME = 1.0f;
+    private static final float DEFAULT_PITCH = 1.0f;
 
     public static final SoundParser INSTANCE = new SoundParser();
-
-    private SoundParser() {}
 
     @Override
     public String getType() {
@@ -48,8 +49,10 @@ public class SoundParser implements Parser {
                 String soundName = soundMatcher.group(1);
                 Sound sound = Sound.valueOf(soundName);
 
-                float volume = Float.parseFloat(soundMatcher.group(2));
-                float pitch = Float.parseFloat(soundMatcher.group(3));
+                float volume = soundMatcher.group(2) != null ?
+                        Float.parseFloat(soundMatcher.group(2)) : DEFAULT_VOLUME;
+                float pitch = soundMatcher.group(3) != null ?
+                        Float.parseFloat(soundMatcher.group(3)) : DEFAULT_PITCH;
 
                 Location playerLoc = player.getLocation();
                 player.playSound(playerLoc, sound, volume, pitch);
