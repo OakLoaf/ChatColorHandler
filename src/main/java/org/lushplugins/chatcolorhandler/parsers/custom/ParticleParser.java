@@ -66,7 +66,7 @@ public class ParticleParser implements Parser {
 
     private Location parseLocation(String locationStr, Player player) {
         Location playerLoc = player.getLocation();
-        String[] parts = locationStr.split(",\\s*", 3);
+        String[] parts = locationStr.split(",\\s", 3);
 
         if (parts.length != 3) {
             return playerLoc;
