@@ -25,7 +25,7 @@ public class Parsers {
             try {
                 string = parser.parseString(string, outputType, player);
             } catch (Throwable e) {
-                Bukkit.getLogger().log(Level.WARNING, "[ChatColorHandler] Failed to parse string '" + string + "' through parser: ", e);
+                Bukkit.getLogger().log(Level.WARNING, "[ChatColorHandler] Failed to parse string '%s' through parser '%s: ".formatted(string, parser.getClass().getSimpleName()), e);
             }
         }
 
