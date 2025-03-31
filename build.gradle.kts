@@ -16,7 +16,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.15.0")
-    compileOnly("net.kyori:adventure-text-minimessage:4.15.0")
+    compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
     compileOnly("me.clip:placeholderapi:2.11.6")
 }

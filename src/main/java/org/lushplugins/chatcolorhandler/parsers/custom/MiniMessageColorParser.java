@@ -7,16 +7,23 @@ import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 import org.lushplugins.chatcolorhandler.parsers.Resolver;
 
+import java.util.List;
+
 public class MiniMessageColorParser implements Resolver {
     public static final MiniMessageColorParser INSTANCE = new MiniMessageColorParser();
+    @SuppressWarnings("Convert2MethodRef")
     private static final TagResolver BASIC_COLORS = TagResolver.builder()
         .resolvers(
-            StandardTags.color(),
-            StandardTags.decorations(),
-            StandardTags.gradient(),
-            StandardTags.rainbow(),
-            StandardTags.reset(),
-            StandardTags.transition()
+            MiniMessageMessenger.resolvers(List.of(
+                () -> StandardTags.color(),
+                () -> StandardTags.decorations(),
+                () -> StandardTags.gradient(),
+                () -> StandardTags.rainbow(),
+                () -> StandardTags.reset(),
+                () -> StandardTags.transition(),
+                () -> StandardTags.pride(),
+                () -> StandardTags.shadowColor()
+            ))
         )
         .build();
 
