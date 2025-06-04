@@ -15,9 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
-import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.Callable;
 
 public class MiniMessageMessenger extends AbstractMessenger {
     public static final MiniMessage MINI_MESSAGE = MiniMessage.builder()
@@ -72,18 +69,5 @@ public class MiniMessageMessenger extends AbstractMessenger {
         audience.sendTitlePart(TitlePart.TIMES, times);
         audience.sendTitlePart(TitlePart.SUBTITLE, ModernChatColorHandler.translate(subtitle, player));
         audience.sendTitlePart(TitlePart.TITLE, ModernChatColorHandler.translate(title, player));
-    }
-
-    public static @NotNull List<TagResolver> resolvers(List<Callable<TagResolver>> callables) {
-        return callables.stream()
-            .map(callable -> {
-                try {
-                    return callable.call();
-                } catch (Exception ignored) {
-                    return null;
-                }
-            })
-            .filter(Objects::nonNull)
-            .toList();
     }
 }

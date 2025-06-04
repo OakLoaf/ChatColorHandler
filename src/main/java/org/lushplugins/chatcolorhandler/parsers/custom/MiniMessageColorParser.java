@@ -7,23 +7,13 @@ import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
 import org.lushplugins.chatcolorhandler.parsers.Resolver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MiniMessageColorParser implements Resolver {
     public static final MiniMessageColorParser INSTANCE = new MiniMessageColorParser();
     private static final TagResolver BASIC_COLORS = TagResolver.builder()
-        .resolvers(
-            MiniMessageMessenger.resolvers(List.of(
-                StandardTags::color,
-                StandardTags::decorations,
-                StandardTags::gradient,
-                StandardTags::rainbow,
-                StandardTags::reset,
-                StandardTags::transition,
-                StandardTags::pride,
-                StandardTags::shadowColor
-            ))
-        )
+        .resolvers(tagResolvers())
         .build();
 
     private MiniMessageColorParser() {}
@@ -47,5 +37,23 @@ public class MiniMessageColorParser implements Resolver {
     @Override
     public @NotNull TagResolver getResolver() {
         return BASIC_COLORS;
+    }
+
+    private static List<TagResolver> tagResolvers() {
+        List<TagResolver> resolvers = new ArrayList<>();
+
+        try {
+            // Resolvers are ordered in order of their addition to MiniMessage
+            resolvers.add(StandardTags.color());
+            resolvers.add(StandardTags.decorations());
+            resolvers.add(StandardTags.gradient());
+            resolvers.add(StandardTags.rainbow());
+            resolvers.add(StandardTags.reset());
+            resolvers.add(StandardTags.transition());
+            resolvers.add(StandardTags.pride());
+            resolvers.add(StandardTags.shadowColor());
+        } catch (NoSuchMethodError ignored) {}
+
+        return resolvers;
     }
 }
