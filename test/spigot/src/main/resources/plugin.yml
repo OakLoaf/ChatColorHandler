@@ -1,0 +1,7 @@
+name: ChatColorHandlerTest
+version: '${version}'
+main: org.lushplugins.chatcolorhandlertest.spigot.ChatColorHandlerTest
+api-version: '1.20'
+depend:
+  - PlaceholderAPI
+  - MiniPlaceholders

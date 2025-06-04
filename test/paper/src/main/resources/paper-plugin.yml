@@ -1,0 +1,12 @@
+name: ChatColorHandlerPaperTest
+version: '${version}'
+main: org.lushplugins.chatcolorhandlertest.paper.ChatColorHandlerTest
+api-version: '1.20'
+dependencies:
+  server:
+    PlaceholderAPI:
+      load: BEFORE
+      required: false
+    MiniPlaceholders:
+      load: BEFORE
+      required: false

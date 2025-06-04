@@ -1,16 +1,43 @@
 plugins {
-    java
+    `java-library`
     `maven-publish`
-    id("io.github.goooler.shadow") version("8.1.7")
+    id("com.gradleup.shadow") version("8.3.0")
 }
 
 group = "org.lushplugins"
-version = "5.1.5"
+version = "5.1.6-alpha1"
 
-repositories {
-    mavenCentral() // Adventure, MiniPlaceholders
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
-    maven("https://repo.helpch.at/releases") // PlaceholderAPI
+allprojects {
+    apply(plugin = "java-library")
+    apply(plugin = "com.gradleup.shadow")
+
+    repositories {
+        mavenLocal()
+        mavenCentral() // Adventure, MiniPlaceholders
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") // Spigot
+        maven("https://repo.papermc.io/repository/maven-public/") // Paper
+        maven("https://repo.helpch.at/releases") // PlaceholderAPI
+    }
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+
+        registerFeature("optional") {
+            usingSourceSet(sourceSets["main"])
+        }
+
+        withSourcesJar()
+    }
+
+    tasks {
+        withType<JavaCompile> {
+            options.encoding = "UTF-8"
+        }
+
+        shadowJar {
+            archiveFileName.set("${project.name}-${project.version}.jar")
+        }
+    }
 }
 
 dependencies {
@@ -19,26 +46,6 @@ dependencies {
     compileOnly("net.kyori:adventure-text-minimessage:4.19.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:2.2.3")
     compileOnly("me.clip:placeholderapi:2.11.6")
-}
-
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-
-    registerFeature("optional") {
-        usingSourceSet(sourceSets["main"])
-    }
-
-    withSourcesJar()
-}
-
-tasks {
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
-
-    shadowJar {
-        archiveFileName.set("${project.name}-${project.version}.jar")
-    }
 }
 
 publishing {
