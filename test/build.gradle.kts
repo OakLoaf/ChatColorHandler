@@ -5,4 +5,10 @@ subprojects {
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(21))
     }
+
+    tasks {
+        shadowJar {
+            dependsOn(":shadowJar")
+        }
+    }
 }
