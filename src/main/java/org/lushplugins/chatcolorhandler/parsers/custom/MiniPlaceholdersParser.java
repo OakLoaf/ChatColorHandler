@@ -19,11 +19,11 @@ public class MiniPlaceholdersParser implements Resolver {
 
     @Override
     public @NotNull TagResolver getResolver() {
-        return MiniPlaceholders.getGlobalPlaceholders();
+        return MiniPlaceholders.globalPlaceholders();
     }
 
     @Override
     public @NotNull TagResolver getResolver(Audience audience) {
-        return MiniPlaceholders.getAudienceGlobalPlaceholders(audience);
+        return MiniPlaceholders.audienceGlobalPlaceholders();
     }
 }
