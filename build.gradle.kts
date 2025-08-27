@@ -41,7 +41,7 @@ allprojects {
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.8-R0.1-SNAPSHOT")
     compileOnly("net.kyori:adventure-text-serializer-legacy:4.24.0")
     compileOnly("net.kyori:adventure-text-minimessage:4.24.0")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.0.1")

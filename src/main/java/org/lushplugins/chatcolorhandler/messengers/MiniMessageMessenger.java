@@ -2,7 +2,6 @@ package org.lushplugins.chatcolorhandler.messengers;
 
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.lushplugins.chatcolorhandler.ModernChatColorHandler;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -33,9 +32,8 @@ public class MiniMessageMessenger extends AbstractMessenger {
             return;
         }
 
-        Audience audience = Audience.audience((Audience) recipient);
         Component parsed = ModernChatColorHandler.translate(message, (recipient instanceof Player player ? player : null));
-        audience.sendMessage(parsed);
+        recipient.sendMessage(parsed);
     }
 
     @Override
@@ -44,8 +42,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
             return;
         }
 
-        Audience audience = Audience.audience((Audience) Bukkit.getServer());
-        audience.sendMessage(ModernChatColorHandler.translate(message));
+        Bukkit.getServer().sendMessage(ModernChatColorHandler.translate(message));
     }
 
     @Override
@@ -54,8 +51,7 @@ public class MiniMessageMessenger extends AbstractMessenger {
             return;
         }
 
-        Audience audience = Audience.audience((Audience) player);
-        audience.sendActionBar(ModernChatColorHandler.translate(message, player));
+        player.sendActionBar(ModernChatColorHandler.translate(message, player));
     }
 
     @Override
@@ -64,10 +60,9 @@ public class MiniMessageMessenger extends AbstractMessenger {
             return;
         }
 
-        Audience audience = Audience.audience((Audience) player);
         Title.Times times = Title.Times.times(Duration.ofMillis(fadeIn * 50L), Duration.ofMillis(stay * 50L), Duration.ofMillis(fadeOut * 50L));
-        audience.sendTitlePart(TitlePart.TIMES, times);
-        audience.sendTitlePart(TitlePart.SUBTITLE, ModernChatColorHandler.translate(subtitle, player));
-        audience.sendTitlePart(TitlePart.TITLE, ModernChatColorHandler.translate(title, player));
+        player.sendTitlePart(TitlePart.TIMES, times);
+        player.sendTitlePart(TitlePart.SUBTITLE, ModernChatColorHandler.translate(subtitle, player));
+        player.sendTitlePart(TitlePart.TITLE, ModernChatColorHandler.translate(title, player));
     }
 }

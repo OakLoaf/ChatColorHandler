@@ -1,6 +1,5 @@
 package org.lushplugins.chatcolorhandler.parsers.custom;
 
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +32,8 @@ public class MiniMessageResolverParser implements Parser {
             case SPIGOT -> {
                 string = string.replace('§', '&');
 
-                TagResolver resolver = Resolver.combineResolvers(player instanceof Audience audience ? audience : null, getPlaceholderResolvers());
-                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, resolver));
+                TagResolver resolver = Resolver.combineResolvers(player, getPlaceholderResolvers());
+                yield MiniMessageMessenger.LEGACY_COMPONENT_SERIALIZER.serialize(MiniMessageMessenger.MINI_MESSAGE.deserialize(string, player, resolver));
             }
             case MINI_MESSAGE -> string;
         };

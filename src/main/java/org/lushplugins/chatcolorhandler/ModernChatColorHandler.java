@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.lushplugins.chatcolorhandler.messengers.MiniMessageMessenger;
 import org.lushplugins.chatcolorhandler.parsers.Parser;
 import org.lushplugins.chatcolorhandler.parsers.Resolver;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
@@ -62,12 +61,12 @@ public class ModernChatColorHandler {
 
         String legacyParsed = ChatColorHandler.parsers().parseString(string, Parser.OutputType.MINI_MESSAGE, player, parsers);
 
-        TagResolver tagResolver = Resolver.combineResolvers((Audience) player, parsers.stream()
+        TagResolver tagResolver = Resolver.combineResolvers(player, parsers.stream()
             .map(parser -> parser instanceof Resolver resolver ? resolver : null)
             .filter(Objects::nonNull)
             .toList());
 
-        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, tagResolver);
+        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, player, tagResolver);
     }
 
     /**
