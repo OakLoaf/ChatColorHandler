@@ -67,7 +67,7 @@ public class ModernChatColorHandler {
             .filter(Objects::nonNull)
             .toList());
 
-        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, tagResolver);
+        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, (Audience) player, tagResolver);
     }
 
     /**
