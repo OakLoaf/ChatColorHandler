@@ -53,7 +53,7 @@ public class ModernChatColorHandler {
      * @param player    Player to parse placeholders for
      * @param parsers   Parsers which this message will be parsed through
      */
-    public static Component translate(@Nullable String string, Player player, @NotNull List<Parser> parsers) {
+    public static Component translate(@Nullable String string, @Nullable Player player, @NotNull List<Parser> parsers) {
         ChatColorHandler.ensureInitialised();
 
         if (string == null || string.isBlank()) {
@@ -67,7 +67,9 @@ public class ModernChatColorHandler {
             .filter(Objects::nonNull)
             .toList());
 
-        return MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, (Audience) player, tagResolver);
+        return (player == null)
+            ? MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, tagResolver)
+            : MiniMessageMessenger.MINI_MESSAGE.deserialize(legacyParsed, (Audience) player, tagResolver);
     }
 
     /**
