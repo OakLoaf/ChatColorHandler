@@ -52,6 +52,7 @@ public class MiniMessageColorParser implements Resolver {
             resolvers.add(StandardTags.transition());
             resolvers.add(StandardTags.pride());
             resolvers.add(StandardTags.shadowColor());
+            resolvers.add(StandardTags.sequentialHead());
         } catch (NoSuchMethodError ignored) {}
 
         return resolvers;
