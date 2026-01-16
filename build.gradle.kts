@@ -42,8 +42,8 @@ allprojects {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.11-R0.2-SNAPSHOT")
-    compileOnly("net.kyori:adventure-text-serializer-legacy:4.25.0")
-    compileOnly("net.kyori:adventure-text-minimessage:4.25.0")
+    compileOnly("net.kyori:adventure-text-serializer-legacy:4.26.1")
+    compileOnly("net.kyori:adventure-text-minimessage:4.26.1")
     compileOnly("io.github.miniplaceholders:miniplaceholders-api:3.1.0")
     compileOnly("me.clip:placeholderapi:2.11.7")
 }
