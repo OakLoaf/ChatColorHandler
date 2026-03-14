@@ -1,3 +1,6 @@
-org.lushplugins.chatcolorhandler
-org.lushplugins.chatcolorhandler.parsers
-org.lushplugins.chatcolorhandler.parsers.custom
+org.lushplugins.chatcolorhandler.common
+org.lushplugins.chatcolorhandler.common.parser
+org.lushplugins.chatcolorhandler.common.settings
+org.lushplugins.chatcolorhandler.paper
+org.lushplugins.chatcolorhandler.paper.parser
+org.lushplugins.chatcolorhandler.paper.resolver

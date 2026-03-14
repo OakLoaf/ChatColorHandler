@@ -7,14 +7,14 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
 
     // Libraries
-    implementation(project(":"))
+    implementation(project(":platform:paper"))
     implementation("io.github.revxrsal:lamp.common:4.0.0-rc.16")
     implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.16")
 }
 
 tasks {
     shadowJar {
-        relocate("org.lushplugins.chatcolorhandler.", "org.lushplugins.chatcolorhandlerpapertest.libraries.chatcolor.")
+        relocate("org.lushplugins.chatcolorhandler.", "org.lushplugins.chatcolorhandlertest.paper.libraries.chatcolor.")
     }
 
     processResources{

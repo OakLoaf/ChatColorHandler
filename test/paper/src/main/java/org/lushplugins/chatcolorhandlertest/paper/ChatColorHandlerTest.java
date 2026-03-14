@@ -13,8 +13,8 @@ public final class ChatColorHandlerTest extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
-        Lamp<BukkitCommandActor> lamp = BukkitLamp.builder(this).build();
-        lamp.register(new MainCommand());
+        BukkitLamp.builder(this).build()
+            .register(new MainCommand());
     }
 
     @Override

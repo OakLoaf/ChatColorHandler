@@ -5,9 +5,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.lushplugins.chatcolorhandler.ChatColorHandler;
-import org.lushplugins.chatcolorhandler.ModernChatColorHandler;
-import org.lushplugins.chatcolorhandler.parsers.ParserTypes;
+import org.lushplugins.chatcolorhandler.paper.PaperColor;
+import org.lushplugins.chatcolorhandler.paper.parser.ParserTypes;
 import org.lushplugins.chatcolorhandlertest.paper.ChatColorHandlerTest;
 
 import java.util.ArrayList;
@@ -92,30 +91,30 @@ public class TestRunner {
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: ",
-                ChatColorHandler::translate)
+                (input) -> PaperColor.handler().translateRaw(input, null, PaperColor.handler().settings().defaultParsers()))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: §x§f§9§c§a§a§4" + (player != null ? player.getName() : "%player_name%"),
-                (input) -> ChatColorHandler.translate(input, player))
+                (input) -> PaperColor.handler().translateRaw(input, player, PaperColor.handler().settings().defaultParsers()))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: §x§f§9§c§a§a§4%player_name%",
-                (input) -> ChatColorHandler.translate(input, ParserTypes.color()))
+                (input) -> PaperColor.handler().translateRaw(input, null, ParserTypes.color()))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: §x§f§9§c§a§a§4%player_name%",
-                (input) -> ChatColorHandler.translate(input, player, ParserTypes.color()))
+                (input) -> PaperColor.handler().translateRaw(input, player, ParserTypes.color()))
             .addTest(
                 inputOne,
                 "&#A4D3F9This is a test string &rusing &lbold, <u>underline</u>&r and shows your name: <#F9CAA4>" + (player != null ? player.getName() : "%player_name%") + "</#F9CAA4>",
-                (input) -> ChatColorHandler.translate(input, player, ParserTypes.placeholder()))
+                (input) -> PaperColor.handler().translateRaw(input, player, ParserTypes.placeholder()))
             .run();
 
-        player.sendMessage(" ");
-        player.sendMessage(ModernChatColorHandler.translate(inputOne));
-        player.sendMessage(ModernChatColorHandler.translate(inputOne, player));
-        player.sendMessage(ModernChatColorHandler.translate(inputOne, ParserTypes.color()));
-        player.sendMessage(ModernChatColorHandler.translate(inputOne, player, ParserTypes.color()));
-        player.sendMessage(ModernChatColorHandler.translate(inputOne, player, ParserTypes.placeholder()));
+        sender.sendMessage(" ");
+        sender.sendMessage(PaperColor.handler().translate(inputOne));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, player));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, ParserTypes.color()));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, player, ParserTypes.color()));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, player, ParserTypes.placeholder()));
     }
 }
