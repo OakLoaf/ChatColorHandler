@@ -3,7 +3,6 @@ package org.lushplugins.chatcolorhandlertest.paper.test;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.chatcolorhandler.paper.PaperColor;
 import org.lushplugins.chatcolorhandler.paper.parser.ParserTypes;
@@ -15,6 +14,7 @@ import java.util.function.Function;
 import java.util.logging.Level;
 
 public class TestRunner {
+    private int testIndex = 0;
     private boolean ran = false;
     private final @Nullable Player player;
     private final List<Test> tests = new ArrayList<>();
@@ -27,8 +27,8 @@ public class TestRunner {
         this.player = player;
     }
 
-    public TestRunner addTest(@NotNull String input, @Nullable String expectedOutput, @NotNull Function<String, String> translate) {
-        this.tests.add(new Test(input, expectedOutput, translate));
+    public TestRunner addTest(String input, @Nullable String expectedOutput, Function<String, String> translate) {
+        this.tests.add(new Test(String.valueOf(++testIndex), input, expectedOutput, translate));
         return this;
     }
 
@@ -43,7 +43,7 @@ public class TestRunner {
         }
     }
 
-    record Test(@NotNull String input, @Nullable String expectedOutput, @NotNull Function<String, String> translate) {
+    record Test(String id, String input, @Nullable String expectedOutput, Function<String, String> translate) {
 
         private String run() {
             return run(null);
@@ -59,21 +59,21 @@ public class TestRunner {
 
             if (expectedOutput == null || expectedOutput.equals(output)) {
                 ChatColorHandlerTest.getInstance().getLogger().info("""
-                    Test Passed:
+                    Test %s Passed:
                       Input '%s' passed tests.
                       Received: '%s'
-                    """.formatted(input, output));
+                    """.formatted(id, input, output));
 
                 if (player != null) {
                     player.sendMessage("§a✔§r: " + output);
                 }
             } else {
                 ChatColorHandlerTest.getInstance().getLogger().info("""
-                    Test Failed:
+                    Test %s Failed:
                       Input '%s' failed tests.
                       Expected: '%s'
                       Received: '%s'
-                    """.formatted(input, expectedOutput, output));
+                    """.formatted(id, input, expectedOutput, output));
 
                 if (player != null) {
                     player.sendMessage("§c✕§r: " + output);
@@ -90,19 +90,19 @@ public class TestRunner {
         new TestRunner(player)
             .addTest(
                 inputOne,
-                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: ",
+                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: ",
                 (input) -> PaperColor.handler().translateRaw(input, null, PaperColor.handler().settings().defaultParsers()))
             .addTest(
                 inputOne,
-                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: §x§f§9§c§a§a§4" + (player != null ? player.getName() : "%player_name%"),
+                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4" + (player != null ? player.getName() : "%player_name%"),
                 (input) -> PaperColor.handler().translateRaw(input, player, PaperColor.handler().settings().defaultParsers()))
             .addTest(
                 inputOne,
-                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: §x§f§9§c§a§a§4%player_name%",
+                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4%player_name%",
                 (input) -> PaperColor.handler().translateRaw(input, null, ParserTypes.color()))
             .addTest(
                 inputOne,
-                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r§r and shows your name: §x§f§9§c§a§a§4%player_name%",
+                "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4%player_name%",
                 (input) -> PaperColor.handler().translateRaw(input, player, ParserTypes.color()))
             .addTest(
                 inputOne,

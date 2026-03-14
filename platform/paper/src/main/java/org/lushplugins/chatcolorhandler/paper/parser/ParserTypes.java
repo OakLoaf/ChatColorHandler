@@ -5,12 +5,18 @@ import org.lushplugins.chatcolorhandler.common.parser.ParserType;
 import org.lushplugins.chatcolorhandler.paper.PaperColor;
 
 import java.util.List;
-import java.util.Set;
+
+import java.util.stream.Stream;
 
 public class ParserTypes {
 
     private static List<Parser> ofType(ParserType type) {
-        return PaperColor.handler().parsers().ofType(type.id());
+        return all().stream()
+            .filter(parser -> {
+                ParserType parserType = parser.getType();
+                return parserType != null && parserType.equals(type);
+            })
+            .toList();
     }
 
     public static List<Parser> color() {
@@ -37,7 +43,10 @@ public class ParserTypes {
         return ofType(ParserType.TEXT_FORMATTING);
     }
 
-    public static Set<Parser> all() {
-        return PaperColor.handler().parsers().values();
+    public static List<Parser> all() {
+        return Stream.concat(
+            PaperColor.handler().parsers().values().stream(),
+            PaperColor.handler().resolvers().values().stream()
+        ).toList();
     }
 }

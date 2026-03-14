@@ -44,13 +44,11 @@ public class ParserRegistry {
         return values().stream()
             .filter(parser -> {
                 ParserType parserType = parser.getType();
-                if (parserType == null) {
-                    return true;
-                }
-
-                for (String type : types) {
-                    if (parserType.equals(type)) {
-                        return true;
+                if (parserType != null) {
+                    for (String type : types) {
+                        if (parserType.equals(type)) {
+                            return true;
+                        }
                     }
                 }
 

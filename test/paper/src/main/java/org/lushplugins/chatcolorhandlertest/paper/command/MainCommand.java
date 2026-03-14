@@ -2,7 +2,6 @@ package org.lushplugins.chatcolorhandlertest.paper.command;
 
 import org.lushplugins.chatcolorhandler.paper.PaperColor;
 import org.lushplugins.chatcolorhandlertest.paper.ChatColorHandlerTest;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

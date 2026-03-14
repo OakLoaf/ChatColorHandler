@@ -53,13 +53,11 @@ public class ResolverRegistry {
         return values().stream()
             .filter(resolver -> {
                 ParserType resolverType = resolver.getType();
-                if (resolverType == null) {
-                    return true;
-                }
-
-                for (String type : types) {
-                    if (resolver.getType().equals(type)) {
-                        return true;
+                if (resolverType != null) {
+                    for (String type : types) {
+                        if (resolver.getType().equals(type)) {
+                            return true;
+                        }
                     }
                 }
 
