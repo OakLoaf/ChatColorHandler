@@ -9,7 +9,7 @@ allprojects {
     apply(plugin = "maven-publish")
 
     group = "org.lushplugins"
-    version = "7.0.0"
+    version = "7.0.0-alpha.3"
 
     repositories {
         mavenLocal()
@@ -37,6 +37,30 @@ allprojects {
     tasks {
         withType<JavaCompile> {
             options.encoding = "UTF-8"
+        }
+    }
+
+    publishing {
+        repositories {
+            maven {
+                name = "lushReleases"
+                url = uri("https://repo.lushplugins.org/releases")
+                credentials(PasswordCredentials::class)
+                authentication {
+                    isAllowInsecureProtocol = true
+                    create<BasicAuthentication>("basic")
+                }
+            }
+
+            maven {
+                name = "lushSnapshots"
+                url = uri("https://repo.lushplugins.org/snapshots")
+                credentials(PasswordCredentials::class)
+                authentication {
+                    isAllowInsecureProtocol = true
+                    create<BasicAuthentication>("basic")
+                }
+            }
         }
     }
 }

@@ -138,17 +138,17 @@ public class PaperColor extends ColorHandler<Component> {
             return;
         }
 
-        Component translatedTitle = translate(title, player);
-        Component translatedSubtitle = translate(subtitle, player);
         Title.Times times = Title.Times.times(
             Duration.ofMillis(fadeIn * 50L),
             Duration.ofMillis(stay * 50L),
             Duration.ofMillis(fadeOut * 50L)
         );
 
-        player.sendTitlePart(TitlePart.TIMES, times);
-        player.sendTitlePart(TitlePart.SUBTITLE, translatedSubtitle);
-        player.sendTitlePart(TitlePart.TITLE, translatedTitle);
+        player.showTitle(Title.title(
+            translate(title, player),
+            translate(subtitle, player),
+            times
+        ));
     }
 
     public static PaperColor handler() {
