@@ -35,8 +35,8 @@ tasks {
         downloadPlugins {
             hangar("PlaceholderAPI", "2.11.6")
             modrinth("miniplaceholders", "wck4v0R0")
-            modrinth("viaversion", "5.4.0-SNAPSHOT+742")
-            modrinth("viabackwards", "5.4.0-SNAPSHOT+425")
+            modrinth("viaversion", "5.7.2")
+            modrinth("viabackwards", "5.7.2")
         }
     }
 }
