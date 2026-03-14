@@ -45,8 +45,7 @@ public class PaperColor extends ColorHandler<Component> {
             MiniMessageDefaultsResolver.INSTANCE,
             MiniMessageInteractionResolver.INSTANCE,
             MiniMessagePlaceholderResolver.INSTANCE,
-            MiniMessageTextFormattingResolver.INSTANCE,
-            MiniPlaceholdersResolver.INSTANCE
+            MiniMessageTextFormattingResolver.INSTANCE
         );
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
