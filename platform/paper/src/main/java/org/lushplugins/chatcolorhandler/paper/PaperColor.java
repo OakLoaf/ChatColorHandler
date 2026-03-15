@@ -1,11 +1,11 @@
 package org.lushplugins.chatcolorhandler.paper;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.title.Title;
-import net.kyori.adventure.title.TitlePart;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -79,9 +79,11 @@ public class PaperColor extends ColorHandler<Component> {
             .toList());
 
         if (player != null) {
-            return MINI_MESSAGE.deserialize(translated, player, resolver);
+            return MINI_MESSAGE.deserialize(translated, player, resolver)
+                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         } else {
-            return MINI_MESSAGE.deserialize(translated, resolver);
+            return MINI_MESSAGE.deserialize(translated, resolver)
+                .decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE);
         }
     }
 
