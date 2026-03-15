@@ -1,3 +1,4 @@
 rootProject.name = "ChatColorHandler"
-include("test:spigot")
-include("test:paper")
+include(":common")
+include(":platform:paper")
+include(":test:paper")

@@ -4,19 +4,15 @@ plugins {
 
 dependencies {
     // Dependencies
-    compileOnly("io.papermc.paper:paper-api:1.21.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
 
     // Libraries
-    implementation(project(":"))
+    implementation(project(":platform:paper"))
     implementation("io.github.revxrsal:lamp.common:4.0.0-rc.16")
     implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.16")
 }
 
 tasks {
-    shadowJar {
-        relocate("org.lushplugins.chatcolorhandler.", "org.lushplugins.chatcolorhandlerpapertest.libraries.chatcolor.")
-    }
-
     processResources{
         expand(project.properties)
 
@@ -30,13 +26,13 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.21.4")
+        minecraftVersion("1.21.11")
 
         downloadPlugins {
             hangar("PlaceholderAPI", "2.11.6")
-            modrinth("miniplaceholders", "wck4v0R0")
-            modrinth("viaversion", "5.4.0-SNAPSHOT+742")
-            modrinth("viabackwards", "5.4.0-SNAPSHOT+425")
+            modrinth("miniplaceholders", "4zOT6txC")
+            modrinth("viaversion", "5.7.2")
+            modrinth("viabackwards", "5.7.2")
         }
     }
 }

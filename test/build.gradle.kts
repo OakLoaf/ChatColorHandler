@@ -1,14 +1,5 @@
 subprojects {
-    group = "org.lushplugins"
-    version = "2.0.0-beta"
+    apply(plugin = "com.gradleup.shadow")
 
-    java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(21))
-    }
-
-    tasks {
-        shadowJar {
-            dependsOn(":shadowJar")
-        }
-    }
+    version = "3.0.0"
 }
