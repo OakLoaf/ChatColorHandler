@@ -12,7 +12,8 @@ ChatColorHandler will automatically setup upon the first use of the library.
 ### Adding Hex Colors to Messages
 These are the main methods that you will be wanting to use in ChatColorHandler:
 
-- `translate` - Translates a string
+- `translate` - Translates a string to the platform's result type *(for example, `PaperColor#translate` returns a `Component`)* 
+- `translateRaw` - Translates a string and returns output as a string
 - `sendMessage` - Sends a message to one or more players
 - `broadcastMessage` - Sends a message to all online players
 - `sendActionBarMessage` - Sends an action bar message to one or more players
