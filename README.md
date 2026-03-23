@@ -1,12 +1,13 @@
 # ChatColorHandler
-![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/ChatColorHandler?color=40c14a&name=Maven)
+![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/chatcolorhandler/paper?color=40c14a&name=Maven)
 
 ChatColorHandler allows you to easily add Hex Colour and MiniMessage support to your Minecraft plugins.
-This Library works with all versions of Spigot and also adds [MiniMessage](https://docs.advntr.dev/minimessage/format.html) support for servers running [Paper](https://papermc.io/downloads/paper) (or forks).
+This Library works with [PaperMC](https://papermc.io/downloads/paper) (or forks) and contains built-in [MiniMessage](https://docs.advntr.dev/minimessage/format.html) support.
+Spigot is not currently supported in 7.0.0 as the library has been rewritten to improve functionality on modern platforms.
 
 ## Using ChatColorHandler
-The hex color formats added by ChatColorHandler are `&#rrggbb` and `#rrggbb` and does not add gradient support.
-ChatColorHandler will automatically setup upon the first use of the library
+The hex color format added by ChatColorHandler is `&#rrggbb` which does not add gradient support.
+ChatColorHandler will automatically setup upon the first use of the library.
 
 ### Adding Hex Colors to Messages
 These are the main methods that you will be wanting to use in ChatColorHandler:
@@ -27,7 +28,7 @@ All support built into ChatColorHandler will automatically be applied to all par
 
 eg.
 ```java
-ChatColorHandler.translate("&#aaee99Example Message %server_name%", List.of(HexParser.INSTANCE, PlacecholderAPIParser.INSTANCE))
+PaperColor.handler().translate("&#aaee99Example Message %server_name%", List.of(HexParser.INSTANCE, PlacecholderAPIParser.INSTANCE))
 ```
 
 <br>
@@ -36,14 +37,14 @@ ChatColorHandler.translate("&#aaee99Example Message %server_name%", List.of(HexP
 Sending messages with ChatColorHandler is as easy as doing:
 
 ```java
-ChatColorHandler.sendMessage(player, "&cThis is an example message");
+PaperColor.handler().sendMessage(player, "&cThis is an example message");
 ```
 
 ### Adding Hex Colors to the rest of Minecraft
 With ChatColorHandler you are able to change gui titles, item names, item lore, etc. All by parsing your text through ChatColorHandler:
 
 ```java
-ChatColorHandler.translate("&#bbff33Inventory Title");
+PaperColor.handler().translate("&#bbff33Inventory Title");
 ```
 
 <br>
@@ -71,9 +72,9 @@ You can simply add ChatColorHandler to your project by adding the below into you
 ```xml
 <dependencies>
     <dependency>
-        <groupId>org.lushplugins</groupId>
-        <artifactId>ChatColorHandler</artifactId>
-        <version>4.0.0</version>
+        <groupId>org.lushplugins.chatcolorhandler</groupId>
+        <artifactId>paper</artifactId>
+        <version>7.0.0</version>
     </dependency>
 </dependencies>
 ```
@@ -92,7 +93,7 @@ repositories {
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "org.lushplugins:ChatColorHandler:4.0.0"
+    compileOnly "org.lushplugins.chatcolorhandler:paper:7.0.0"
 }
 ```
 </details>
