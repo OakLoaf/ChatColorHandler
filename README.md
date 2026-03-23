@@ -28,7 +28,7 @@ All support built into ChatColorHandler will automatically be applied to all par
 
 eg.
 ```java
-PaperColor.handler().translate("&#aaee99Example Message %server_name%", List.of(HexParser.INSTANCE, PlacecholderAPIParser.INSTANCE))
+PaperColor.handler().translate("&#aaee99Example Message %server_name%", List.of(HexParser.INSTANCE, PlaceholderAPIParser.INSTANCE))
 ```
 
 <br>
