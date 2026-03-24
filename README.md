@@ -12,7 +12,8 @@ ChatColorHandler will automatically setup upon the first use of the library.
 ### Adding Hex Colors to Messages
 These are the main methods that you will be wanting to use in ChatColorHandler:
 
-- `translate` - Translates a string
+- `translate` - Translates a string to the platform's result type *(for example, `PaperColor#translate` returns a `Component`)* 
+- `translateRaw` - Translates a string and returns output as a string
 - `sendMessage` - Sends a message to one or more players
 - `broadcastMessage` - Sends a message to all online players
 - `sendActionBarMessage` - Sends an action bar message to one or more players
@@ -28,7 +29,7 @@ All support built into ChatColorHandler will automatically be applied to all par
 
 eg.
 ```java
-PaperColor.handler().translate("&#aaee99Example Message %server_name%", List.of(HexParser.INSTANCE, PlacecholderAPIParser.INSTANCE))
+PaperColor.handler().translate("&#aaee99Example Message %server_name%", List.of(HexParser.INSTANCE, PlaceholderAPIParser.INSTANCE))
 ```
 
 <br>
@@ -54,7 +55,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
 
 ![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/ChatColorHandler?color=40c14a&name=Maven)
 
-**Javadocs:** https://oakloaf.github.io/ChatColorHandler/org/lushplugins/chatcolorhandler/ChatColorHandler.html
+**Javadocs:** https://oakloaf.github.io/ChatColorHandler/org/lushplugins/chatcolorhandler/common/ColorHandler.html
 
 <details open>
 <summary>Maven</summary>
