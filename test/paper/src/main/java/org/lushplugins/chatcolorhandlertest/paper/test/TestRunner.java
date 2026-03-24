@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
+import org.lushplugins.chatcolorhandler.common.parser.Parsers;
 import org.lushplugins.chatcolorhandler.paper.PaperColor;
-import org.lushplugins.chatcolorhandler.paper.parser.ParserTypes;
 import org.lushplugins.chatcolorhandlertest.paper.ChatColorHandlerTest;
 
 import java.util.ArrayList;
@@ -91,30 +91,30 @@ public class TestRunner {
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: ",
-                (input) -> PaperColor.handler().translateRaw(input, null, PaperColor.handler().settings().defaultParsers()))
+                (input) -> PaperColor.handler().translateRaw(input, null, Parsers::defaults))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4" + (player != null ? player.getName() : "%player_name%"),
-                (input) -> PaperColor.handler().translateRaw(input, player, PaperColor.handler().settings().defaultParsers()))
+                (input) -> PaperColor.handler().translateRaw(input, player, Parsers::defaults))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4%player_name%",
-                (input) -> PaperColor.handler().translateRaw(input, null, ParserTypes.color()))
+                (input) -> PaperColor.handler().translateRaw(input, null, Parsers::color))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4%player_name%",
-                (input) -> PaperColor.handler().translateRaw(input, player, ParserTypes.color()))
+                (input) -> PaperColor.handler().translateRaw(input, player, Parsers::color))
             .addTest(
                 inputOne,
                 "&#A4D3F9This is a test string &rusing &lbold, <u>underline</u>&r and shows your name: <#F9CAA4>" + (player != null ? player.getName() : "%player_name%") + "</#F9CAA4>",
-                (input) -> PaperColor.handler().translateRaw(input, player, ParserTypes.placeholder()))
+                (input) -> PaperColor.handler().translateRaw(input, player, Parsers::placeholder))
             .run();
 
         sender.sendMessage(" ");
         sender.sendMessage(PaperColor.handler().translate(inputOne));
         sender.sendMessage(PaperColor.handler().translate(inputOne, player));
-        sender.sendMessage(PaperColor.handler().translate(inputOne, ParserTypes.color()));
-        sender.sendMessage(PaperColor.handler().translate(inputOne, player, ParserTypes.color()));
-        sender.sendMessage(PaperColor.handler().translate(inputOne, player, ParserTypes.placeholder()));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, Parsers::color));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, player, Parsers::color));
+        sender.sendMessage(PaperColor.handler().translate(inputOne, player, Parsers::placeholder));
     }
 }

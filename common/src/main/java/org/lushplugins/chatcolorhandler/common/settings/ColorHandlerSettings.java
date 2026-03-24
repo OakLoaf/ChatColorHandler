@@ -1,7 +1,6 @@
 package org.lushplugins.chatcolorhandler.common.settings;
 
 import org.lushplugins.chatcolorhandler.common.parser.Parser;
-import org.lushplugins.chatcolorhandler.common.parser.ParserType;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -19,6 +19,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 public class PaperColor extends ColorHandler<Component> {
     private static final PaperColor INSTANCE = new PaperColor();
@@ -67,13 +69,22 @@ public class PaperColor extends ColorHandler<Component> {
     }
 
     @Override
-    public Component translate(@Nullable String string, @Nullable Player player, Collection<Parser> parsers) {
+    public Collection<Parser> allParsers() {
+        return Stream.concat(
+            parsers().values().stream(),
+            resolvers().values().stream()
+        ).toList();
+    }
+
+    @Override
+    public Component translate(@Nullable String string, @Nullable Player player, UnaryOperator<Parsers> parsers) {
         if (string == null || string.isBlank()) {
             return Component.empty();
         }
 
-        String translated = parsers().parseString(string, player, parsers);
-        TagResolver resolver = resolvers.asTagResolver(player, parsers.stream()
+        Parsers parserSet = parsers.apply(new Parsers(this));
+        String translated = parsers().parseString(string, player, parserSet);
+        TagResolver resolver = resolvers.asTagResolver(player, parserSet.values().stream()
             .filter(parser -> parser instanceof Resolver)
             .map(parser -> (Resolver) parser)
             .toList());
@@ -87,20 +98,9 @@ public class PaperColor extends ColorHandler<Component> {
         }
     }
 
-    public String translateRaw(@Nullable String string, @Nullable Player player, Collection<Parser> parsers) {
+    @Override
+    public String translateRaw(@Nullable String string, @Nullable Player player, UnaryOperator<Parsers> parsers) {
         return LEGACY_SERIALIZER.serialize(translate(string, player, parsers));
-    }
-
-    public String translateRaw(@Nullable String string, @Nullable Player player) {
-        return translateRaw(string, player, settings().defaultParsers());
-    }
-
-    public String translateRaw(@Nullable String string, Collection<Parser> parsers) {
-        return translateRaw(string, null, parsers);
-    }
-
-    public String translateRaw(@Nullable String string) {
-        return translateRaw(string, null, settings().defaultParsers());
     }
 
     @Override

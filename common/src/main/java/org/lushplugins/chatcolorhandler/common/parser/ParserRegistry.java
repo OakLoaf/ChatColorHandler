@@ -20,7 +20,7 @@ public class ParserRegistry {
         sort();
     }
 
-    public String parseString(@NotNull String string, @Nullable Player player, @NotNull Collection<Parser> parsers) {
+    public String parseString(@NotNull String string, @Nullable Player player, @NotNull Parsers parsers) {
         for (Parser parser : parsers) {
             try {
                 string = parser.parseString(string, player);

@@ -5,10 +5,12 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import org.lushplugins.chatcolorhandler.common.parser.Parser;
 import org.lushplugins.chatcolorhandler.common.parser.ParserRegistry;
+import org.lushplugins.chatcolorhandler.common.parser.Parsers;
 import org.lushplugins.chatcolorhandler.common.settings.ColorHandlerSettings;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 /**
  * @param <T> Translation output type
@@ -26,6 +28,10 @@ public abstract class ColorHandler<T> {
         return parsers;
     }
 
+    public Collection<Parser> allParsers() {
+        return parsers.values();
+    }
+
     /**
      * Translates a string to allow for hex colours and placeholders
      *
@@ -33,7 +39,7 @@ public abstract class ColorHandler<T> {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public abstract T translate(@Nullable String string, @Nullable Player player, Collection<Parser> parsers);
+    public abstract T translate(@Nullable String string, @Nullable Player player, UnaryOperator<Parsers> parsers);
 
     /**
      * Translates a string to allow for hex colours and placeholders
@@ -42,7 +48,7 @@ public abstract class ColorHandler<T> {
      * @param player Player to parse placeholders for
      */
     public T translate(@Nullable String string, @Nullable Player player) {
-        return translate(string, player, settings.defaultParsers());
+        return translate(string, player, Parsers::defaults);
     }
 
     /**
@@ -51,7 +57,7 @@ public abstract class ColorHandler<T> {
      * @param string String to be translated
      * @param parsers Parsers which this message won't be parsed through
      */
-    public T translate(@Nullable String string, Collection<Parser> parsers) {
+    public T translate(@Nullable String string, UnaryOperator<Parsers> parsers) {
         return translate(string, null, parsers);
     }
 
@@ -61,7 +67,7 @@ public abstract class ColorHandler<T> {
      * @param string String to be translated
      */
     public T translate(@Nullable String string) {
-        return translate(string, null, settings.defaultParsers());
+        return translate(string, null, Parsers::defaults);
     }
 
     /**
@@ -71,7 +77,7 @@ public abstract class ColorHandler<T> {
      * @param player Player to parse placeholders for
      * @param parsers Parsers which this message will be parsed through
      */
-    public List<T> translate(Collection<String> strings, Player player, List<Parser> parsers) {
+    public List<T> translate(Collection<String> strings, Player player, UnaryOperator<Parsers> parsers) {
         return strings.stream().map(string -> translate(string, player, parsers)).toList();
     }
 
@@ -91,7 +97,7 @@ public abstract class ColorHandler<T> {
      * @param strings Strings to be translated
      * @param parsers Parsers which this message will be parsed through
      */
-    public List<T> translate(Collection<String> strings, List<Parser> parsers) {
+    public List<T> translate(Collection<String> strings, UnaryOperator<Parsers> parsers) {
         return strings.stream().map(string -> translate(string, parsers)).toList();
     }
 
@@ -102,6 +108,20 @@ public abstract class ColorHandler<T> {
      */
     public List<T> translate(Collection<String> strings) {
         return strings.stream().map(this::translate).toList();
+    }
+
+    public abstract String translateRaw(@Nullable String string, @Nullable Player player, UnaryOperator<Parsers> parsers);
+
+    public String translateRaw(@Nullable String string, @Nullable Player player) {
+        return translateRaw(string, player, Parsers::defaults);
+    }
+
+    public String translateRaw(@Nullable String string, UnaryOperator<Parsers> parsers) {
+        return translateRaw(string, null, parsers);
+    }
+
+    public String translateRaw(@Nullable String string) {
+        return translateRaw(string, null, Parsers::defaults);
     }
 
     /**
