@@ -28,11 +28,6 @@ public class Parsers implements Iterable<Parser> {
         return this;
     }
 
-    public Parsers defaults() {
-        parsers.addAll(instance.settings().defaultParsers());
-        return this;
-    }
-
     public Parsers ofType(ParserType type) {
         instance.allParsers().stream()
             .filter(parser -> Objects.equals(parser.getType(), type))
@@ -63,6 +58,10 @@ public class Parsers implements Iterable<Parser> {
 
     public Parsers textFormatting() {
         return ofType(ParserType.TEXT_FORMATTING);
+    }
+
+    public Parsers defaults() {
+        return instance.settings().defaultParsers().apply(this);
     }
 
     public Parsers all() {

@@ -91,11 +91,11 @@ public class TestRunner {
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: ",
-                (input) -> PaperColor.handler().translateRaw(input, null, Parsers::defaults))
+                (input) -> PaperColor.handler().translateRaw(input, null, PaperColor.handler().settings().defaultParsers()))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4" + (player != null ? player.getName() : "%player_name%"),
-                (input) -> PaperColor.handler().translateRaw(input, player, Parsers::defaults))
+                (input) -> PaperColor.handler().translateRaw(input, player, PaperColor.handler().settings().defaultParsers()))
             .addTest(
                 inputOne,
                 "§x§a§4§d§3§f§9This is a test string §rusing §lbold, §nunderline§r and shows your name: §x§f§9§c§a§a§4%player_name%",

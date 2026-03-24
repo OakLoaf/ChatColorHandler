@@ -48,7 +48,7 @@ public abstract class ColorHandler<T> {
      * @param player Player to parse placeholders for
      */
     public T translate(@Nullable String string, @Nullable Player player) {
-        return translate(string, player, Parsers::defaults);
+        return translate(string, player, settings().defaultParsers());
     }
 
     /**
@@ -67,7 +67,7 @@ public abstract class ColorHandler<T> {
      * @param string String to be translated
      */
     public T translate(@Nullable String string) {
-        return translate(string, null, Parsers::defaults);
+        return translate(string, null, settings().defaultParsers());
     }
 
     /**
@@ -113,7 +113,7 @@ public abstract class ColorHandler<T> {
     public abstract String translateRaw(@Nullable String string, @Nullable Player player, UnaryOperator<Parsers> parsers);
 
     public String translateRaw(@Nullable String string, @Nullable Player player) {
-        return translateRaw(string, player, Parsers::defaults);
+        return translateRaw(string, player, settings().defaultParsers());
     }
 
     public String translateRaw(@Nullable String string, UnaryOperator<Parsers> parsers) {
@@ -121,7 +121,7 @@ public abstract class ColorHandler<T> {
     }
 
     public String translateRaw(@Nullable String string) {
-        return translateRaw(string, null, Parsers::defaults);
+        return translateRaw(string, null, settings().defaultParsers());
     }
 
     /**
