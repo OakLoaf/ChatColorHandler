@@ -53,7 +53,7 @@ PaperColor.handler().translate("&#bbff33Inventory Title");
 ## Add ChatColorHandler to your project:
 You can simply add ChatColorHandler to your project by adding the below into your maven or gradle build file!
 
-![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/ChatColorHandler?color=40c14a&name=Maven)
+![Version Number](https://repo.lushplugins.org/api/badge/latest/releases/org/lushplugins/chatcolorhandler/paper?color=40c14a&name=Maven)
 
 **Javadocs:** https://oakloaf.github.io/ChatColorHandler/org/lushplugins/chatcolorhandler/common/ColorHandler.html
 
