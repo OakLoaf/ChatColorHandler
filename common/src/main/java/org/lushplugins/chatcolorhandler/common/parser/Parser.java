@@ -9,6 +9,8 @@ public interface Parser {
      */
     @Nullable ParserType getType();
 
+    int getPriority();
+
     /**
      * Parse a string in relation to a player
      * @param string The string to parse

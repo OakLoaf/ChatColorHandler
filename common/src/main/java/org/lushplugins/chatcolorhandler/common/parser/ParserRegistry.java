@@ -9,15 +9,13 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class ParserRegistry {
-    private Map<Parser, Integer> parsers = new HashMap<>();
+    private final Set<Parser> parsers = new HashSet<>();
 
     /**
      * @param parser parser to register
-     * @param priority priority of parser, higher value will go first
      */
-    public void register(Parser parser, int priority) {
-        parsers.put(parser, priority);
-        sort();
+    public void register(Parser parser) {
+        parsers.add(parser);
     }
 
     public String parseString(@NotNull String string, @Nullable Player player, @NotNull Parsers parsers) {
@@ -32,12 +30,18 @@ public class ParserRegistry {
         return string;
     }
 
-    public void sort() {
-        parsers = sortByValue(parsers);
+    public List<Parser> values() {
+        return parsers.stream()
+            .sorted(Parsers.comparingPriority())
+            .toList();
     }
 
-    public Set<Parser> values() {
-        return parsers.keySet();
+    public List<Parser> unsorted() {
+        return new ArrayList<>(parsers);
+    }
+
+    public List<Parser> sorted() {
+        return values();
     }
 
     public List<Parser> ofTypes(@NotNull String... types) {
@@ -54,23 +58,11 @@ public class ParserRegistry {
 
                 return false;
             })
+            .sorted(Parsers.comparingPriority())
             .toList();
     }
 
     public List<Parser> ofType(@NotNull String type) {
         return ofTypes(type);
-    }
-
-    private static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(Map<K, V> map) {
-        List<Map.Entry<K, V>> list = new ArrayList<>(map.entrySet());
-        list.sort(Map.Entry.comparingByValue());
-        Collections.reverse(list);
-
-        Map<K, V> result = new LinkedHashMap<>();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
     }
 }

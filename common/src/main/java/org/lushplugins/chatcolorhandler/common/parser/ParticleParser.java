@@ -9,12 +9,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ParticleParser implements Parser {
-    public  static final ParticleParser INSTANCE = new ParticleParser();
+    public  static final ParticleParser INSTANCE = new ParticleParser(59);
     private static final Pattern PARTICLE_PATTERN = Pattern.compile("<particle:([a-zA-Z_]+)(?::([~\\d.-]+, [~\\d.-]+, [~\\d.-]+))?(?::(\\d+))?>");
+
+    private final int priority;
+
+    public ParticleParser(int priority) {
+        this.priority = priority;
+    }
 
     @Override
     public ParserType getType() {
         return ParserType.PARTICLE;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     @Override

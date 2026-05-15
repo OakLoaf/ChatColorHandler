@@ -36,11 +36,11 @@ public class PaperColor extends ColorHandler<Component> {
     private final ResolverRegistry resolvers = new ResolverRegistry();
 
     public PaperColor() {
-        parsers().register(HexParser.INSTANCE, 80);
-        parsers().register(LegacyHexParser.INSTANCE, 70);
-        parsers().register(LegacyAmpersandParser.INSTANCE, 69);
-        parsers().register(SoundParser.INSTANCE, 60);
-        parsers().register(ParticleParser.INSTANCE, 59);
+        parsers().register(HexParser.INSTANCE);
+        parsers().register(LegacyHexParser.INSTANCE);
+        parsers().register(LegacyAmpersandParser.INSTANCE);
+        parsers().register(SoundParser.INSTANCE);
+        parsers().register(ParticleParser.INSTANCE);
 
         resolvers().register(
             MiniMessageColorResolver.INSTANCE,
@@ -52,7 +52,7 @@ public class PaperColor extends ColorHandler<Component> {
 
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         if (pluginManager.isPluginEnabled("PlaceholderAPI")) {
-            parsers().register(PlaceholderAPIParser.INSTANCE, 90);
+            parsers().register(PlaceholderAPIParser.INSTANCE);
         }
 
         if (pluginManager.isPluginEnabled("MiniPlaceholders")) {

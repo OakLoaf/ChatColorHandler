@@ -9,8 +9,14 @@ import java.util.regex.Pattern;
  * Translates hex in format "§x§r§r§g§g§b§b"
  */
 public class LegacyHexParser implements Parser {
-    public static final LegacyHexParser INSTANCE = new LegacyHexParser();
+    public static final LegacyHexParser INSTANCE = new LegacyHexParser(70);
     private static final Pattern HEX_PATTERN = Pattern.compile("[§&]x[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])[§&]([a-fA-F0-9])");
+
+    private final int priority;
+
+    public LegacyHexParser(int priority) {
+        this.priority = priority;
+    }
 
     @Override
     public ParserType getType() {
@@ -18,7 +24,12 @@ public class LegacyHexParser implements Parser {
     }
 
     @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    @Override
     public String parseString(String string, @Nullable Player player) {
-        return HEX_PATTERN.matcher(string).replaceAll("<reset><#$1$2$3$4$5$6>");
+         return HEX_PATTERN.matcher(string).replaceAll("<reset><#$1$2$3$4$5$6>");
     }
 }

@@ -4,11 +4,22 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 public class LegacyAmpersandParser implements Parser {
-    public static final LegacyAmpersandParser INSTANCE = new LegacyAmpersandParser();
+    public static final LegacyAmpersandParser INSTANCE = new LegacyAmpersandParser(69);
+
+    private final int priority;
+
+    public LegacyAmpersandParser(int priority) {
+        this.priority = priority;
+    }
 
     @Override
     public ParserType getType() {
         return ParserType.COLOR;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     @Override

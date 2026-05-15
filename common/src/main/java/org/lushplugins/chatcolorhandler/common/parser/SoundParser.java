@@ -8,14 +8,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SoundParser implements Parser {
-    public static final SoundParser INSTANCE = new SoundParser();
+    public static final SoundParser INSTANCE = new SoundParser(60);
     private static final Pattern SOUND_PATTERN = Pattern.compile("<sound:([A-Za-z0-9._-]+)(?::([0-9.]+))?(?::([0-9.]+))?>");
     private static final float DEFAULT_VOLUME = 1.0f;
     private static final float DEFAULT_PITCH = 1.0f;
 
+    private final int priority;
+
+    public SoundParser(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public ParserType getType() {
         return ParserType.SOUND;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
     @Override

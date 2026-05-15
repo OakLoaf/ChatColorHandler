@@ -3,6 +3,7 @@ package org.lushplugins.chatcolorhandler.common.parser;
 import org.jspecify.annotations.NonNull;
 import org.lushplugins.chatcolorhandler.common.ColorHandler;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class Parsers implements Iterable<Parser> {
@@ -69,11 +70,19 @@ public class Parsers implements Iterable<Parser> {
         return this;
     }
 
-    public Set<Parser> values() {
-        return parsers;
+    public List<Parser> values() {
+        return parsers.stream()
+            .sorted(Parsers.comparingPriority())
+            .toList();
     }
 
     public @NonNull Iterator<Parser> iterator() {
-        return parsers.iterator();
+        return parsers.stream()
+            .sorted(Parsers.comparingPriority())
+            .iterator();
+    }
+
+    public static Comparator<Parser> comparingPriority() {
+        return (c1, c2) -> Integer.compare(c2.getPriority(), c1.getPriority());
     }
 }
