@@ -75,7 +75,7 @@ You can simply add ChatColorHandler to your project by adding the below into you
     <dependency>
         <groupId>org.lushplugins.chatcolorhandler</groupId>
         <artifactId>paper</artifactId>
-        <version>7.0.0</version>
+        <version>8.1.1</version>
     </dependency>
 </dependencies>
 ```
@@ -94,7 +94,7 @@ repositories {
 **Artifact:**
 ```gradle
 dependencies {
-    compileOnly "org.lushplugins.chatcolorhandler:paper:7.0.0"
+    compileOnly "org.lushplugins.chatcolorhandler:paper:8.1.1"
 }
 ```
 </details>
