@@ -8,8 +8,8 @@ dependencies {
 
     // Libraries
     implementation(project(":platform:paper"))
-    implementation("io.github.revxrsal:lamp.common:4.0.0-rc.19")
-    implementation("io.github.revxrsal:lamp.bukkit:4.0.0-rc.19")
+    implementation("io.github.revxrsal:lamp.common:4.0.0")
+    implementation("io.github.revxrsal:lamp.bukkit:4.0.0")
 }
 
 tasks {
